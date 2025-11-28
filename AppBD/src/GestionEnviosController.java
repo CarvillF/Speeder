@@ -1,82 +1,79 @@
+import clases.ProtocolActions;
+import clases.Request;
+import clases.Response;
+import clases.SpeederClient;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.stage.Stage;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 
-import java.io.IOException;
-import java.net.URL;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class GestionEnviosController {
 
     @FXML
-    private Button btnVisualizarEnvios;
+    private TableView<Map<String, Object>> tableEnvios;
 
     @FXML
-    private Button btnAgregarEnvio;
-
+    private TableColumn<Map<String, Object>, String> colId;
     @FXML
-    private Button btnEliminarEnvio;
-
+    private TableColumn<Map<String, Object>, String> colDestino;
     @FXML
-    private Button btnEditarUbicacion;
-
+    private TableColumn<Map<String, Object>, String> colEstado;
     @FXML
-    private Button btnVolverMenu;
+    private TableColumn<Map<String, Object>, String> colPrecio;
+
+    private final Gson gson = new Gson();
 
     @FXML
     private void initialize() {
+        // Aquí puedes configurar las cellValueFactory si quieres mostrar campos específicos
     }
 
     @FXML
     private void onVisualizarEnvios() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Visualización de envíos");
-        alert.setHeaderText(null);
-        alert.setContentText("Aquí se mostrarán los envíos actuales en la tabla (más adelante con base de datos).");
-        alert.showAndWait();
+        // Aquí idealmente mandarías el ID de usuario actual, por ahora null
+        Request request = new Request(ProtocolActions.GET_MY_SHIPMENTS, null);
+
+        new Thread(() -> {
+            SpeederClient client = SpeederClient.getInstance();
+            Response response = client.sendRequest(request);
+
+            if (response != null && "SUCCESS".equalsIgnoreCase(response.getStatus())) {
+                // Convertir data genérico a List<Map<String,Object>>
+                String json = gson.toJson(response.getData());
+                Type type = new TypeToken<ArrayList<Map<String, Object>>>() {}.getType();
+                List<Map<String, Object>> lista = gson.fromJson(json, type);
+
+                Platform.runLater(() -> {
+                    tableEnvios.getItems().setAll(lista);
+                });
+            } else {
+                // Podrías mostrar un label de error en la UI
+                Platform.runLater(() -> {
+                    System.out.println("Error al obtener envíos");
+                });
+            }
+        }).start();
     }
 
     @FXML
     private void onAgregarEnvio() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Añadir envío");
-        alert.setHeaderText("Datos del envío + precio estimado");
-        alert.setContentText("Aquí aparecería un formulario para ingresar los datos del envío y calcular un precio estimado.");
-        alert.showAndWait();
+        // Parecido: crear Request con CREATE_SHIPMENT
     }
 
     @FXML
     private void onEliminarEnvio() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Eliminar envío");
-        alert.setHeaderText("Advertencia");
-        alert.setContentText("Aquí se pediría confirmación antes de eliminar un envío seleccionado.");
-        alert.showAndWait();
+        // Parecido: crear Request con DELETE_SHIPMENT y el id seleccionado
     }
 
     @FXML
     private void onEditarUbicacion() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Editar ubicación");
-        alert.setHeaderText(null);
-        alert.setContentText("Aquí se podría cambiar la ubicación/estado del envío seleccionado.");
-        alert.showAndWait();
-    }
-
-    @FXML
-    private void onVolverMenuUsuario() {
-        try {
-            URL fxml = getClass().getResource("menu_usuario.fxml");
-            Parent root = FXMLLoader.load(fxml);
-            Stage stage = (Stage) btnVolverMenu.getScene().getWindow();
-            stage.setScene(new Scene(root, 800, 600));
-            stage.setTitle("Menú de usuario - Sistema de Paquetería");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        // Parecido: UPDATE_SHIPMENT_LOCATION
     }
 }

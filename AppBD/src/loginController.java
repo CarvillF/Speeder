@@ -1,3 +1,8 @@
+import clases.ProtocolActions;
+import clases.Request;
+import clases.Response;
+import clases.SpeederClient;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,6 +13,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class loginController {
 
@@ -35,25 +42,36 @@ public class loginController {
         if (usuario == null || usuario.isEmpty()
                 || password == null || password.isEmpty()) {
             messageLabel.setText("Por favor ingrese usuario y contraseña.");
+            messageLabel.setStyle("-fx-text-fill: red;");
             return;
         }
 
-        irMenuUsuario();
-    }
+        messageLabel.setText("Conectando...");
+        messageLabel.setStyle("-fx-text-fill: black;");
 
-    // SOLO si luego agregas un botón "Iniciar sesión como transportista"
-    @FXML
-    private void onLoginTransportistaClicked() {
-        String usuario = usernameTextField.getText();
-        String password = passwordPasswordField.getText();
+        new Thread(() -> {
+            Map<String, String> payload = new HashMap<>();
+            payload.put("username", usuario);
+            payload.put("password", password);
 
-        if (usuario == null || usuario.isEmpty()
-                || password == null || password.isEmpty()) {
-            messageLabel.setText("Por favor ingrese usuario y contraseña.");
-            return;
-        }
+            Request request = new Request(ProtocolActions.LOGIN, payload);
 
-        irMenuTransportista();
+            SpeederClient client = SpeederClient.getInstance();
+            Response response = client.sendRequest(request);
+
+            Platform.runLater(() -> {
+                if (response != null && "SUCCESS".equalsIgnoreCase(response.getStatus())) {
+                    messageLabel.setText("Login exitoso");
+                    messageLabel.setStyle("-fx-text-fill: green;");
+                    irMenuUsuario();
+                } else {
+                    String msg = (response != null) ? response.getMessage() : "Error de conexión";
+                    messageLabel.setText("Error: " + msg);
+                    messageLabel.setStyle("-fx-text-fill: red;");
+                }
+            });
+
+        }).start();
     }
 
     @FXML
@@ -68,7 +86,8 @@ public class loginController {
 
     private void irMenuUsuario() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("menu_usuario.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("menu_usuario.fxml"));
+            Parent root = loader.load();
             Stage stage = (Stage) usernameTextField.getScene().getWindow();
             stage.setScene(new Scene(root, 800, 600));
             stage.setTitle("Menú de usuario - Sistema de Paquetería");
@@ -79,42 +98,31 @@ public class loginController {
         }
     }
 
-    private void irMenuTransportista() {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("menu_transportista.fxml"));
-            Stage stage = (Stage) usernameTextField.getScene().getWindow();
-            stage.setScene(new Scene(root, 800, 600));
-            stage.setTitle("Menú Transportista - Sistema de Paquetería");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            messageLabel.setText("Error al abrir el menú de transportista.");
-        }
-    }
-
     private void irRegistroTransportista() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("registro_transportista.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("registro_transportista.fxml"));
+            Parent root = loader.load();
             Stage stage = (Stage) usernameTextField.getScene().getWindow();
             stage.setScene(new Scene(root, 800, 600));
-            stage.setTitle("Registro Transportista - Sistema de Paquetería");
+            stage.setTitle("Registro transportista");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            messageLabel.setText("Error al abrir registro de transportista.");
+            messageLabel.setText("Error al abrir registro transportista.");
         }
     }
 
     private void irRegistroEmpresario() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("registro_empresario.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("registro_empresario.fxml"));
+            Parent root = loader.load();
             Stage stage = (Stage) usernameTextField.getScene().getWindow();
             stage.setScene(new Scene(root, 800, 600));
-            stage.setTitle("Registro Empresario - Sistema de Paquetería");
+            stage.setTitle("Registro empresario");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            messageLabel.setText("Error al abrir registro de empresario.");
+            messageLabel.setText("Error al abrir registro empresario.");
         }
     }
 }

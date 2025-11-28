@@ -1,56 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MenuUsuarioController">
+
    <left>
-      <VBox prefHeight="200.0" prefWidth="220.0" spacing="10.0" style="-fx-background-color: #263F73;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="600.0" prefWidth="220.0" style="-fx-background-color: #263F73;" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="68.0" prefWidth="178.0" text="Menú de usuario" textFill="WHITE">
+
+            <Label layoutX="30.0" layoutY="40.0" text="Menú de usuario" textFill="WHITE">
                <font>
                   <Font name="Arial Black" size="18.0" />
                </font>
-               <VBox.margin>
-                  <Insets left="20.0" />
-               </VBox.margin></Label>
-            <Button fx:id="btnRevisarEnvios" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onRevisarEnvios" text="Revisar envíos actuales">
-               <VBox.margin>
-                  <Insets left="30.0" />
-               </VBox.margin></Button>
-            <Button fx:id="btnConfigUsuario" mnemonicParsing="false" onAction="#onConfigUsuario" text="Configuración de usuario">
-               <VBox.margin>
-                  <Insets left="30.0" />
-               </VBox.margin></Button>
-            <Button fx:id="btnGestionEnvios" mnemonicParsing="false" onAction="#onGestionEnvios" text="Gestión de envíos">
-               <VBox.margin>
-                  <Insets left="30.0" />
-               </VBox.margin></Button>
-            <Button fx:id="btnLogout" mnemonicParsing="false" onAction="#onLogout" text="Cerrar sesión">
-               <VBox.margin>
-                  <Insets left="30.0" />
-               </VBox.margin></Button>
+            </Label>
+
+            <Button fx:id="btnRevisarEnvios" layoutX="30.0" layoutY="173.0" mnemonicParsing="false" onAction="#onRevisarEnvios" prefHeight="28.0" prefWidth="160.0" style="-fx-background-color: transparent;                            -fx-border-color: transparent;                            -fx-text-fill: white;                            -fx-focus-color: transparent;                            -fx-faint-focus-color: transparent;" text="Envíos actuales" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font></Button>
+
+            <Button fx:id="btnConfigUsuario" layoutX="30.0" layoutY="223.0" mnemonicParsing="false" onAction="#onConfigUsuario" prefHeight="28.0" prefWidth="160.0" style="-fx-background-color: transparent;                            -fx-border-color: transparent;                            -fx-text-fill: white;                            -fx-focus-color: transparent;                            -fx-faint-focus-color: transparent;" text="Configuración" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="13.0" />
+               </font></Button>
+
+            <Button fx:id="btnGestionEnvios" layoutX="30.0" layoutY="286.0" mnemonicParsing="false" onAction="#onGestionEnvios" prefHeight="28.0" prefWidth="160.0" style="-fx-background-color: transparent;                            -fx-border-color: transparent;                            -fx-text-fill: white;                            -fx-focus-color: transparent;                            -fx-faint-focus-color: transparent;" text="Gestión de envíos" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font></Button>
+
+            <Button fx:id="btnLogout" layoutX="31.0" layoutY="527.0" mnemonicParsing="false" onAction="#onLogout" prefHeight="28.0" prefWidth="160.0" style="-fx-background-color: transparent;                            -fx-border-color: transparent;                            -fx-text-fill: white;                            -fx-focus-color: transparent;                            -fx-faint-focus-color: transparent;" text="Cerrar sesión" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="13.0" />
+               </font></Button>
+
          </children>
-      </VBox>
+      </AnchorPane>
    </left>
+
    <center>
-      <VBox prefHeight="600.0" prefWidth="580.0" spacing="10.0" BorderPane.alignment="TOP_LEFT">
+      <AnchorPane prefHeight="600.0" prefWidth="580.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="sectionTitleLabel" text="Seleccione una opción del menú">
-               <padding>
-                  <Insets left="20.0" top="20.0" />
-               </padding>
+            <Label fx:id="sectionTitleLabel" layoutX="30.0" layoutY="40.0" text="Seleccione una opción del menú">
+               <font>
+                  <Font size="16.0" />
+               </font>
             </Label>
-            <Label fx:id="sectionDescriptionLabel" text="Aquí se mostrará la información de la opción seleccionada.">
-               <VBox.margin>
-                  <Insets left="20.0" />
-               </VBox.margin>
-            </Label>
+
+            <Label fx:id="sectionDescriptionLabel" layoutX="30.0" layoutY="80.0" prefWidth="520.0" text="Aquí se mostrará la información de la opción seleccionada." />
          </children>
-      </VBox>
+      </AnchorPane>
    </center>
+
 </BorderPane>

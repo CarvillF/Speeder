@@ -7,7 +7,6 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
 
 public class MenuUsuarioController {
 
@@ -31,64 +30,71 @@ public class MenuUsuarioController {
 
     @FXML
     private void initialize() {
-        sectionTitleLabel.setText("Seleccione una opción del menú");
-        sectionDescriptionLabel.setText("Aquí se mostrará la información de la opción seleccionada.");
+        if (sectionTitleLabel != null) {
+            sectionTitleLabel.setText("Seleccione una opción del menú");
+        }
+        if (sectionDescriptionLabel != null) {
+            sectionDescriptionLabel.setText("Aquí se mostrará la información de la opción seleccionada.");
+        }
     }
 
     @FXML
     private void onRevisarEnvios() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("revisar_envios.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("revisar_envios.fxml"));
+            Parent root = loader.load();
             Stage stage = (Stage) btnRevisarEnvios.getScene().getWindow();
             stage.setScene(new Scene(root, 800, 600));
-            stage.setTitle("Revisar envíos actuales - Sistema de Paquetería");
+            stage.setTitle("Revisar envíos");
             stage.show();
         } catch (IOException e) {
-        e.printStackTrace();
+            e.printStackTrace();
+            sectionDescriptionLabel.setText("Error al abrir la vista de envíos.");
+        }
     }
-}
 
     @FXML
     private void onConfigUsuario() {
-        System.out.println("[MenuUsuario] CLICK Configuración de usuario");
-
-        // Buscar el FXML
-        URL fxmlLocation = getClass().getResource("configuracion.fxml");
-        System.out.println("[MenuUsuario] URL configuracion.fxml = " + fxmlLocation);
-
-        if (fxmlLocation == null) {
-            System.out.println("[MenuUsuario] ERROR: No se encontró configuracion.fxml en el mismo paquete.");
-            return;
-        }
-
         try {
-            Parent root = FXMLLoader.load(fxmlLocation);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("configuracion.fxml"));
+            Parent root = loader.load();
             Stage stage = (Stage) btnConfigUsuario.getScene().getWindow();
             stage.setScene(new Scene(root, 800, 600));
-            stage.setTitle("Configuración - Sistema de Paquetería");
+            stage.setTitle("Configuración");
             stage.show();
         } catch (IOException e) {
-            System.out.println("[MenuUsuario] ERROR cargando configuracion.fxml");
             e.printStackTrace();
+            sectionDescriptionLabel.setText("Error al abrir configuración.");
         }
     }
 
     @FXML
     private void onGestionEnvios() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("gestion_envios.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("gestion_envios.fxml"));
+            Parent root = loader.load();
             Stage stage = (Stage) btnGestionEnvios.getScene().getWindow();
             stage.setScene(new Scene(root, 800, 600));
-            stage.setTitle("Gestión de envíos - Sistema de Paquetería");
+            stage.setTitle("Gestión de envíos");
             stage.show();
         } catch (IOException e) {
-        e.printStackTrace();
+            e.printStackTrace();
+            sectionDescriptionLabel.setText("Error al abrir gestión de envíos.");
+        }
     }
-}
 
     @FXML
     private void onLogout() {
-        sectionTitleLabel.setText("Sesión cerrada (simulado)");
-        sectionDescriptionLabel.setText("Luego esta opción te devolverá a la pantalla de login.");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) btnLogout.getScene().getWindow();
+            stage.setScene(new Scene(root, 600, 400));
+            stage.setTitle("Sistema de Paquetería");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            sectionDescriptionLabel.setText("Error al cerrar sesión.");
+        }
     }
 }

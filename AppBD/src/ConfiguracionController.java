@@ -23,22 +23,48 @@ public class ConfiguracionController {
 
     @FXML
     private void initialize() {
-        // Por ahora no hace nada
     }
 
     @FXML
     private void onCambiarUsuario() {
-        // Aquí luego se mostrará la vista/formulario para editar usuario
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("config_usuario.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) btnCambiarUsuario.getScene().getWindow();
+            stage.setScene(new Scene(root, 800, 600));
+            stage.setTitle("Cambiar datos de usuario");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     private void onCambiarEmprendimiento() {
-        // Aquí luego se mostrará la vista/formulario para editar emprendimiento
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("config_emprendimiento.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) btnCambiarEmprendimiento.getScene().getWindow();
+            stage.setScene(new Scene(root, 800, 600));
+            stage.setTitle("Cambiar datos de emprendimiento");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     private void onGestionPago() {
-        // Aquí luego se mostrará la vista/formulario para métodos de pago
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("config_metodos_pago.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) btnGestionPago.getScene().getWindow();
+            stage.setScene(new Scene(root, 800, 600));
+            stage.setTitle("Gestionar métodos de pago");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -55,4 +81,3 @@ public class ConfiguracionController {
         }
     }
 }
-

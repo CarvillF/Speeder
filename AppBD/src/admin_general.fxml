@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
@@ -10,11 +9,11 @@
             fx:controller="AdminGeneralController"
             prefWidth="1200.0" prefHeight="700.0">
 
-    <!-- IZQUIERDA: menú General / Informe -->
     <left>
         <AnchorPane prefWidth="180.0" style="-fx-background-color:#263F73;">
             <children>
-                <Label layoutX="35.0" layoutY="40.0" text="Admin" textFill="WHITE">
+                <Label layoutX="35.0" layoutY="40.0"
+                       text="Admin" textFill="WHITE">
                     <font><Font name="System Bold" size="18.0"/></font>
                 </Label>
 
@@ -22,18 +21,27 @@
                         layoutX="20.0" layoutY="100.0"
                         prefWidth="140.0" prefHeight="30.0"
                         text="General"
+                        textFill="WHITE"
+                        style="-fx-background-color: transparent;
+                               -fx-border-color: transparent;
+                               -fx-focus-color: transparent;
+                               -fx-faint-focus-color: transparent;"
                         onAction="#onGeneralClicked"/>
 
                 <Button fx:id="btnInforme"
                         layoutX="20.0" layoutY="145.0"
                         prefWidth="140.0" prefHeight="30.0"
                         text="Informe"
+                        textFill="WHITE"
+                        style="-fx-background-color: transparent;
+                               -fx-border-color: transparent;
+                               -fx-focus-color: transparent;
+                               -fx-faint-focus-color: transparent;"
                         onAction="#onInformeClicked"/>
             </children>
         </AnchorPane>
     </left>
 
-    <!-- CENTRO: TabPane con tablas -->
     <center>
         <AnchorPane prefWidth="720.0">
             <children>
@@ -42,7 +50,6 @@
                          layoutX="10.0" layoutY="10.0"
                          prefWidth="700.0" prefHeight="650.0">
 
-                    <!-- TAB USUARIOS -->
                     <Tab text="Usuarios" closable="false">
                         <AnchorPane>
 
@@ -54,17 +61,18 @@
                             <TextField fx:id="tfBuscarUsuarios"
                                        layoutX="20.0" layoutY="50.0"
                                        prefWidth="650.0"
-                                       promptText="Buscar..."/>
+                                       promptText="Buscar usuario..."/>
 
                             <TableView fx:id="tableUsuarios"
                                        layoutX="20.0" layoutY="95.0"
                                        prefWidth="650.0" prefHeight="460.0">
                                 <columns>
-                                    <TableColumn text="ID"/>
-                                    <TableColumn text="Nombre"/>
-                                    <TableColumn text="Apellidos"/>
-                                    <TableColumn text="Cédula"/>
-                                    <TableColumn text="Correo"/>
+                                    <TableColumn fx:id="colUsuarioCedula"    text="Cédula"/>
+                                    <TableColumn fx:id="colUsuarioNombre"    text="Nombre"/>
+                                    <TableColumn fx:id="colUsuarioApellidos" text="Apellidos"/>
+                                    <TableColumn fx:id="colUsuarioCorreo"    text="Correo"/>
+                                    <TableColumn fx:id="colUsuarioNumero"    text="Número"/>
+                                    <TableColumn fx:id="colUsuarioCiudad"    text="Ciudad"/>
                                 </columns>
                             </TableView>
 
@@ -82,7 +90,6 @@
                         </AnchorPane>
                     </Tab>
 
-                    <!-- TAB TRANSPORTISTAS -->
                     <Tab text="Transpor." closable="false">
                         <AnchorPane>
 
@@ -94,17 +101,18 @@
                             <TextField fx:id="tfBuscarTransportistas"
                                        layoutX="20.0" layoutY="50.0"
                                        prefWidth="650.0"
-                                       promptText="Buscar..."/>
+                                       promptText="Buscar transportista..."/>
 
                             <TableView fx:id="tableTransportistas"
                                        layoutX="20.0" layoutY="95.0"
                                        prefWidth="650.0" prefHeight="460.0">
                                 <columns>
-                                    <TableColumn text="ID"/>
-                                    <TableColumn text="Nombre"/>
-                                    <TableColumn text="Licencia"/>
-                                    <TableColumn text="Zona"/>
-                                    <TableColumn text="Disponibilidad"/>
+                                    <TableColumn fx:id="colTransCedula"          text="Cédula"/>
+                                    <TableColumn fx:id="colTransNombre"          text="Nombre"/>
+                                    <TableColumn fx:id="colTransNumeroLicencia"  text="N° licencia"/>
+                                    <TableColumn fx:id="colTransTipoLicencia"    text="Tipo licencia"/>
+                                    <TableColumn fx:id="colTransZonaCobertura"   text="Zona cobert."/>
+                                    <TableColumn fx:id="colTransDisponibilidad"  text="Disponibilidad"/>
                                 </columns>
                             </TableView>
 
@@ -122,7 +130,6 @@
                         </AnchorPane>
                     </Tab>
 
-                    <!-- TAB ADMIN -->
                     <Tab text="Admin" closable="false">
                         <AnchorPane>
 
@@ -134,16 +141,17 @@
                             <TextField fx:id="tfBuscarAdmins"
                                        layoutX="20.0" layoutY="50.0"
                                        prefWidth="650.0"
-                                       promptText="Buscar..."/>
+                                       promptText="Buscar empresario/admin..."/>
 
                             <TableView fx:id="tableAdmins"
                                        layoutX="20.0" layoutY="95.0"
                                        prefWidth="650.0" prefHeight="460.0">
                                 <columns>
-                                    <TableColumn text="ID"/>
-                                    <TableColumn text="Nombre"/>
-                                    <TableColumn text="Correo"/>
-                                    <TableColumn text="Rol"/>
+                                    <TableColumn fx:id="colAdminCedula"           text="Cédula"/>
+                                    <TableColumn fx:id="colAdminNombre"           text="Nombre"/>
+                                    <TableColumn fx:id="colAdminApellidos"        text="Apellidos"/>
+                                    <TableColumn fx:id="colAdminCargoEmpresa"     text="Cargo empresa"/>
+                                    <TableColumn fx:id="colAdminCorreoEmpresarial" text="Correo empresarial"/>
                                 </columns>
                             </TableView>
 
@@ -166,12 +174,11 @@
         </AnchorPane>
     </center>
 
-    <!-- DERECHA: Envíos pendientes -->
     <right>
         <AnchorPane prefWidth="300.0" style="-fx-background-color:#111111;">
             <children>
 
-                <Label layoutX="95.0" layoutY="20.0" text="Envíos" textFill="WHITE">
+                <Label layoutX="110.0" layoutY="20.0" text="Envíos" textFill="WHITE">
                     <font><Font name="System Bold" size="18.0"/></font>
                 </Label>
 
@@ -197,8 +204,4 @@
             </children>
         </AnchorPane>
     </right>
-
-    <padding>
-        <Insets top="5" right="5" bottom="5" left="5"/>
-    </padding>
 </BorderPane>

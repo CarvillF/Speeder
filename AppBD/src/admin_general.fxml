@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="AdminGeneralController"
+            prefWidth="1200.0" prefHeight="700.0">
+
+    <!-- IZQUIERDA: menú General / Informe -->
+    <left>
+        <AnchorPane prefWidth="180.0" style="-fx-background-color:#263F73;">
+            <children>
+                <Label layoutX="35.0" layoutY="40.0" text="Admin" textFill="WHITE">
+                    <font><Font name="System Bold" size="18.0"/></font>
+                </Label>
+
+                <Button fx:id="btnGeneral"
+                        layoutX="20.0" layoutY="100.0"
+                        prefWidth="140.0" prefHeight="30.0"
+                        text="General"
+                        onAction="#onGeneralClicked"/>
+
+                <Button fx:id="btnInforme"
+                        layoutX="20.0" layoutY="145.0"
+                        prefWidth="140.0" prefHeight="30.0"
+                        text="Informe"
+                        onAction="#onInformeClicked"/>
+            </children>
+        </AnchorPane>
+    </left>
+
+    <!-- CENTRO: TabPane con tablas -->
+    <center>
+        <AnchorPane prefWidth="720.0">
+            <children>
+
+                <TabPane fx:id="tabPaneEntidades"
+                         layoutX="10.0" layoutY="10.0"
+                         prefWidth="700.0" prefHeight="650.0">
+
+                    <!-- TAB USUARIOS -->
+                    <Tab text="Usuarios" closable="false">
+                        <AnchorPane>
+
+                            <Label layoutX="20.0" layoutY="15.0" text="Filtrar por"/>
+                            <ChoiceBox fx:id="cbFiltroUsuarios"
+                                       layoutX="95.0" layoutY="11.0"
+                                       prefWidth="200.0"/>
+
+                            <TextField fx:id="tfBuscarUsuarios"
+                                       layoutX="20.0" layoutY="50.0"
+                                       prefWidth="650.0"
+                                       promptText="Buscar..."/>
+
+                            <TableView fx:id="tableUsuarios"
+                                       layoutX="20.0" layoutY="95.0"
+                                       prefWidth="650.0" prefHeight="460.0">
+                                <columns>
+                                    <TableColumn text="ID"/>
+                                    <TableColumn text="Nombre"/>
+                                    <TableColumn text="Apellidos"/>
+                                    <TableColumn text="Cédula"/>
+                                    <TableColumn text="Correo"/>
+                                </columns>
+                            </TableView>
+
+                            <Button fx:id="btnCrearUsuario"
+                                    layoutX="20.0" layoutY="575.0"
+                                    prefWidth="140.0"
+                                    text="Crear usuario"
+                                    onAction="#onCrearUsuario"/>
+
+                            <Button fx:id="btnEliminarUsuario"
+                                    layoutX="180.0" layoutY="575.0"
+                                    prefWidth="140.0"
+                                    text="Eliminar usuario"
+                                    onAction="#onEliminarUsuario"/>
+                        </AnchorPane>
+                    </Tab>
+
+                    <!-- TAB TRANSPORTISTAS -->
+                    <Tab text="Transpor." closable="false">
+                        <AnchorPane>
+
+                            <Label layoutX="20.0" layoutY="15.0" text="Filtrar por"/>
+                            <ChoiceBox fx:id="cbFiltroTransportistas"
+                                       layoutX="95.0" layoutY="11.0"
+                                       prefWidth="200.0"/>
+
+                            <TextField fx:id="tfBuscarTransportistas"
+                                       layoutX="20.0" layoutY="50.0"
+                                       prefWidth="650.0"
+                                       promptText="Buscar..."/>
+
+                            <TableView fx:id="tableTransportistas"
+                                       layoutX="20.0" layoutY="95.0"
+                                       prefWidth="650.0" prefHeight="460.0">
+                                <columns>
+                                    <TableColumn text="ID"/>
+                                    <TableColumn text="Nombre"/>
+                                    <TableColumn text="Licencia"/>
+                                    <TableColumn text="Zona"/>
+                                    <TableColumn text="Disponibilidad"/>
+                                </columns>
+                            </TableView>
+
+                            <Button fx:id="btnCrearTransportista"
+                                    layoutX="20.0" layoutY="575.0"
+                                    prefWidth="160.0"
+                                    text="Crear transportista"
+                                    onAction="#onCrearTransportista"/>
+
+                            <Button fx:id="btnEliminarTransportista"
+                                    layoutX="200.0" layoutY="575.0"
+                                    prefWidth="160.0"
+                                    text="Eliminar transportista"
+                                    onAction="#onEliminarTransportista"/>
+                        </AnchorPane>
+                    </Tab>
+
+                    <!-- TAB ADMIN -->
+                    <Tab text="Admin" closable="false">
+                        <AnchorPane>
+
+                            <Label layoutX="20.0" layoutY="15.0" text="Filtrar por"/>
+                            <ChoiceBox fx:id="cbFiltroAdmins"
+                                       layoutX="95.0" layoutY="11.0"
+                                       prefWidth="200.0"/>
+
+                            <TextField fx:id="tfBuscarAdmins"
+                                       layoutX="20.0" layoutY="50.0"
+                                       prefWidth="650.0"
+                                       promptText="Buscar..."/>
+
+                            <TableView fx:id="tableAdmins"
+                                       layoutX="20.0" layoutY="95.0"
+                                       prefWidth="650.0" prefHeight="460.0">
+                                <columns>
+                                    <TableColumn text="ID"/>
+                                    <TableColumn text="Nombre"/>
+                                    <TableColumn text="Correo"/>
+                                    <TableColumn text="Rol"/>
+                                </columns>
+                            </TableView>
+
+                            <Button fx:id="btnCrearAdmin"
+                                    layoutX="20.0" layoutY="575.0"
+                                    prefWidth="140.0"
+                                    text="Crear admin"
+                                    onAction="#onCrearAdmin"/>
+
+                            <Button fx:id="btnEliminarAdmin"
+                                    layoutX="180.0" layoutY="575.0"
+                                    prefWidth="140.0"
+                                    text="Eliminar admin"
+                                    onAction="#onEliminarAdmin"/>
+                        </AnchorPane>
+                    </Tab>
+
+                </TabPane>
+            </children>
+        </AnchorPane>
+    </center>
+
+    <!-- DERECHA: Envíos pendientes -->
+    <right>
+        <AnchorPane prefWidth="300.0" style="-fx-background-color:#111111;">
+            <children>
+
+                <Label layoutX="95.0" layoutY="20.0" text="Envíos" textFill="WHITE">
+                    <font><Font name="System Bold" size="18.0"/></font>
+                </Label>
+
+                <Label layoutX="20.0" layoutY="70.0" text="Filtrar por" textFill="WHITE"/>
+                <ChoiceBox fx:id="cbFiltroEnvios"
+                           layoutX="95.0" layoutY="66.0"
+                           prefWidth="180.0"/>
+
+                <TextField fx:id="tfBuscarEnvios"
+                           layoutX="20.0" layoutY="110.0"
+                           prefWidth="255.0"
+                           promptText="Buscar envío..."/>
+
+                <ListView fx:id="listEnviosPendientes"
+                          layoutX="20.0" layoutY="160.0"
+                          prefWidth="255.0" prefHeight="420.0"/>
+
+                <Button fx:id="btnAnularEnvio"
+                        layoutX="70.0" layoutY="600.0"
+                        prefWidth="160.0"
+                        text="Anular envío"
+                        onAction="#onAnularEnvio"/>
+            </children>
+        </AnchorPane>
+    </right>
+
+    <padding>
+        <Insets top="5" right="5" bottom="5" left="5"/>
+    </padding>
+</BorderPane>

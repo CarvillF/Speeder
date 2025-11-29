@@ -1,0 +1,15 @@
+# IDEs
+.idea/
+.vscode/
+*.iml
+
+# Java / Gradle / Maven builds
+out/
+target/
+build/
+.gradle/
+*.class
+*.log
+
+# Mac
+.DS_Store

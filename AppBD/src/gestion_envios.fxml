@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="GestionEnviosController"
+            prefHeight="600.0" prefWidth="800.0">
+
+    <left>
+        <AnchorPane prefHeight="600.0" prefWidth="260.0"
+                    style="-fx-background-color: #263F73;"
+                    BorderPane.alignment="CENTER">
+            <children>
+                <Label layoutX="25.0" layoutY="60.0"
+                       text="Menú de gestión de envíos"
+                       textFill="WHITE">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </Label>
+
+                <Button fx:id="btnVisualizarEnvios"
+                        layoutX="20.0" layoutY="120.0"
+                        prefWidth="220.0" prefHeight="26.0"
+                        mnemonicParsing="false"
+                        text="Visualización de envíos actuales"
+                        onAction="#onVisualizarEnvios" />
+
+                <Button fx:id="btnAgregarEnvio"
+                        layoutX="20.0" layoutY="165.0"
+                        prefWidth="220.0" prefHeight="26.0"
+                        mnemonicParsing="false"
+                        text="Añadir envíos"
+                        onAction="#onAgregarEnvio" />
+
+                <Button fx:id="btnEliminarEnvio"
+                        layoutX="20.0" layoutY="210.0"
+                        prefWidth="220.0" prefHeight="26.0"
+                        mnemonicParsing="false"
+                        text="Eliminar envíos"
+                        onAction="#onEliminarEnvio" />
+
+                <Button fx:id="btnEditarUbicacion"
+                        layoutX="20.0" layoutY="255.0"
+                        prefWidth="220.0" prefHeight="26.0"
+                        mnemonicParsing="false"
+                        text="Editar ubicación de envío"
+                        onAction="#onEditarUbicacion" />
+
+                <Button fx:id="btnVolverMenu"
+                        layoutX="20.0" layoutY="20.0"
+                        mnemonicParsing="false"
+                        text="Volver"
+                        onAction="#onVolverMenuUsuario" />
+            </children>
+        </AnchorPane>
+    </left>
+
+    <center>
+        <AnchorPane prefHeight="600.0" prefWidth="540.0"
+                    BorderPane.alignment="CENTER">
+            <children>
+                <Label layoutX="30.0" layoutY="20.0"
+                       text="Gestión de envíos">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Label>
+
+                <TableView layoutX="30.0" layoutY="60.0"
+                           prefWidth="480.0" prefHeight="400.0">
+                    <columns>
+                        <TableColumn text="ID" />
+                        <TableColumn text="Destino" />
+                        <TableColumn text="Estado" />
+                        <TableColumn text="Precio estimado" />
+                    </columns>
+                </TableView>
+
+                <Label layoutX="30.0" layoutY="480.0"
+                       text="(Aquí se mostrarán los envíos actuales cuando se conecte a la base de datos.)" />
+            </children>
+        </AnchorPane>
+    </center>
+</BorderPane>

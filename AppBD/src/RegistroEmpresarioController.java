@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import back.consultas.Buscar;
+
 public class RegistroEmpresarioController {
 
     @FXML
@@ -83,15 +85,21 @@ public class RegistroEmpresarioController {
 
             SpeederClient client = SpeederClient.getInstance();
             Response response = client.sendRequest(request);
+            boolean buscarCI = Buscar.cedulaExiste(cedula);
 
             Platform.runLater(() -> {
-                if (response != null && "SUCCESS".equalsIgnoreCase(response.getStatus())) {
-                    statusLabel.setText("Registro de empresario exitoso.");
-                    statusLabel.setStyle("-fx-text-fill: green;");
-                } else {
-                    String msg = (response != null) ? response.getMessage() : "Error de conexión";
-                    statusLabel.setText("Error: " + msg);
+                if (buscarCI){
+                    statusLabel.setText("Error: Cedula registrada");
                     statusLabel.setStyle("-fx-text-fill: red;");
+                } else {
+                    if (response != null && "SUCCESS".equalsIgnoreCase(response.getStatus())) {
+                        statusLabel.setText("Registro de transportista exitoso.");
+                        statusLabel.setStyle("-fx-text-fill: green;");
+                    } else {
+                        String msg = (response != null) ? response.getMessage() : "Error de conexión";
+                        statusLabel.setText("Error: " + msg);
+                        statusLabel.setStyle("-fx-text-fill: red;");
+                    }
                 }
             });
         }).start();

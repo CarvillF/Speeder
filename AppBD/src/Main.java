@@ -1,4 +1,7 @@
 
+import java.sql.SQLException;
+
+import back.DBConnection;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -17,6 +20,11 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+        try (var connection =  DBConnection.connect()){
+            System.out.println("Connected to the MySQL database. \n");
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
         launch(args);
     }
 }

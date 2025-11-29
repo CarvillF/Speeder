@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import back.consultas.Buscar;
+
 public class loginController {
 
     @FXML
@@ -59,14 +61,20 @@ public class loginController {
             SpeederClient client = SpeederClient.getInstance();
             Response response = client.sendRequest(request);
 
+            boolean buscar = Buscar.login(usuario, password);
             Platform.runLater(() -> {
-                if (response != null && "SUCCESS".equalsIgnoreCase(response.getStatus())) {
-                    messageLabel.setText("Login exitoso");
-                    messageLabel.setStyle("-fx-text-fill: green;");
-                    irMenuUsuario();
+                if(buscar){
+                    if (response != null && "SUCCESS".equalsIgnoreCase(response.getStatus())) {
+                        messageLabel.setText("Login exitoso");
+                        messageLabel.setStyle("-fx-text-fill: green;");
+                        irMenuUsuario();
+                    } else {
+                        String msg = (response != null) ? response.getMessage() : "Error de conexión";
+                        messageLabel.setText("Error: " + msg);
+                        messageLabel.setStyle("-fx-text-fill: red;");
+                    }
                 } else {
-                    String msg = (response != null) ? response.getMessage() : "Error de conexión";
-                    messageLabel.setText("Error: " + msg);
+                    messageLabel.setText("Error: Correo o contraseña no existen");
                     messageLabel.setStyle("-fx-text-fill: red;");
                 }
             });

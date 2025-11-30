@@ -1,7 +1,7 @@
 package back.clases;
 
 public class Cliente extends Usuario {
-    //atributos
+    // atributos
     private String dir_empresa;
 
     // constructor
@@ -10,13 +10,13 @@ public class Cliente extends Usuario {
         this.dir_empresa = dir_empresa;
     }
 
-    //setter
-    public void setDirEmpresa(String new_dir_empresa){
+    // setter
+    public void setDirEmpresa(String new_dir_empresa) {
         this.dir_empresa = new_dir_empresa;
     }
 
-    //getters
-    public String getDirEmpresa(){
+    // getters
+    public String getDirEmpresa() {
         return dir_empresa;
     }
 }

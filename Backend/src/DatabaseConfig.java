@@ -1,4 +1,4 @@
-package back;
+package
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,17 +23,17 @@ public class DatabaseConfig {
         }
     }
 
-    //obtiene url
+    // obtiene url
     public static String getDbUrl() {
         return properties.getProperty("db.url");
     }
 
-    //ontiene usuario
+    // ontiene usuario
     public static String getDbUsername() {
         return properties.getProperty("db.username");
     }
 
-    //obtiene contraseña
+    // obtiene contraseña
     public static String getDbPassword() {
         return properties.getProperty("db.password");
     }

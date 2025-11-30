@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane xmlns="http://javafx.com/javafx/21"
@@ -14,47 +9,47 @@
             fx:controller="ConfiguracionMetodosPagoController"
             prefHeight="600.0" prefWidth="800.0">
 
-    <!-- MENÚ IZQUIERDO -->
     <left>
-        <AnchorPane prefHeight="200.0" prefWidth="260.0"
-                    style="-fx-background-color: #263F73;"
+        <AnchorPane prefWidth="220.0"
+                    style="-fx-background-color:#263F73;"
                     BorderPane.alignment="CENTER">
             <children>
-                <Label layoutX="40.0" layoutY="40.0"
-                       text="Menú de configuración"
+                <Label layoutX="20.0" layoutY="30.0"
+                       text="Métodos de pago"
                        textFill="WHITE">
                     <font>
-                        <Font size="17.0" />
+                        <Font name="System Bold" size="18.0" />
                     </font>
                 </Label>
 
-                <Button layoutX="22.0" layoutY="110.0"
-                        prefHeight="25.0" prefWidth="215.0"
-                        text="Cambiar campos de usuario"
-                        onAction="#onIrUsuario"
+                <Button layoutX="20.0" layoutY="100.0"
+                        prefWidth="180.0" prefHeight="28.0"
+                        text="Refrescar"
+                        onAction="#onRefrescar"
                         style="-fx-background-color: transparent;
                                -fx-text-fill: white;
                                -fx-border-color: transparent;" />
 
-                <Button layoutX="22.0" layoutY="150.0"
-                        prefHeight="25.0" prefWidth="215.0"
-                        text="Cambiar campos de emprendimiento"
-                        onAction="#onIrEmprendimiento"
+                <Button layoutX="20.0" layoutY="140.0"
+                        prefWidth="180.0" prefHeight="28.0"
+                        text="Agregar método"
+                        onAction="#onAgregarMetodo"
                         style="-fx-background-color: transparent;
                                -fx-text-fill: white;
                                -fx-border-color: transparent;" />
 
-                <Button layoutX="22.0" layoutY="190.0"
-                        prefHeight="25.0" prefWidth="215.0"
-                        text="Gestionar métodos de pago"
+                <Button layoutX="20.0" layoutY="180.0"
+                        prefWidth="180.0" prefHeight="28.0"
+                        text="Eliminar método"
+                        onAction="#onEliminarMetodo"
                         style="-fx-background-color: transparent;
                                -fx-text-fill: white;
                                -fx-border-color: transparent;" />
 
-                <Button fx:id="btnVolverMenu"
-                        layoutX="21.0" layoutY="23.0"
+                <Button layoutX="20.0" layoutY="520.0"
+                        prefWidth="180.0" prefHeight="28.0"
                         text="Volver"
-                        onAction="#onVolverMenuUsuario"
+                        onAction="#onVolverConfiguracion"
                         style="-fx-background-color: transparent;
                                -fx-text-fill: white;
                                -fx-border-color: transparent;" />
@@ -62,61 +57,27 @@
         </AnchorPane>
     </left>
 
-    <!-- FORMULARIO DERECHA: MÉTODOS DE PAGO -->
     <center>
-        <AnchorPane prefHeight="600.0" prefWidth="540.0"
+        <AnchorPane prefWidth="580.0" prefHeight="600.0"
                     BorderPane.alignment="CENTER">
             <children>
-                <Label layoutX="40.0" layoutY="30.0"
-                       text="Gestionar métodos de pago">
+                <Label layoutX="20.0" layoutY="20.0"
+                       text="Listado de métodos de pago">
                     <font>
-                        <Font name="System Bold" size="18.0" />
+                        <Font name="System Bold" size="16.0" />
                     </font>
                 </Label>
 
-                <Label layoutX="40.0" layoutY="80.0" text="ID método pago" />
-                <TextField fx:id="tfIdMetodoPago"
-                           layoutX="200.0" layoutY="76.0"
-                           prefWidth="260.0" />
-
-                <Label layoutX="40.0" layoutY="120.0" text="Cédula propietario" />
-                <TextField fx:id="tfCedulaPago"
-                           layoutX="200.0" layoutY="116.0"
-                           prefWidth="260.0" />
-
-                <Label layoutX="40.0" layoutY="160.0" text="Tipo" />
-                <ChoiceBox fx:id="cbTipoPago"
-                           layoutX="200.0" layoutY="156.0"
-                           prefWidth="260.0" />
-
-                <Label layoutX="40.0" layoutY="200.0" text="Datos" />
-                <TextField fx:id="tfDatosPago"
-                           layoutX="200.0" layoutY="196.0"
-                           prefWidth="260.0" />
-
-                <CheckBox fx:id="cbPredeterminado"
-                          layoutX="200.0" layoutY="236.0"
-                          text="Predeterminado" />
-
-                <Label layoutX="40.0" layoutY="280.0" text="Fecha creación (opcional)" />
-                <TextField fx:id="tfFechaCreacion"
-                           layoutX="200.0" layoutY="276.0"
-                           prefWidth="260.0"
-                           promptText="YYYY-MM-DD" />
-
-                <Button fx:id="btnGuardarMetodoPago"
-                        layoutX="200.0" layoutY="330.0"
-                        prefWidth="160.0"
-                        text="Guardar método" />
-
-                <Button fx:id="btnEliminarMetodoPago"
-                        layoutX="200.0" layoutY="370.0"
-                        prefWidth="160.0"
-                        text="Eliminar método" />
-
-                <Label fx:id="lblMensajePago"
-                       layoutX="40.0" layoutY="420.0"
-                       textFill="red" />
+                <TableView fx:id="tableMetodosPago"
+                           layoutX="20.0" layoutY="60.0"
+                           prefWidth="540.0" prefHeight="480.0">
+                    <columns>
+                        <TableColumn fx:id="colId" text="ID" prefWidth="60.0" />
+                        <TableColumn fx:id="colTipo" text="Tipo" prefWidth="120.0" />
+                        <TableColumn fx:id="colDatos" text="Datos" prefWidth="220.0" />
+                        <TableColumn fx:id="colFecha" text="Fecha creación" prefWidth="140.0" />
+                    </columns>
+                </TableView>
             </children>
         </AnchorPane>
     </center>

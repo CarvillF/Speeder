@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="VehiculosTransportistaController"
+            prefHeight="600.0" prefWidth="800.0">
+
+    <left>
+        <AnchorPane prefHeight="600.0" prefWidth="260.0"
+                    style="-fx-background-color: #263F73;"
+                    BorderPane.alignment="CENTER">
+            <children>
+
+                <Button fx:id="btnVolverMenu"
+                        layoutX="20.0" layoutY="20.0"
+                        prefWidth="80.0" prefHeight="26.0"
+                        text="Volver"
+                        onAction="#onVolverMenuTransportista"
+                        style="-fx-background-color: transparent;
+                               -fx-text-fill: white;
+                               -fx-border-color: transparent;" />
+
+                <Label layoutX="40.0" layoutY="70.0"
+                       text="Mis vehículos"
+                       textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Label>
+
+            </children>
+        </AnchorPane>
+    </left>
+
+    <center>
+        <AnchorPane prefHeight="600.0" prefWidth="540.0"
+                    BorderPane.alignment="CENTER">
+            <children>
+
+                <Label layoutX="30.0" layoutY="20.0"
+                       text="Gestión de vehículos">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Label>
+
+                <Label layoutX="30.0" layoutY="60.0"
+                       text="Filtrar por" />
+
+                <ChoiceBox fx:id="cbFiltroCampo"
+                           layoutX="100.0" layoutY="56.0"
+                           prefWidth="150.0" />
+
+                <TextField fx:id="tfBuscar"
+                           layoutX="30.0" layoutY="95.0"
+                           prefWidth="480.0"
+                           promptText="Buscar vehículo..." />
+
+                <TableView fx:id="tableVehiculos"
+                           layoutX="30.0" layoutY="140.0"
+                           prefWidth="480.0" prefHeight="340.0">
+                    <columns>
+                        <TableColumn fx:id="colId"
+                                     text="ID vehículo" />
+                        <TableColumn fx:id="colModelo"
+                                     text="Modelo" />
+                        <TableColumn fx:id="colColor"
+                                     text="Color" />
+                        <TableColumn fx:id="colPlaca"
+                                     text="Placa" />
+                        <TableColumn fx:id="colCapacidad"
+                                     text="Capacidad máx." />
+                    </columns>
+                </TableView>
+
+                <Button fx:id="btnActualizar"
+                        layoutX="30.0" layoutY="510.0"
+                        prefWidth="100.0" prefHeight="26.0"
+                        text="Actualizar"
+                        onAction="#onActualizarListaVehiculos" />
+
+                <Button fx:id="btnAgregarVehiculo"
+                        layoutX="140.0" layoutY="510.0"
+                        prefWidth="110.0" prefHeight="26.0"
+                        text="Agregar"
+                        onAction="#onAgregarVehiculo" />
+
+                <Button fx:id="btnEditarVehiculo"
+                        layoutX="255.0" layoutY="510.0"
+                        prefWidth="110.0" prefHeight="26.0"
+                        text="Editar"
+                        onAction="#onEditarVehiculo" />
+
+                <Button fx:id="btnEliminarVehiculo"
+                        layoutX="370.0" layoutY="510.0"
+                        prefWidth="110.0" prefHeight="26.0"
+                        text="Eliminar"
+                        onAction="#onEliminarVehiculo" />
+
+            </children>
+        </AnchorPane>
+    </center>
+</BorderPane>

@@ -16,4 +16,16 @@ public class ProtocolActions {
     public static final String CANCEL_SHIPMENT = "CANCEL_SHIPMENT";
 
     public static final String UPDATE_PROFILE = "UPDATE_PROFILE";
+
+    public static final String GET_ASSIGNED_SHIPMENTS = "GET_ASSIGNED_SHIPMENTS";
+    public static final String UPDATE_SHIPMENT_STATE = "UPDATE_SHIPMENT_STATE";
+
+    public static final String GET_MY_VEHICLES = "GET_MY_VEHICLES";
+    public static final String CREATE_VEHICLE = "CREATE_VEHICLE";
+    public static final String UPDATE_VEHICLE = "UPDATE_VEHICLE";
+    public static final String DELETE_VEHICLE = "DELETE_VEHICLE";
+
+    public static final String GET_PAYMENT_METHODS = "GET_PAYMENT_METHODS";
+    public static final String CREATE_PAYMENT_METHOD = "CREATE_PAYMENT_METHOD";
+    public static final String DELETE_PAYMENT_METHOD = "DELETE_PAYMENT_METHOD";
 }

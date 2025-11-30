@@ -1,129 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity"
-            minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="600.0" prefWidth="800.0"
-            xmlns="http://javafx.com/javafx/21"
+<BorderPane xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="ConfiguracionController">
+            fx:controller="ConfiguracionController"
+            prefHeight="600.0" prefWidth="800.0">
 
-   <!-- MENÚ IZQUIERDO -->
-   <left>
-      <AnchorPane prefHeight="200.0" prefWidth="260.0"
-                  style="-fx-background-color: #263F73;"
-                  BorderPane.alignment="CENTER">
-         <children>
-            <Label layoutX="40.0" layoutY="40.0"
-                   text="Menú de configuración"
-                   textFill="WHITE">
-               <font>
-                  <Font size="17.0" />
-               </font>
-            </Label>
+    <left>
+        <AnchorPane prefHeight="600.0" prefWidth="260.0"
+                    style="-fx-background-color: #263F73;"
+                    BorderPane.alignment="CENTER">
+            <children>
+                <Button fx:id="btnVolverMenu"
+                        layoutX="20.0" layoutY="20.0"
+                        text="Volver"
+                        onAction="#onVolverMenuUsuario"
+                        style="-fx-background-color: transparent;
+                               -fx-text-fill: white;
+                               -fx-border-color: transparent;" />
 
-            <Button fx:id="btnCambiarUsuario"
-                    layoutX="22.0" layoutY="110.0"
-                    prefHeight="25.0" prefWidth="215.0"
-                    text="Cambiar campos de usuario"
-                    onAction="#onCambiarUsuario"
-                    style="-fx-background-color: transparent;
-                           -fx-text-fill: white;
-                           -fx-border-color: transparent;" />
+                <Label layoutX="30.0" layoutY="70.0"
+                       text="Menú de configuración"
+                       textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Label>
 
-            <Button fx:id="btnCambiarEmprendimiento"
-                    layoutX="22.0" layoutY="150.0"
-                    prefHeight="25.0" prefWidth="215.0"
-                    text="Cambiar campos de emprendimiento"
-                    onAction="#onCambiarEmprendimiento"
-                    style="-fx-background-color: transparent;
-                           -fx-text-fill: white;
-                           -fx-border-color: transparent;" />
+                <Button fx:id="btnCambiarUsuario"
+                        layoutX="22.0" layoutY="130.0"
+                        prefHeight="26.0" prefWidth="215.0"
+                        text="Cambiar campos de usuario"
+                        onAction="#onCambiarUsuario"
+                        style="-fx-background-color: transparent;
+                               -fx-text-fill: white;
+                               -fx-border-color: transparent;" />
 
-            <Button fx:id="btnGestionPago"
-                    layoutX="22.0" layoutY="190.0"
-                    prefHeight="25.0" prefWidth="215.0"
-                    text="Gestionar métodos de pago"
-                    onAction="#onGestionPago"
-                    style="-fx-background-color: transparent;
-                           -fx-text-fill: white;
-                           -fx-border-color: transparent;" />
+                <Button fx:id="btnCambiarEmprendimiento"
+                        layoutX="22.0" layoutY="170.0"
+                        prefHeight="26.0" prefWidth="215.0"
+                        text="Cambiar campos de emprendimiento"
+                        onAction="#onCambiarEmprendimiento"
+                        style="-fx-background-color: transparent;
+                               -fx-text-fill: white;
+                               -fx-border-color: transparent;" />
 
-            <Button fx:id="btnVolverMenu"
-                    layoutX="21.0" layoutY="23.0"
-                    text="Volver"
-                    onAction="#onVolverMenuUsuario"
-                    style="-fx-background-color: transparent;
-                           -fx-text-fill: white;
-                           -fx-border-color: transparent;" />
-         </children>
-      </AnchorPane>
-   </left>
+                <Button fx:id="btnGestionPago"
+                        layoutX="22.0" layoutY="210.0"
+                        prefHeight="26.0" prefWidth="215.0"
+                        text="Gestionar métodos de pago"
+                        onAction="#onGestionPago"
+                        style="-fx-background-color: transparent;
+                               -fx-text-fill: white;
+                               -fx-border-color: transparent;" />
+            </children>
+        </AnchorPane>
+    </left>
 
-   <!-- FORMULARIO DERECHA: CAMBIAR DATOS DE USUARIO -->
-   <center>
-      <AnchorPane prefHeight="600.0" prefWidth="540.0"
-                  BorderPane.alignment="CENTER">
-         <children>
+    <center>
+        <AnchorPane prefHeight="600.0" prefWidth="540.0"
+                    BorderPane.alignment="CENTER">
+            <children>
+                <Label layoutX="30.0" layoutY="30.0"
+                       text="Configuración del empresario">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Label>
 
-            <Label layoutX="40.0" layoutY="30.0"
-                   text="Cambiar datos de usuario">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-
-            <Label layoutX="40.0" layoutY="80.0" text="Cédula" />
-            <TextField fx:id="tfCedulaUsuario"
-                       layoutX="180.0" layoutY="76.0"
-                       prefWidth="260.0" />
-
-            <Label layoutX="40.0" layoutY="120.0" text="Nombre" />
-            <TextField fx:id="tfNombreUsuario"
-                       layoutX="180.0" layoutY="116.0"
-                       prefWidth="260.0" />
-
-            <Label layoutX="40.0" layoutY="160.0" text="Apellidos" />
-            <TextField fx:id="tfApellidosUsuario"
-                       layoutX="180.0" layoutY="156.0"
-                       prefWidth="260.0" />
-
-            <Label layoutX="40.0" layoutY="200.0" text="Correo" />
-            <TextField fx:id="tfCorreoUsuario"
-                       layoutX="180.0" layoutY="196.0"
-                       prefWidth="260.0" />
-
-            <Label layoutX="40.0" layoutY="240.0" text="Contraseña" />
-            <PasswordField fx:id="pfPasswordUsuario"
-                           layoutX="180.0" layoutY="236.0"
-                           prefWidth="260.0" />
-
-            <Label layoutX="40.0" layoutY="280.0" text="Número de teléfono" />
-            <TextField fx:id="tfNumeroUsuario"
-                       layoutX="180.0" layoutY="276.0"
-                       prefWidth="260.0" />
-
-            <Button fx:id="btnGuardarUsuario"
-                    layoutX="180.0" layoutY="330.0"
-                    prefWidth="140.0"
-                    text="Guardar cambios" />
-
-            <Button fx:id="btnCancelarUsuario"
-                    layoutX="340.0" layoutY="330.0"
-                    prefWidth="100.0"
-                    text="Cancelar" />
-
-            <Label fx:id="lblMensajeUsuario"
-                   layoutX="40.0" layoutY="380.0"
-                   textFill="red" />
-         </children>
-      </AnchorPane>
-   </center>
+                <Label layoutX="30.0" layoutY="70.0"
+                       text="Seleccione una opción en el menú de la izquierda para modificar sus datos de usuario, emprendimiento o métodos de pago."
+                       wrapText="true"
+                       prefWidth="480.0" />
+            </children>
+        </AnchorPane>
+    </center>
 </BorderPane>

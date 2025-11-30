@@ -3,7 +3,6 @@ import clases.Request;
 import clases.Response;
 import clases.SpeederClient;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,7 +19,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RevisarEnviosController {
+public class EnviosTransportistaController {
 
     @FXML
     private Button btnVolverMenu;
@@ -53,19 +52,30 @@ public class RevisarEnviosController {
     private Button btnActualizar;
 
     @FXML
-    private Button btnCancelarEnvio;
+    private Button btnMarcarRecogido;
+
+    @FXML
+    private Button btnMarcarEntregado;
 
     @FXML
     private void initialize() {
         if (cbFiltroEstado != null) {
-            cbFiltroEstado.getItems().addAll(
-                    "Todos",
-                    "PENDIENTE",
-                    "EN CAMINO",
-                    "ENTREGADO",
-                    "CANCELADO"
-            );
+            cbFiltroEstado.getItems().addAll("Todos", "PENDIENTE", "EN CAMINO", "ENTREGADO", "CANCELADO");
             cbFiltroEstado.setValue("Todos");
+        }
+    }
+
+    @FXML
+    private void onVolverMenuTransportista() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("menu_transportista.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) btnVolverMenu.getScene().getWindow();
+            stage.setScene(new Scene(root, 800, 600));
+            stage.setTitle("Menú transportista");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -91,45 +101,33 @@ public class RevisarEnviosController {
     }
 
     @FXML
-    private void onVolverMenuUsuario(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("menu_usuario.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) btnVolverMenu.getScene().getWindow();
-            stage.setScene(new Scene(root, 800, 600));
-            stage.setTitle("Menú de usuario");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Error al volver al menú de usuario");
-            alert.showAndWait();
-        }
-    }
-
-    @FXML
-    private void onActualizarLista(ActionEvent event) {
+    private void onActualizarLista() {
         String estado = cbFiltroEstado != null ? cbFiltroEstado.getValue() : "Todos";
         String texto = tfBuscar != null ? tfBuscar.getText() : "";
-
         Map<String, String> payload = new HashMap<>();
         payload.put("estado", estado);
         payload.put("buscar", texto);
-
-        Request request = new Request(ProtocolActions.GET_MY_SHIPMENTS, payload);
-        sendRequestAsync(request, "Lista de envíos actualizada", "Error al obtener los envíos");
+        Request request = new Request(ProtocolActions.GET_ASSIGNED_SHIPMENTS, payload);
+        sendRequestAsync(request, "Lista de envíos actualizada", "Error al obtener los envíos asignados");
     }
 
     @FXML
-    private void onCancelarEnvio(ActionEvent event) {
-        Object seleccionado = tableEnvios != null
-                ? tableEnvios.getSelectionModel().getSelectedItem()
-                : null;
-
+    private void onMarcarRecogido() {
+        Object seleccionado = tableEnvios != null ? tableEnvios.getSelectionModel().getSelectedItem() : null;
         Map<String, Object> payload = new HashMap<>();
         payload.put("envioSeleccionado", seleccionado);
+        payload.put("nuevoEstado", "RECOGIDA");
+        Request request = new Request(ProtocolActions.UPDATE_SHIPMENT_STATE, payload);
+        sendRequestAsync(request, "Envío marcado como recogido", "Error al actualizar estado");
+    }
 
-        Request request = new Request(ProtocolActions.CANCEL_SHIPMENT, payload);
-        sendRequestAsync(request, "Envío cancelado correctamente", "Error al cancelar el envío");
+    @FXML
+    private void onMarcarEntregado() {
+        Object seleccionado = tableEnvios != null ? tableEnvios.getSelectionModel().getSelectedItem() : null;
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("envioSeleccionado", seleccionado);
+        payload.put("nuevoEstado", "ENTREGADO");
+        Request request = new Request(ProtocolActions.UPDATE_SHIPMENT_STATE, payload);
+        sendRequestAsync(request, "Envío marcado como entregado", "Error al actualizar estado");
     }
 }

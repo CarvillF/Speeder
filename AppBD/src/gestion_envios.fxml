@@ -10,30 +10,28 @@
 
 <BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GestionEnviosController">
 
-    <!-- MENÚ IZQUIERDO -->
     <left>
         <AnchorPane prefHeight="600.0" prefWidth="260.0" style="-fx-background-color: #263F73;" BorderPane.alignment="CENTER">
             <children>
-                <Label layoutX="41.0" layoutY="108.0" text="Menú de gestión de envíos" textFill="WHITE">
+                <Label layoutX="25.0" layoutY="60.0" text="Menú de gestión de envíos" textFill="WHITE">
                     <font>
                         <Font size="16.0" />
                     </font>
                 </Label>
 
-                <Button fx:id="btnVisualizarEnvios" layoutX="20.0" layoutY="174.0" mnemonicParsing="false" onAction="#onVisualizarEnvios" prefHeight="26.0" prefWidth="220.0" style="-fx-background-color: transparent;                                -fx-text-fill: white;                                -fx-border-color: transparent;" text="Visualización de envíos actuales" />
+                <Button fx:id="btnVerEnvios" layoutX="20.0" layoutY="120.0" mnemonicParsing="false" onAction="#onVerEnvios" prefHeight="26.0" prefWidth="220.0" style="-fx-background-color: transparent;                                -fx-text-fill: white;                                -fx-border-color: transparent;" text="Ver mis envíos" />
 
-                <Button fx:id="btnAgregarEnvio" layoutX="20.0" layoutY="212.0" mnemonicParsing="false" onAction="#onAgregarEnvio" prefHeight="26.0" prefWidth="220.0" style="-fx-background-color: transparent;                                -fx-text-fill: white;                                -fx-border-color: transparent;" text="Añadir envíos" />
+                <Button fx:id="btnSolicitarEnvio" layoutX="20.0" layoutY="165.0" mnemonicParsing="false" onAction="#onSolicitarEnvio" prefHeight="26.0" prefWidth="220.0" style="-fx-background-color: transparent;                                -fx-text-fill: white;                                -fx-border-color: transparent;" text="Solicitar nuevo envío" />
 
-                <Button fx:id="btnEliminarEnvio" layoutX="20.0" layoutY="251.0" mnemonicParsing="false" onAction="#onEliminarEnvio" prefHeight="26.0" prefWidth="220.0" style="-fx-background-color: transparent;                                -fx-text-fill: white;                                -fx-border-color: transparent;" text="Eliminar envíos" />
+                <Button fx:id="btnCancelarEnvio" layoutX="20.0" layoutY="210.0" mnemonicParsing="false" onAction="#onCancelarEnvio" prefHeight="26.0" prefWidth="220.0" style="-fx-background-color: transparent;                                -fx-text-fill: white;                                -fx-border-color: transparent;" text="Cancelar envío" />
 
-                <Button fx:id="btnEditarUbicacion" layoutX="21.0" layoutY="300.0" mnemonicParsing="false" onAction="#onEditarUbicacion" prefHeight="26.0" prefWidth="220.0" style="-fx-background-color: transparent;                                -fx-text-fill: white;                                -fx-border-color: transparent;" text="Editar ubicación de envío" />
+                <Button fx:id="btnEditarUbicacion" layoutX="20.0" layoutY="255.0" mnemonicParsing="false" onAction="#onEditarUbicacion" prefHeight="26.0" prefWidth="220.0" style="-fx-background-color: transparent;                                -fx-text-fill: white;                                -fx-border-color: transparent;" text="Editar ubicación de envío" />
 
                 <Button fx:id="btnVolverMenu" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#onVolverMenuUsuario" style="-fx-background-color: transparent;                                -fx-text-fill: white;                                -fx-border-color: transparent;" text="Volver" />
             </children>
         </AnchorPane>
     </left>
 
-    <!-- ZONA CENTRAL: tabla de envíos -->
     <center>
         <AnchorPane prefHeight="600.0" prefWidth="540.0" BorderPane.alignment="CENTER">
             <children>
@@ -45,15 +43,12 @@
 
                 <TableView fx:id="tableEnvios" layoutX="30.0" layoutY="60.0" prefHeight="400.0" prefWidth="480.0">
                     <columns>
-                        <TableColumn fx:id="colEnvioId" text="ID envío" />
-                        <TableColumn fx:id="colEnvioCompania" text="Compañía" />
-                        <TableColumn fx:id="colEnvioTransportista" text="Transportista" />
-                        <TableColumn fx:id="colEnvioEstado" text="Estado" />
-                        <TableColumn fx:id="colEnvioTarifa" text="Tarifa" />
+                        <TableColumn fx:id="colId" prefWidth="60.0" text="ID" />
+                        <TableColumn fx:id="colDestino" prefWidth="140.0" text="Destino" />
+                        <TableColumn fx:id="colEstado" prefWidth="120.0" text="Estado" />
+                        <TableColumn fx:id="colPrecio" prefWidth="160.0" text="Precio estimado" />
                     </columns>
                 </TableView>
-
-                <Label layoutX="30.0" layoutY="480.0" text="(Aquí se mostrarán los envíos cuando se conecte a la base de datos.)" />
             </children>
         </AnchorPane>
     </center>

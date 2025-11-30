@@ -46,7 +46,7 @@
    <left>
       <AnchorPane prefHeight="200.0" prefWidth="325.0" style="-fx-background-color: #263F73;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="120.0" layoutY="44.0" text="Uber2" textFill="WHITE">
+            <Label layoutX="106.0" layoutY="50.0" text="Speeder" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="32.0" />
                </font>
@@ -59,31 +59,31 @@
          </children>
       </AnchorPane>
    </left>
-   <right>
+   <center>
       <AnchorPane prefHeight="200.0" prefWidth="275.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="usernameTextField" layoutX="57.0" layoutY="95.0" />
-            <PasswordField fx:id="passwordPasswordField" layoutX="57.0" layoutY="225.0" />
+            <TextField fx:id="usernameTextField" layoutX="57.0" layoutY="113.0" />
+            <PasswordField fx:id="passwordPasswordField" layoutX="57.0" layoutY="200.0" />
             <Label layoutX="99.0" layoutY="41.0" text="Secure Login">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label layoutX="54.0" layoutY="69.0" text="Usuario">
+            <Label layoutX="54.0" layoutY="86.0" text="Usuario">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label layoutX="59.0" layoutY="200.0" text="Contraseña">
+            <Label layoutX="57.0" layoutY="173.0" text="Contraseña">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Button fx:id="loginButton" layoutX="77.0" layoutY="274.0" mnemonicParsing="false" onAction="#onLoginClicked" prefHeight="26.0" prefWidth="119.0" style="-fx-background-color: #263F73;" text="Iniciar Sesion" textFill="WHITE" />
-            <Label fx:id="messageLabel" layoutX="57.0" layoutY="270.0" textFill="#ae3b3b" />
+            <Button fx:id="loginButton" layoutX="77.0" layoutY="257.0" mnemonicParsing="false" onAction="#onLoginClicked" prefHeight="26.0" prefWidth="119.0" style="-fx-background-color: #263F73;" text="Iniciar Sesion" textFill="WHITE" />
+            <Label fx:id="messageLabel" layoutX="47.0" layoutY="298.0" prefHeight="17.0" prefWidth="20.0" textFill="#ae3b3b" />
             <Button fx:id="registerButton" layoutX="40.0" layoutY="330.0" mnemonicParsing="false" onAction="#onRegisterClicked" prefHeight="26.0" prefWidth="194.0" style="-fx-background-color: #263F73;" text="Registrarse como Transportista" textFill="WHITE" />
             <Button fx:id="registerButton2" layoutX="41.0" layoutY="360.0" mnemonicParsing="false" onAction="#onRegisterClicked2" prefHeight="26.0" prefWidth="194.0" style="-fx-background-color: #263F73;" text="Registrarse como Empresario" textFill="WHITE" />
          </children>
       </AnchorPane>
-   </right>
+   </center>
 </BorderPane>

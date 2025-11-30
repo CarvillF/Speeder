@@ -2,78 +2,90 @@ import clases.ProtocolActions;
 import clases.Request;
 import clases.Response;
 import clases.SpeederClient;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import javafx.stage.Stage;
 
 public class GestionEnviosController {
 
     @FXML
-    private TableView<Map<String, Object>> tableEnvios;
+    private TableView<?> tableEnvios;
 
     @FXML
-    private TableColumn<Map<String, Object>, String> colId;
-    @FXML
-    private TableColumn<Map<String, Object>, String> colDestino;
-    @FXML
-    private TableColumn<Map<String, Object>, String> colEstado;
-    @FXML
-    private TableColumn<Map<String, Object>, String> colPrecio;
-
-    private final Gson gson = new Gson();
+    private TableColumn<?, ?> colId;
 
     @FXML
-    private void initialize() {
-        // Aquí puedes configurar las cellValueFactory si quieres mostrar campos específicos
-    }
+    private TableColumn<?, ?> colDestino;
 
     @FXML
-    private void onVisualizarEnvios() {
-        // Aquí idealmente mandarías el ID de usuario actual, por ahora null
-        Request request = new Request(ProtocolActions.GET_MY_SHIPMENTS, null);
+    private TableColumn<?, ?> colEstado;
 
+    @FXML
+    private TableColumn<?, ?> colPrecio;
+
+    private void sendRequestAsync(Request request, String successMsg, String errorPrefix) {
         new Thread(() -> {
-            SpeederClient client = SpeederClient.getInstance();
-            Response response = client.sendRequest(request);
-
-            if (response != null && "SUCCESS".equalsIgnoreCase(response.getStatus())) {
-                // Convertir data genérico a List<Map<String,Object>>
-                String json = gson.toJson(response.getData());
-                Type type = new TypeToken<ArrayList<Map<String, Object>>>() {}.getType();
-                List<Map<String, Object>> lista = gson.fromJson(json, type);
-
-                Platform.runLater(() -> {
-                    tableEnvios.getItems().setAll(lista);
-                });
-            } else {
-                // Podrías mostrar un label de error en la UI
-                Platform.runLater(() -> {
-                    System.out.println("Error al obtener envíos");
-                });
-            }
+            Response response = SpeederClient.getInstance().sendRequest(request);
+            Platform.runLater(() -> {
+                Alert alert;
+                if (response != null && "SUCCESS".equals(response.getStatus())) {
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setContentText(successMsg);
+                } else {
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    String msg = errorPrefix;
+                    if (response != null && response.getMessage() != null) {
+                        msg += ": " + response.getMessage();
+                    }
+                    alert.setContentText(msg);
+                }
+                alert.showAndWait();
+            });
         }).start();
     }
 
     @FXML
-    private void onAgregarEnvio() {
-        // Parecido: crear Request con CREATE_SHIPMENT
+    private void onVerEnvios(ActionEvent event) {
+        Request request = new Request(ProtocolActions.GET_MY_SHIPMENTS, null);
+        sendRequestAsync(request, "Envíos actualizados correctamente", "Error al obtener los envíos");
     }
 
     @FXML
-    private void onEliminarEnvio() {
-        // Parecido: crear Request con DELETE_SHIPMENT y el id seleccionado
+    private void onSolicitarEnvio(ActionEvent event) {
+        Request request = new Request(ProtocolActions.CREATE_SHIPMENT, null);
+        sendRequestAsync(request, "Solicitud de envío enviada", "Error al solicitar el envío");
     }
 
     @FXML
-    private void onEditarUbicacion() {
-        // Parecido: UPDATE_SHIPMENT_LOCATION
+    private void onCancelarEnvio(ActionEvent event) {
+        Request request = new Request(ProtocolActions.DELETE_SHIPMENT, null);
+        sendRequestAsync(request, "Envío cancelado", "Error al cancelar el envío");
+    }
+
+    @FXML
+    private void onEditarUbicacion(ActionEvent event) {
+        Request request = new Request(ProtocolActions.UPDATE_SHIPMENT_LOCATION, null);
+        sendRequestAsync(request, "Ubicación actualizada", "Error al actualizar la ubicación");
+    }
+
+    @FXML
+    private void onVolverMenuUsuario(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("menu_usuario.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) tableEnvios.getScene().getWindow();
+            stage.setScene(new Scene(root, 800, 600));
+            stage.setTitle("Menú de usuario - Sistema de Paquetería");
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

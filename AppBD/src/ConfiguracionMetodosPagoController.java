@@ -1,56 +1,176 @@
+import clases.PaymentMethod;
+import clases.ProtocolActions;
+import clases.Request;
+import clases.Response;
+import clases.SpeederClient;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ConfiguracionMetodosPagoController {
 
     @FXML
-    private Button btnVolverMenu;
+    private TableView<PaymentMethod> tableMetodosPago;
 
     @FXML
-    private void onIrUsuario() {
+    private TableColumn<PaymentMethod, Number> colId;
+
+    @FXML
+    private TableColumn<PaymentMethod, String> colTipo;
+
+    @FXML
+    private TableColumn<PaymentMethod, String> colDatos;
+
+    @FXML
+    private TableColumn<PaymentMethod, String> colFecha;
+
+    @FXML
+    private void initialize() {
+        if (colId != null) {
+            colId.setCellValueFactory(c -> c.getValue().idMetodoProperty());
+        }
+        if (colTipo != null) {
+            colTipo.setCellValueFactory(c -> c.getValue().tipoProperty());
+        }
+        if (colDatos != null) {
+            colDatos.setCellValueFactory(c -> c.getValue().datosProperty());
+        }
+        if (colFecha != null) {
+            colFecha.setCellValueFactory(c -> c.getValue().createdAtProperty());
+        }
+        cargarMetodosDesdeServidor();
+    }
+
+    @FXML
+    private void onRefrescar() {
+        cargarMetodosDesdeServidor();
+    }
+
+    @FXML
+    private void onAgregarMetodo() {
+        // Aquí solo dejas el esqueleto; el backend luego hará el INSERT de verdad.
+        // De momento mandamos un PaymentMethod con tipo/datos "dummy" o lo que tú quieras.
+
+        PaymentMethod nuevo = new PaymentMethod();
+        nuevo.setTipo("tarjeta");          // luego puedes leer esto de campos de texto si quieres
+        nuevo.setDatos("XXXX-XXXX-XXXX");  // solo para probar la consulta
+
+        Request request = new Request(ProtocolActions.CREATE_PAYMENT_METHOD, nuevo);
+
+        new Thread(() -> {
+            Response response = SpeederClient.getInstance().sendRequest(request);
+            Platform.runLater(() -> {
+                Alert alert;
+                if (response != null && "SUCCESS".equalsIgnoreCase(response.getStatus())) {
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Método agregado");
+                    alert.setHeaderText(null);
+                    alert.setContentText(response.getMessage() != null
+                            ? response.getMessage()
+                            : "El método de pago fue agregado.");
+                    cargarMetodosDesdeServidor();
+                } else {
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error al agregar");
+                    alert.setHeaderText(null);
+                    String msg = response != null && response.getMessage() != null
+                            ? response.getMessage()
+                            : "No se pudo agregar el método de pago.";
+                    alert.setContentText(msg);
+                }
+                alert.showAndWait();
+            });
+        }).start();
+    }
+
+    @FXML
+    private void onEliminarMetodo() {
+        PaymentMethod seleccionado = tableMetodosPago.getSelectionModel().getSelectedItem();
+        if (seleccionado == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Selección requerida");
+            alert.setHeaderText(null);
+            alert.setContentText("Seleccione un método de pago para eliminarlo.");
+            alert.showAndWait();
+            return;
+        }
+
+        Request request = new Request(ProtocolActions.DELETE_PAYMENT_METHOD, seleccionado.getIdMetodoPago());
+
+        new Thread(() -> {
+            Response response = SpeederClient.getInstance().sendRequest(request);
+            Platform.runLater(() -> {
+                Alert alert;
+                if (response != null && "SUCCESS".equalsIgnoreCase(response.getStatus())) {
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Método eliminado");
+                    alert.setHeaderText(null);
+                    alert.setContentText(response.getMessage() != null
+                            ? response.getMessage()
+                            : "El método de pago fue eliminado.");
+                    tableMetodosPago.getItems().remove(seleccionado);
+                } else {
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error al eliminar");
+                    alert.setHeaderText(null);
+                    String msg = response != null && response.getMessage() != null
+                            ? response.getMessage()
+                            : "No se pudo eliminar el método de pago.";
+                    alert.setContentText(msg);
+                }
+                alert.showAndWait();
+            });
+        }).start();
+    }
+
+    @FXML
+    private void onVolverConfiguracion() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("configuracion.fxml"));
             Parent root = loader.load();
-            Stage stage = (Stage) btnVolverMenu.getScene().getWindow();
+            Stage stage = (Stage) tableMetodosPago.getScene().getWindow();
             stage.setScene(new Scene(root, 800, 600));
-            stage.setTitle("Configuración de usuario - Sistema de Paquetería");
+            stage.setTitle("Configuración");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error al volver");
+            alert.setHeaderText(null);
+            alert.setContentText("No se pudo volver al menú de configuración.");
+            alert.showAndWait();
         }
     }
 
-    @FXML
-    private void onIrEmprendimiento() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("configuracion_emprendimiento.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) btnVolverMenu.getScene().getWindow();
-            stage.setScene(new Scene(root, 800, 600));
-            stage.setTitle("Configuración de emprendimiento - Sistema de Paquetería");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    private void cargarMetodosDesdeServidor() {
+        Request request = new Request(ProtocolActions.GET_PAYMENT_METHODS, null);
 
-    @FXML
-    private void onVolverMenuUsuario() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("menu_usuario.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) btnVolverMenu.getScene().getWindow();
-            stage.setScene(new Scene(root, 800, 600));
-            stage.setTitle("Menú de usuario - Sistema de Paquetería");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        new Thread(() -> {
+            Response response = SpeederClient.getInstance().sendRequest(request);
+            if (response == null || response.getData() == null) {
+                return;
+            }
+            Gson gson = new Gson();
+            String json = gson.toJson(response.getData());
+            Type listType = new TypeToken<ArrayList<PaymentMethod>>() {}.getType();
+            List<PaymentMethod> metodos = gson.fromJson(json, listType);
+
+            Platform.runLater(() -> {
+                tableMetodosPago.getItems().setAll(metodos);
+            });
+        }).start();
     }
 }

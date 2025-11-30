@@ -8,7 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -16,30 +16,36 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ConfiguracionEmprendimientoController {
+public class ConfiguracionUsuarioController {
 
     @FXML
-    private TextField txtRuc;
+    private TextField txtNombre;
 
     @FXML
-    private TextField txtNombreCompania;
+    private TextField txtApellidos;
 
     @FXML
-    private TextField txtTipoCompania;
+    private TextField txtCorreo;
 
     @FXML
-    private TextArea txtDescripcion;
+    private TextField txtTelefono;
 
     @FXML
-    private void onGuardarCambiosEmprendimiento() {
-        String ruc = txtRuc.getText();
-        String nombre = txtNombreCompania.getText();
-        String tipo = txtTipoCompania.getText();
-        String descripcion = txtDescripcion.getText();
+    private PasswordField txtContrasena;
+
+    @FXML
+    private void onGuardarCambios() {
+        String nombre = txtNombre.getText();
+        String apellidos = txtApellidos.getText();
+        String correo = txtCorreo.getText();
+        String telefono = txtTelefono.getText();
+        String contrasena = txtContrasena.getText();
 
         if ((nombre == null || nombre.isBlank()) &&
-            (tipo == null || tipo.isBlank()) &&
-            (descripcion == null || descripcion.isBlank())) {
+            (apellidos == null || apellidos.isBlank()) &&
+            (correo == null || correo.isBlank()) &&
+            (telefono == null || telefono.isBlank()) &&
+            (contrasena == null || contrasena.isBlank())) {
 
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Datos incompletos");
@@ -50,18 +56,20 @@ public class ConfiguracionEmprendimientoController {
         }
 
         Map<String, String> payload = new HashMap<>();
-
-        if (ruc != null && !ruc.isBlank()) {
-            payload.put("ruc", ruc);
-        }
         if (nombre != null && !nombre.isBlank()) {
-            payload.put("nombre_compania", nombre);
+            payload.put("nombre", nombre);
         }
-        if (tipo != null && !tipo.isBlank()) {
-            payload.put("tipo_compania", tipo);
+        if (apellidos != null && !apellidos.isBlank()) {
+            payload.put("apellidos", apellidos);
         }
-        if (descripcion != null && !descripcion.isBlank()) {
-            payload.put("descripcion", descripcion);
+        if (correo != null && !correo.isBlank()) {
+            payload.put("correo", correo);
+        }
+        if (telefono != null && !telefono.isBlank()) {
+            payload.put("telefono", telefono);
+        }
+        if (contrasena != null && !contrasena.isBlank()) {
+            payload.put("contrasena", contrasena);
         }
 
         Request request = new Request(ProtocolActions.UPDATE_PROFILE, payload);
@@ -73,18 +81,18 @@ public class ConfiguracionEmprendimientoController {
                 Alert alert;
                 if (response != null && "SUCCESS".equalsIgnoreCase(response.getStatus())) {
                     alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Emprendimiento actualizado");
+                    alert.setTitle("Perfil actualizado");
                     alert.setHeaderText(null);
                     alert.setContentText(response.getMessage() != null
                             ? response.getMessage()
-                            : "Los datos del emprendimiento se actualizaron correctamente.");
+                            : "Los datos se actualizaron correctamente.");
                 } else {
                     alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error al actualizar");
                     alert.setHeaderText(null);
                     String msg = (response != null && response.getMessage() != null)
                             ? response.getMessage()
-                            : "No se pudo actualizar el emprendimiento.";
+                            : "No se pudo actualizar el perfil.";
                     alert.setContentText(msg);
                 }
                 alert.showAndWait();
@@ -97,7 +105,7 @@ public class ConfiguracionEmprendimientoController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("configuracion.fxml"));
             Parent root = loader.load();
-            Stage stage = (Stage) txtRuc.getScene().getWindow();
+            Stage stage = (Stage) txtNombre.getScene().getWindow();
             stage.setScene(new Scene(root, 800, 600));
             stage.setTitle("Configuración");
             stage.show();

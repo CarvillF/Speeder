@@ -46,9 +46,25 @@ public class Agregar {
                 String sql = "insert into usuario(cedula, nombre, apellidos, correo, contrasena, numero, tDirecciones_id_direccion)"
                         +
                         " values (?, ?, ?, ?, ?, ?, ?)";
+                pstmtAssignStatement = conn.prepareStatement(sql);
+                pstmtAssignStatement.setString(1, cedula);
+                pstmtAssignStatement.setString(2, nombre);
+                pstmtAssignStatement.setString(3, apellidos);
+                pstmtAssignStatement.setString(4, correo);
+                pstmtAssignStatement.setString(5, numero);
+                pstmtAssignStatement.setInt(6, ID);
+                
+                conn.commit();
+            } else {
+                conn.rollback();
             }
         } catch (Exception e) {
-
+            e.printStackTrace();
+            try {
+                conn.rollback();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 }

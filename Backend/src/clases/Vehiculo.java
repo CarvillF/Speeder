@@ -2,60 +2,38 @@ package clases;
 
 public class Vehiculo {
     // atributos
-    private int id_vehiculo;
-    private String transportista_cedula;
-    private String nombre_modelo;
-    private String color;
-    private String placa;
+    private String matricula;
+    private String modelo;
+    private int anio;
+    private double volumen;
 
     // constructor
-    public Vehiculo(int id_vehiculo, String transportista_cedula, String nombre_modelo, String color, String placa) {
-        this.id_vehiculo = id_vehiculo;
-        this.transportista_cedula = transportista_cedula;
-        this.nombre_modelo = nombre_modelo;
-        this.color = color;
-        this.placa = placa;
+    public Vehiculo(String matricula, String modelo, int anio, double volumen) {
+        this.matricula = matricula;
+        this.modelo = modelo;
+        this.anio = anio;
+        this.volumen = volumen;
     }
 
     // setters
-    public void setIdVehiculo(int id_vehiculo) {
-        this.id_vehiculo = id_vehiculo;
-    }
-
-    public void setTransportistaCedula(String transportista_cedula) {
-        this.transportista_cedula = transportista_cedula;
-    }
-
-    public void setNombreModelo(String nombre_modelo) {
-        this.nombre_modelo = nombre_modelo;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public void setPlaca(String placa) {
-        this.placa = placa;
+    public void setVolument(double new_volumen) {
+        this.volumen = new_volumen;
     }
 
     // getters
-    public int getIdVehiculo() {
-        return id_vehiculo;
+    public String getMatricula() {
+        return matricula;
     }
 
-    public String getTransportistaCedula() {
-        return transportista_cedula;
+    public String getModelo() {
+        return modelo;
     }
 
-    public String getNombreModelo() {
-        return nombre_modelo;
+    public int getAnio() {
+        return anio;
     }
 
-    public String getColor() {
-        return color;
-    }
-
-    public String getPlaca() {
-        return placa;
+    public double getVolumen() {
+        return volumen;
     }
 }

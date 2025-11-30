@@ -2,6 +2,7 @@ package clases;
 
 import java.time.LocalDate;
 import java.time.Duration;
+import java.util.ArrayList;
 
 enum Estado {
     // estados del paquete
@@ -26,130 +27,117 @@ enum Estado {
 
 public class Envio {
     // atributos
-    private int id_envio;
-    private String sucursal_RUC;
-    private int sucursal_id_direccion;
-    private int id_direccion_entrega;
-    private String transportista_cedula;
-    private int id_paquete;
-    private LocalDate fecha_hora_inicio;
-    private LocalDate fecha_hora_final;
-    private double tarifa;
+    private LocalDate fecha_inicio;
+    private LocalDate fecha_fin;
+    private String dir_origen;
+    private String dir_destino;
+    private String ciudad_origen;
+    private String ciudad_destino;
     private Estado estado;
-    private Paquete paquete; // 1:1 relationship in DB
+    private ArrayList<Paquete> paquetes;
 
     // constructor
-    public Envio(int id_envio, String sucursal_RUC, int sucursal_id_direccion, int id_direccion_entrega,
-            String transportista_cedula, int id_paquete, LocalDate fecha_hora_inicio, LocalDate fecha_hora_final,
-            double tarifa, Estado estado, Paquete paquete) {
-        this.id_envio = id_envio;
-        this.sucursal_RUC = sucursal_RUC;
-        this.sucursal_id_direccion = sucursal_id_direccion;
-        this.id_direccion_entrega = id_direccion_entrega;
-        this.transportista_cedula = transportista_cedula;
-        this.id_paquete = id_paquete;
-        this.fecha_hora_inicio = fecha_hora_inicio;
-        this.fecha_hora_final = fecha_hora_final;
-        this.tarifa = tarifa;
+    private Envio(LocalDate fecha_inicio, LocalDate fecha_fin, String dir_origen,
+            String dir_destino, String ciudad_origen, String ciudad_destino,
+            Estado estado, ArrayList<Paquete> paquetes) {
+        this.fecha_inicio = fecha_inicio;
+        this.fecha_fin = fecha_fin;
+        this.dir_origen = dir_origen;
+        this.dir_destino = dir_destino;
+        this.ciudad_origen = ciudad_origen;
+        this.ciudad_destino = ciudad_destino;
         this.estado = estado;
-        this.paquete = paquete;
+        this.paquetes = paquetes;
     }
 
     // setters
-    public void setIdEnvio(int id_envio) {
-        this.id_envio = id_envio;
+    public void setFechaInicio(LocalDate new_fecha_inicio) {
+        this.fecha_inicio = new_fecha_inicio;
     }
 
-    public void setSucursalRUC(String sucursal_RUC) {
-        this.sucursal_RUC = sucursal_RUC;
+    public void setFechaFin(LocalDate new_fecha_fin) {
+        this.fecha_fin = new_fecha_fin;
     }
 
-    public void setSucursalIdDireccion(int sucursal_id_direccion) {
-        this.sucursal_id_direccion = sucursal_id_direccion;
+    public void setDirOrigen(String new_dir_origen) {
+        this.dir_origen = new_dir_origen;
     }
 
-    public void setIdDireccionEntrega(int id_direccion_entrega) {
-        this.id_direccion_entrega = id_direccion_entrega;
+    public void setDirDestino(String new_dir_destino) {
+        this.dir_destino = new_dir_destino;
     }
 
-    public void setTransportistaCedula(String transportista_cedula) {
-        this.transportista_cedula = transportista_cedula;
+    public void setCiudadOrigen(String new_ciudad_origen) {
+        this.ciudad_origen = new_ciudad_origen;
     }
 
-    public void setIdPaquete(int id_paquete) {
-        this.id_paquete = id_paquete;
+    public void setCiudadDestino(String new_ciudad_destino) {
+        this.ciudad_destino = new_ciudad_destino;
     }
 
-    public void setFechaHoraInicio(LocalDate fecha_hora_inicio) {
-        this.fecha_hora_inicio = fecha_hora_inicio;
-    }
-
-    public void setFechaHoraFinal(LocalDate fecha_hora_final) {
-        this.fecha_hora_final = fecha_hora_final;
-    }
-
-    public void setTarifa(double tarifa) {
-        this.tarifa = tarifa;
-    }
-
-    public void setEstado(Estado estado) {
-        this.estado = estado;
-    }
-
-    public void setPaquete(Paquete paquete) {
-        this.paquete = paquete;
+    public void setEstado(Estado new_estado) {
+        this.estado = new_estado;
     }
 
     // getters
-    public int getIdEnvio() {
-        return id_envio;
+    public LocalDate getFechaInicio() {
+        return fecha_inicio;
     }
 
-    public String getSucursalRUC() {
-        return sucursal_RUC;
+    public LocalDate getFechaFin() {
+        return fecha_fin;
     }
 
-    public int getSucursalIdDireccion() {
-        return sucursal_id_direccion;
+    public String getDirOrigen() {
+        return dir_origen;
     }
 
-    public int getIdDireccionEntrega() {
-        return id_direccion_entrega;
+    public String getDirDestino() {
+        return dir_destino;
     }
 
-    public String getTransportistaCedula() {
-        return transportista_cedula;
+    public String getCiudadOrigen() {
+        return ciudad_origen;
     }
 
-    public int getIdPaquete() {
-        return id_paquete;
-    }
-
-    public LocalDate getFechaHoraInicio() {
-        return fecha_hora_inicio;
-    }
-
-    public LocalDate getFechaHoraFinal() {
-        return fecha_hora_final;
-    }
-
-    public double getTarifa() {
-        return tarifa;
+    public String getCiudadDestino() {
+        return ciudad_destino;
     }
 
     public Estado getEstado() {
         return estado;
     }
 
-    public Paquete getPaquete() {
-        return paquete;
+    public ArrayList<Paquete> getPaquetes() {
+        return paquetes;
     }
 
     // funciones extra
     public Long getDuracionDias() {
-        if (fecha_hora_inicio == null || fecha_hora_final == null)
-            return 0L;
-        Duration duracion = Duration.between(fecha_hora_inicio.atStartOfDay(), fecha_hora_final.atStartOfDay());
-        return duracion.toDays();
+        Duration duracion = Duration.between(fecha_inicio, fecha_fin);
+        long dias = duracion.toDays();
+        return dias;
+    }
+
+    public long[] getDuracionDiasHoras(int inicio, int fin) {
+        Duration duracion = Duration.between(fecha_inicio.atTime(inicio, 0), fecha_fin.atTime(fin, 0));
+        long dias = duracion.toDays();
+        long horas = duracion.minusDays(dias).toHours();
+
+        long[] dur = new long[2];
+        dur[0] = dias;
+        dur[1] = horas;
+
+        return dur;
+    }
+
+    public void eliminarVehiculo(int id_paquete) {
+        if (!paquetes.isEmpty()) {
+            paquetes.remove(id_paquete);
+        }
+    }
+
+    public void agregarVehiculo(Paquete pack) {
+        paquetes.add(pack);
     }
 }

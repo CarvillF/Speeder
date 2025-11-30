@@ -72,6 +72,7 @@ public class ConfiguracionEmprendimientoController {
 
     @FXML
     private void initialize() {
+
         if (colRuc != null) {
             colRuc.setCellValueFactory(c -> c.getValue().rucProperty());
         }
@@ -85,9 +86,12 @@ public class ConfiguracionEmprendimientoController {
             colDescripcion.setCellValueFactory(c -> c.getValue().descripcionProperty());
         }
 
-        tableEmprendimientos.getSelectionModel().selectedItemProperty().addListener(
-                (obs, oldSel, newSel) -> mostrarDetalleEmprendimiento(newSel)
-        );
+        if (tableEmprendimientos != null) {
+            tableEmprendimientos.getSelectionModel().selectedItemProperty().addListener(
+                    (obs, oldSel, newSel) -> mostrarDetalleEmprendimiento(newSel)
+            );
+        }
+
 
         if (colSucDireccionId != null) {
             colSucDireccionId.setCellValueFactory(c -> c.getValue().direccionIdProperty());
@@ -100,13 +104,16 @@ public class ConfiguracionEmprendimientoController {
             colSucActiva.setCellFactory(CheckBoxTableCell.forTableColumn(colSucActiva));
         }
 
-        tableSucursales.getSelectionModel().selectedItemProperty().addListener(
-                (obs, oldSel, newSel) -> mostrarDetalleSucursal(newSel)
-        );
+        if (tableSucursales != null) {
+            tableSucursales.getSelectionModel().selectedItemProperty().addListener(
+                    (obs, oldSel, newSel) -> mostrarDetalleSucursal(newSel)
+            );
+        }
 
         cargarEmprendimientosDesdeServidor();
         cargarSucursalesDesdeServidor();
     }
+
 
     @FXML
     private void onAgregarEmprendimiento() {
@@ -149,8 +156,11 @@ public class ConfiguracionEmprendimientoController {
     }
 
     @FXML
-    private void onGuardarCambios() {
-        Company seleccionado = tableEmprendimientos.getSelectionModel().getSelectedItem();
+    private void onActualizarEmprendimiento() {
+        Company seleccionado = (tableEmprendimientos != null)
+                ? tableEmprendimientos.getSelectionModel().getSelectedItem()
+                : null;
+
         if (seleccionado == null) {
             mostrarAlerta(Alert.AlertType.WARNING, "Selección requerida",
                     "Seleccione un emprendimiento para guardar los cambios.");
@@ -168,7 +178,9 @@ public class ConfiguracionEmprendimientoController {
             Response response = SpeederClient.getInstance().sendRequest(request);
             Platform.runLater(() -> {
                 if (response != null && "SUCCESS".equalsIgnoreCase(response.getStatus())) {
-                    tableEmprendimientos.refresh();
+                    if (tableEmprendimientos != null) {
+                        tableEmprendimientos.refresh();
+                    }
                     mostrarAlerta(Alert.AlertType.INFORMATION, "Cambios guardados",
                             response.getMessage() != null ? response.getMessage()
                                     : "Los datos se actualizaron correctamente.");
@@ -184,6 +196,10 @@ public class ConfiguracionEmprendimientoController {
 
     @FXML
     private void onEliminarEmprendimiento() {
+        if (tableEmprendimientos == null) {
+            return;
+        }
+
         Company seleccionado = tableEmprendimientos.getSelectionModel().getSelectedItem();
         if (seleccionado == null) {
             mostrarAlerta(Alert.AlertType.WARNING, "Selección requerida",
@@ -212,8 +228,14 @@ public class ConfiguracionEmprendimientoController {
         }).start();
     }
 
+
     @FXML
     private void onAgregarSucursal() {
+        if (tfSucDireccionId == null || tfSucRuc == null || chkSucActiva == null) {
+
+            return;
+        }
+
         String idTxt = tfSucDireccionId.getText().trim();
         String ruc = tfSucRuc.getText().trim();
         boolean activa = chkSucActiva.isSelected();
@@ -261,6 +283,10 @@ public class ConfiguracionEmprendimientoController {
 
     @FXML
     private void onGuardarSucursal() {
+        if (tableSucursales == null || tfSucDireccionId == null || tfSucRuc == null || chkSucActiva == null) {
+            return;
+        }
+
         Branch seleccionada = tableSucursales.getSelectionModel().getSelectedItem();
         if (seleccionada == null) {
             mostrarAlerta(Alert.AlertType.WARNING, "Selección requerida",
@@ -307,6 +333,10 @@ public class ConfiguracionEmprendimientoController {
 
     @FXML
     private void onEliminarSucursal() {
+        if (tableSucursales == null) {
+            return;
+        }
+
         Branch seleccionada = tableSucursales.getSelectionModel().getSelectedItem();
         if (seleccionada == null) {
             mostrarAlerta(Alert.AlertType.WARNING, "Selección requerida",
@@ -314,8 +344,7 @@ public class ConfiguracionEmprendimientoController {
             return;
         }
 
-        Request request = new Request(ProtocolActions.DELETE_BRANCH,
-                seleccionada.getDireccionId()); // o un objeto si el backend lo requiere
+        Request request = new Request(ProtocolActions.DELETE_BRANCH, seleccionada.getDireccionId());
 
         new Thread(() -> {
             Response response = SpeederClient.getInstance().sendRequest(request);
@@ -352,6 +381,7 @@ public class ConfiguracionEmprendimientoController {
         }
     }
 
+
     private void cargarEmprendimientosDesdeServidor() {
         Request request = new Request(ProtocolActions.GET_COMPANIES, null);
 
@@ -366,7 +396,9 @@ public class ConfiguracionEmprendimientoController {
             List<Company> lista = gson.fromJson(json, listType);
 
             Platform.runLater(() -> {
-                tableEmprendimientos.getItems().setAll(lista);
+                if (tableEmprendimientos != null) {
+                    tableEmprendimientos.getItems().setAll(lista);
+                }
             });
         }).start();
     }
@@ -385,10 +417,13 @@ public class ConfiguracionEmprendimientoController {
             List<Branch> lista = gson.fromJson(json, listType);
 
             Platform.runLater(() -> {
-                tableSucursales.getItems().setAll(lista);
+                if (tableSucursales != null) {
+                    tableSucursales.getItems().setAll(lista);
+                }
             });
         }).start();
     }
+
 
     private void mostrarDetalleEmprendimiento(Company c) {
         if (c == null) {
@@ -402,7 +437,7 @@ public class ConfiguracionEmprendimientoController {
     }
 
     private void mostrarDetalleSucursal(Branch b) {
-        if (b == null) {
+        if (b == null || tfSucDireccionId == null || tfSucRuc == null || chkSucActiva == null) {
             limpiarCamposSucursal();
             return;
         }
@@ -412,16 +447,16 @@ public class ConfiguracionEmprendimientoController {
     }
 
     private void limpiarCamposEmprendimiento() {
-        tfRuc.clear();
-        tfNombre.clear();
-        tfTipo.clear();
-        tfDescripcion.clear();
+        if (tfRuc != null) tfRuc.clear();
+        if (tfNombre != null) tfNombre.clear();
+        if (tfTipo != null) tfTipo.clear();
+        if (tfDescripcion != null) tfDescripcion.clear();
     }
 
     private void limpiarCamposSucursal() {
-        tfSucDireccionId.clear();
-        tfSucRuc.clear();
-        chkSucActiva.setSelected(false);
+        if (tfSucDireccionId != null) tfSucDireccionId.clear();
+        if (tfSucRuc != null) tfSucRuc.clear();
+        if (chkSucActiva != null) chkSucActiva.setSelected(false);
     }
 
     private void mostrarAlerta(Alert.AlertType type, String title, String msg) {

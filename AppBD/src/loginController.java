@@ -39,13 +39,22 @@ public class loginController {
         String usuario = usernameTextField.getText();
         String password = passwordPasswordField.getText();
 
-        if (usuario == null || usuario.isEmpty()
-                || password == null || password.isEmpty()) {
+        // 1) DEMO: usuario y contraseña VACÍOS -> ir a selección de rol demo
+        if ((usuario == null || usuario.isBlank())
+                && (password == null || password.isBlank())) {
+            irSeleccionRolDemo();
+            return;
+        }
+
+        // 2) Solo uno vacío -> mensaje de error normal
+        if (usuario == null || usuario.isBlank()
+                || password == null || password.isBlank()) {
             messageLabel.setText("Por favor ingrese usuario y contraseña.");
             messageLabel.setStyle("-fx-text-fill: red;");
             return;
         }
 
+        // 3) Caso normal: login contra backend
         messageLabel.setText("Conectando...");
         messageLabel.setStyle("-fx-text-fill: black;");
 
@@ -84,12 +93,41 @@ public class loginController {
         irRegistroEmpresario();
     }
 
+    // ====== NUEVO: IR A SELECCIÓN DE ROL DEMO ======
+    private void irSeleccionRolDemo() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("seleccion_rol_demo.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) usernameTextField.getScene().getWindow();
+
+            // 🔹 SIN tamaño fijo: deja que el FXML mande
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.sizeToScene();
+            stage.centerOnScreen();
+
+            stage.setTitle("Modo demo - Seleccionar rol");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            if (messageLabel != null) {
+                messageLabel.setText("Error al abrir selección de rol demo.");
+                messageLabel.setStyle("-fx-text-fill: red;");
+            }
+        }
+    }
+
     private void irMenuUsuario() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("menu_usuario.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) usernameTextField.getScene().getWindow();
-            stage.setScene(new Scene(root, 800, 600));
+
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.sizeToScene();
+            stage.centerOnScreen();
+
             stage.setTitle("Menú de usuario - Sistema de Paquetería");
             stage.show();
         } catch (IOException e) {
@@ -103,7 +141,12 @@ public class loginController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("registro_transportista.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) usernameTextField.getScene().getWindow();
-            stage.setScene(new Scene(root, 800, 600));
+
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.sizeToScene();
+            stage.centerOnScreen();
+
             stage.setTitle("Registro transportista");
             stage.show();
         } catch (IOException e) {
@@ -117,7 +160,12 @@ public class loginController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("registro_empresario.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) usernameTextField.getScene().getWindow();
-            stage.setScene(new Scene(root, 800, 600));
+
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.sizeToScene();
+            stage.centerOnScreen();
+
             stage.setTitle("Registro empresario");
             stage.show();
         } catch (IOException e) {

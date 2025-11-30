@@ -22,7 +22,7 @@ public class Agregar {
     public static void agregarTransportista(String cedula, String nombre, String apellidos, String correo,
             String numero) {
         Connection conn = null;
-        PreparedStatement stmt = null, pstmtAssigStatement = null;
+        PreparedStatement stmt = null, pstmtAssignStatement = null;
         ResultSet rs = null;
 
         try {

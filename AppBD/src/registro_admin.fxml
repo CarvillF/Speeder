@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="RegistroAdminController"
+            prefHeight="600.0" prefWidth="800.0">
+
+    <top>
+        <AnchorPane prefHeight="70.0"
+                    style="-fx-background-color:#263F73;"
+                    BorderPane.alignment="CENTER">
+            <children>
+                <Button fx:id="btnVolver"
+                        layoutX="20.0" layoutY="20.0"
+                        text="Volver"
+                        textFill="WHITE"
+                        onAction="#onVolverAdminGeneral"
+                        style="-fx-background-color: transparent;
+                               -fx-border-color: transparent;" />
+
+                <Label layoutX="260.0" layoutY="22.0"
+                       text="Registro de administrador"
+                       textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Label>
+            </children>
+        </AnchorPane>
+    </top>
+
+    <center>
+        <GridPane hgap="15.0" vgap="12.0"
+                  BorderPane.alignment="CENTER">
+            <padding>
+                <Insets top="30" right="40" bottom="30" left="40"/>
+            </padding>
+
+            <columnConstraints>
+                <ColumnConstraints halignment="RIGHT" prefWidth="120.0"/>
+                <ColumnConstraints prefWidth="220.0"/>
+                <ColumnConstraints halignment="RIGHT" prefWidth="120.0"/>
+                <ColumnConstraints prefWidth="220.0"/>
+            </columnConstraints>
+
+            <rowConstraints>
+                <RowConstraints prefHeight="30.0"/>
+                <RowConstraints prefHeight="30.0"/>
+                <RowConstraints prefHeight="30.0"/>
+                <RowConstraints prefHeight="30.0"/>
+                <RowConstraints prefHeight="30.0"/>
+                <RowConstraints prefHeight="30.0"/>
+            </rowConstraints>
+
+            <children>
+                <Label text="Cédula:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="tfCedula" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="Nombre:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="tfNombre" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="Apellidos:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <TextField fx:id="tfApellidos" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <Label text="Correo:" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                <TextField fx:id="tfCorreo" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+
+                <Label text="Número:" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+                <TextField fx:id="tfNumero" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+
+                <Label text="Código empleado:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <TextField fx:id="tfCodigoEmpleado" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                <Label text="Estado cuenta:" GridPane.rowIndex="3" GridPane.columnIndex="2"/>
+                <ChoiceBox fx:id="cbEstadoCuenta"
+                           GridPane.rowIndex="3" GridPane.columnIndex="3"/>
+
+                <Label text="Contraseña:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <PasswordField fx:id="pfContrasena"
+                               GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+            </children>
+        </GridPane>
+    </center>
+
+    <bottom>
+        <HBox spacing="10.0" alignment="CENTER"
+              BorderPane.alignment="CENTER">
+            <padding>
+                <Insets top="10" bottom="20"/>
+            </padding>
+            <children>
+                <Button fx:id="btnRegistrarAdmin"
+                        text="Registrar admin"
+                        onAction="#onRegistrarAdmin"/>
+            </children>
+        </HBox>
+    </bottom>
+</BorderPane>

@@ -2,128 +2,44 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity"
-            minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="600.0" prefWidth="800.0"
-            xmlns="http://javafx.com/javafx/21"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="ConfiguracionController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ConfiguracionController">
 
-   <!-- MENÚ IZQUIERDO -->
    <left>
-      <AnchorPane prefHeight="200.0" prefWidth="260.0"
-                  style="-fx-background-color: #263F73;"
-                  BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="200.0" prefWidth="260.0" style="-fx-background-color: #263F73;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="40.0" layoutY="40.0"
-                   text="Menú de configuración"
-                   textFill="WHITE">
+            <Label layoutX="48.0" layoutY="69.0" text="Menú de configuración" textFill="WHITE">
                <font>
                   <Font size="17.0" />
                </font>
             </Label>
 
-            <Button fx:id="btnCambiarUsuario"
-                    layoutX="22.0" layoutY="110.0"
-                    prefHeight="25.0" prefWidth="215.0"
-                    text="Cambiar campos de usuario"
-                    onAction="#onCambiarUsuario"
-                    style="-fx-background-color: transparent;
-                           -fx-text-fill: white;
-                           -fx-border-color: transparent;" />
+            <Button fx:id="btnCambiarUsuario" layoutX="23.0" layoutY="167.0" onAction="#onCambiarUsuario" prefHeight="25.0" prefWidth="215.0" style="-fx-background-color: transparent;                            -fx-text-fill: white;                            -fx-border-color: transparent;" text="Cambiar campos de usuario" />
 
-            <Button fx:id="btnCambiarEmprendimiento"
-                    layoutX="22.0" layoutY="150.0"
-                    prefHeight="25.0" prefWidth="215.0"
-                    text="Cambiar campos de emprendimiento"
-                    onAction="#onCambiarEmprendimiento"
-                    style="-fx-background-color: transparent;
-                           -fx-text-fill: white;
-                           -fx-border-color: transparent;" />
+            <Button fx:id="btnCambiarEmprendimiento" layoutX="22.0" layoutY="217.0" onAction="#onCambiarEmprendimiento" prefHeight="25.0" prefWidth="215.0" style="-fx-background-color: transparent;                            -fx-text-fill: white;                            -fx-border-color: transparent;" text="Cambiar campos  emprendimiento" />
 
-            <Button fx:id="btnGestionPago"
-                    layoutX="22.0" layoutY="190.0"
-                    prefHeight="25.0" prefWidth="215.0"
-                    text="Gestionar métodos de pago"
-                    onAction="#onGestionPago"
-                    style="-fx-background-color: transparent;
-                           -fx-text-fill: white;
-                           -fx-border-color: transparent;" />
+            <Button fx:id="btnConfigSucursales" layoutX="22.0" layoutY="272.0" onAction="#onConfigSucursales" prefHeight="25.0" prefWidth="215.0" style="-fx-background-color: transparent;                            -fx-text-fill: white;                            -fx-border-color: transparent;" text="Configurar sucursales" />
 
-            <Button fx:id="btnVolverMenu"
-                    layoutX="21.0" layoutY="23.0"
-                    text="Volver"
-                    onAction="#onVolverMenuUsuario"
-                    style="-fx-background-color: transparent;
-                           -fx-text-fill: white;
-                           -fx-border-color: transparent;" />
+            <Button fx:id="btnGestionPago" layoutX="23.0" layoutY="317.0" onAction="#onGestionPago" prefHeight="25.0" prefWidth="215.0" style="-fx-background-color: transparent;                            -fx-text-fill: white;                            -fx-border-color: transparent;" text="Gestionar métodos de pago" />
+
+            <Button fx:id="btnVolverMenu" layoutX="21.0" layoutY="23.0" onAction="#onVolverMenuUsuario" style="-fx-background-color: transparent;                            -fx-text-fill: white;                            -fx-border-color: transparent;" text="Volver" />
          </children>
       </AnchorPane>
    </left>
 
-   <!-- FORMULARIO DERECHA: CAMBIAR DATOS DE USUARIO -->
    <center>
-      <AnchorPane prefHeight="600.0" prefWidth="540.0"
-                  BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="600.0" prefWidth="540.0" BorderPane.alignment="CENTER">
          <children>
-
-            <Label layoutX="40.0" layoutY="30.0"
-                   text="Cambiar datos de usuario">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-
-            <Label layoutX="40.0" layoutY="80.0" text="Cédula" />
-            <TextField fx:id="tfCedulaUsuario"
-                       layoutX="180.0" layoutY="76.0"
-                       prefWidth="260.0" />
-
-            <Label layoutX="40.0" layoutY="120.0" text="Nombre" />
-            <TextField fx:id="tfNombreUsuario"
-                       layoutX="180.0" layoutY="116.0"
-                       prefWidth="260.0" />
-
-            <Label layoutX="40.0" layoutY="160.0" text="Apellidos" />
-            <TextField fx:id="tfApellidosUsuario"
-                       layoutX="180.0" layoutY="156.0"
-                       prefWidth="260.0" />
-
-            <Label layoutX="40.0" layoutY="200.0" text="Correo" />
-            <TextField fx:id="tfCorreoUsuario"
-                       layoutX="180.0" layoutY="196.0"
-                       prefWidth="260.0" />
-
-            <Label layoutX="40.0" layoutY="240.0" text="Contraseña" />
-            <PasswordField fx:id="pfPasswordUsuario"
-                           layoutX="180.0" layoutY="236.0"
-                           prefWidth="260.0" />
-
-            <Label layoutX="40.0" layoutY="280.0" text="Número de teléfono" />
-            <TextField fx:id="tfNumeroUsuario"
-                       layoutX="180.0" layoutY="276.0"
-                       prefWidth="260.0" />
-
-            <Button fx:id="btnGuardarUsuario"
-                    layoutX="180.0" layoutY="330.0"
-                    prefWidth="140.0"
-                    text="Guardar cambios" />
-
-            <Button fx:id="btnCancelarUsuario"
-                    layoutX="340.0" layoutY="330.0"
-                    prefWidth="100.0"
-                    text="Cancelar" />
-
-            <Label fx:id="lblMensajeUsuario"
-                   layoutX="40.0" layoutY="380.0"
-                   textFill="red" />
-         </children>
-      </AnchorPane>
+            <ImageView fitHeight="604.0" fitWidth="560.0" pickOnBounds="true">
+               <image>
+                  <Image url="@img/enviar-paquetes-correctamente-scaled.jpg" />
+               </image>
+            </ImageView>
+         </children></AnchorPane>
    </center>
 </BorderPane>

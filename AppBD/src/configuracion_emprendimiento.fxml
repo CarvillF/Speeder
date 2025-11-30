@@ -1,60 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/21"
+<BorderPane prefHeight="600.0" prefWidth="800.0"
+            xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="ConfiguracionEmprendimientoController"
-            prefHeight="600.0" prefWidth="800.0">
+            fx:controller="ConfiguracionEmprendimientoController">
 
     <left>
-        <AnchorPane prefHeight="200.0" prefWidth="260.0"
+        <AnchorPane prefHeight="600.0" prefWidth="180.0"
                     style="-fx-background-color: #263F73;"
                     BorderPane.alignment="CENTER">
             <children>
-                <Label layoutX="40.0" layoutY="40.0"
-                       text="Menú de configuración"
+                <Button fx:id="btnVolver"
+                        layoutX="20.0" layoutY="20.0"
+                        prefHeight="26.0" prefWidth="80.0"
+                        text="Volver"
+                        onAction="#onVolverConfiguracion"
+                        style="-fx-background-color: transparent;
+                               -fx-text-fill: white;
+                               -fx-border-color: transparent;" />
+
+                <Label layoutX="20.0" layoutY="70.0"
+                       text="Emprendimientos"
                        textFill="WHITE">
                     <font>
-                        <Font size="17.0" />
+                        <Font name="System Bold" size="18.0" />
                     </font>
                 </Label>
-
-                <Button layoutX="22.0" layoutY="110.0"
-                        prefHeight="25.0" prefWidth="215.0"
-                        text="Cambiar campos de usuario"
-                        onAction="#onIrUsuario"
-                        style="-fx-background-color: transparent;
-                               -fx-text-fill: white;
-                               -fx-border-color: transparent;" />
-
-                <Button layoutX="22.0" layoutY="150.0"
-                        prefHeight="25.0" prefWidth="215.0"
-                        text="Cambiar campos de emprendimiento"
-                        style="-fx-background-color: transparent;
-                               -fx-text-fill: white;
-                               -fx-border-color: transparent;" />
-
-                <Button layoutX="22.0" layoutY="190.0"
-                        prefHeight="25.0" prefWidth="215.0"
-                        text="Gestionar métodos de pago"
-                        onAction="#onIrMetodosPago"
-                        style="-fx-background-color: transparent;
-                               -fx-text-fill: white;
-                               -fx-border-color: transparent;" />
-
-                <Button fx:id="btnVolverMenu"
-                        layoutX="21.0" layoutY="23.0"
-                        text="Volver"
-                        onAction="#onVolverMenuUsuario"
-                        style="-fx-background-color: transparent;
-                               -fx-text-fill: white;
-                               -fx-border-color: transparent;" />
             </children>
         </AnchorPane>
     </left>
@@ -63,66 +38,73 @@
         <AnchorPane prefHeight="600.0" prefWidth="540.0"
                     BorderPane.alignment="CENTER">
             <children>
-                <Label layoutX="40.0" layoutY="30.0"
-                       text="Cambiar datos de emprendimiento">
+
+                <Label layoutX="30.0" layoutY="20.0"
+                       text="Configuración de emprendimientos">
                     <font>
                         <Font name="System Bold" size="18.0" />
                     </font>
                 </Label>
 
-                <Label layoutX="40.0" layoutY="80.0" text="Cédula propietario" />
-                <TextField fx:id="tfCedulaEmpresario"
-                           layoutX="220.0" layoutY="76.0"
-                           prefWidth="260.0" />
+                <Label layoutX="30.0" layoutY="70.0" text="RUC:" />
+                <TextField fx:id="tfRuc"
+                           layoutX="130.0" layoutY="65.0"
+                           prefWidth="200.0" />
 
-                <Label layoutX="40.0" layoutY="120.0" text="Cargo en la empresa" />
-                <TextField fx:id="tfCargoEmpresa"
-                           layoutX="220.0" layoutY="116.0"
-                           prefWidth="260.0" />
+                <Label layoutX="30.0" layoutY="110.0" text="Nombre:" />
+                <TextField fx:id="tfNombre"
+                           layoutX="130.0" layoutY="105.0"
+                           prefWidth="320.0" />
 
-                <Label layoutX="40.0" layoutY="160.0" text="Correo empresarial" />
-                <TextField fx:id="tfCorreoEmpresarial"
-                           layoutX="220.0" layoutY="156.0"
-                           prefWidth="260.0" />
+                <Label layoutX="30.0" layoutY="150.0" text="Tipo compañía:" />
+                <TextField fx:id="tfTipo"
+                           layoutX="130.0" layoutY="145.0"
+                           prefWidth="200.0"
+                           promptText="Privada / Pública / etc." />
 
-                <Label layoutX="40.0" layoutY="200.0" text="Nombre compañía" />
-                <TextField fx:id="tfNombreCompania"
-                           layoutX="220.0" layoutY="196.0"
-                           prefWidth="260.0" />
+                <Label layoutX="30.0" layoutY="190.0" text="Descripción:" />
+                <TextField fx:id="tfDescripcion"
+                           layoutX="130.0" layoutY="185.0"
+                           prefWidth="320.0"
+                           promptText="Descripción breve" />
 
-                <Label layoutX="40.0" layoutY="240.0" text="RUC" />
-                <TextField fx:id="tfRucCompania"
-                           layoutX="220.0" layoutY="236.0"
-                           prefWidth="260.0" />
+                <Button fx:id="btnAgregar"
+                        layoutX="30.0" layoutY="230.0"
+                        prefWidth="150.0"
+                        text="Agregar emprendimiento"
+                        onAction="#onAgregarEmprendimiento" />
 
-                <Label layoutX="40.0" layoutY="280.0" text="Tipo de negocio" />
-                <TextField fx:id="tfTipoNegocio"
-                           layoutX="220.0" layoutY="276.0"
-                           prefWidth="260.0" />
+                <Button fx:id="btnActualizar"
+                        layoutX="190.0" layoutY="230.0"
+                        prefWidth="150.0"
+                        text="Actualizar seleccionado"
+                        onAction="#onActualizarEmprendimiento" />
 
-                <Label layoutX="40.0" layoutY="320.0" text="Dirección compañía" />
-                <TextField fx:id="tfDireccionCompania"
-                           layoutX="220.0" layoutY="316.0"
-                           prefWidth="260.0" />
+                <Button fx:id="btnEliminar"
+                        layoutX="350.0" layoutY="230.0"
+                        prefWidth="150.0"
+                        text="Eliminar seleccionado"
+                        onAction="#onEliminarEmprendimiento" />
 
-                <Label layoutX="40.0" layoutY="360.0" text="Referencia ubicación" />
-                <TextField fx:id="tfReferenciaUbicacion"
-                           layoutX="220.0" layoutY="356.0"
-                           prefWidth="260.0" />
+                <TableView fx:id="tableEmprendimientos"
+                           layoutX="10.0" layoutY="280.0"
+                           prefHeight="300.0" prefWidth="600.0">
+                    <columns>
+                        <TableColumn fx:id="colRuc"
+                                     prefWidth="100.0"
+                                     text="RUC" />
+                        <TableColumn fx:id="colNombre"
+                                     prefWidth="180.0"
+                                     text="Nombre" />
+                        <TableColumn fx:id="colTipo"
+                                     prefWidth="120.0"
+                                     text="Tipo" />
+                        <TableColumn fx:id="colDescripcion"
+                                     prefWidth="200.0"
+                                     text="Descripción" />
+                    </columns>
+                </TableView>
 
-                <Button fx:id="btnGuardarEmprendimiento"
-                        layoutX="220.0" layoutY="410.0"
-                        prefWidth="160.0"
-                        text="Guardar cambios" />
-
-                <Button fx:id="btnCancelarEmprendimiento"
-                        layoutX="390.0" layoutY="410.0"
-                        prefWidth="90.0"
-                        text="Cancelar" />
-
-                <Label fx:id="lblMensajeEmprendimiento"
-                       layoutX="40.0" layoutY="460.0"
-                       textFill="red" />
             </children>
         </AnchorPane>
     </center>

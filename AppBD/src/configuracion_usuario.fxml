@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ConfiguracionUsuarioController"
+            prefHeight="600.0" prefWidth="800.0">
+
+    <top>
+        <AnchorPane prefHeight="60.0" BorderPane.alignment="CENTER">
+            <children>
+                <Label layoutX="20.0" layoutY="18.0"
+                       text="Configuración de usuario">
+                    <font>
+                        <Font name="System Bold" size="20.0"/>
+                    </font>
+                </Label>
+            </children>
+        </AnchorPane>
+    </top>
+
+    <center>
+        <AnchorPane BorderPane.alignment="CENTER">
+            <children>
+                <GridPane layoutX="60.0" layoutY="60.0"
+                          hgap="10.0" vgap="12.0">
+                    <columnConstraints>
+                        <ColumnConstraints prefWidth="140.0"/>
+                        <ColumnConstraints prefWidth="260.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints prefHeight="30.0"/>
+                        <RowConstraints prefHeight="30.0"/>
+                        <RowConstraints prefHeight="30.0"/>
+                        <RowConstraints prefHeight="30.0"/>
+                        <RowConstraints prefHeight="30.0"/>
+                    </rowConstraints>
+                    <children>
+                        <Label text="Nombre:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                        <TextField fx:id="txtNombre"
+                                   promptText="Nombre"
+                                   GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                        <Label text="Apellidos:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                        <TextField fx:id="txtApellidos"
+                                   promptText="Apellidos"
+                                   GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                        <Label text="Correo:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                        <TextField fx:id="txtCorreo"
+                                   promptText="correo@ejemplo.com"
+                                   GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                        <Label text="Teléfono:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                        <TextField fx:id="txtTelefono"
+                                   promptText="Número de contacto"
+                                   GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                        <Label text="Contraseña:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                        <PasswordField fx:id="txtContrasena"
+                                       promptText="Nueva contraseña"
+                                       GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                    </children>
+                </GridPane>
+
+                <HBox layoutX="60.0" layoutY="330.0" spacing="15.0">
+                    <children>
+                        <Button fx:id="btnGuardar"
+                                text="Guardar cambios"
+                                onAction="#onGuardarCambios"
+                                prefWidth="150.0"/>
+                        <Button fx:id="btnVolver"
+                                text="Volver"
+                                onAction="#onVolverConfiguracion"
+                                prefWidth="120.0"/>
+                    </children>
+                </HBox>
+            </children>
+        </AnchorPane>
+    </center>
+
+    <padding>
+        <Insets left="10.0" right="10.0" top="10.0" bottom="10.0"/>
+    </padding>
+</BorderPane>

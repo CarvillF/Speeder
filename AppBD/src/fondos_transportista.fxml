@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FondosTransportistaController">
+
+    <left>
+        <AnchorPane prefHeight="600.0" prefWidth="180.0" style="-fx-background-color: #263F73;" BorderPane.alignment="CENTER">
+            <children>
+                <Button fx:id="btnVolver" layoutX="20.0" layoutY="20.0" onAction="#onVolverMenuTransportista" prefHeight="26.0" prefWidth="80.0" style="-fx-background-color: transparent;                                -fx-text-fill: white;                                -fx-border-color: transparent;" text="Volver" />
+
+                <Label layoutX="43.0" layoutY="101.0" text="Fondos" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Label>
+            </children>
+        </AnchorPane>
+    </left>
+
+    <center>
+        <AnchorPane prefHeight="600.0" prefWidth="620.0" BorderPane.alignment="CENTER">
+            <children>
+
+                <Label layoutX="30.0" layoutY="20.0" text="Fondos del transportista">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Label>
+
+                <Label layoutX="30.0" layoutY="70.0" text="Saldo actual:" />
+                <Label fx:id="lblSaldoActual" layoutX="140.0" layoutY="70.0" text="\$0.00">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Label>
+
+                <Separator layoutX="30.0" layoutY="100.0" prefWidth="550.0" />
+
+                <Label layoutX="30.0" layoutY="130.0" text="Retirar fondos">
+                    <font>
+                        <Font name="System Bold" size="16.0" />
+                    </font>
+                </Label>
+
+                <Label layoutX="30.0" layoutY="170.0" text="Monto a retirar:" />
+                <TextField fx:id="tfMontoRetiro" layoutX="150.0" layoutY="165.0" prefWidth="150.0" promptText="Ej: 50.00" />
+
+                <Button fx:id="btnRetirar" layoutX="320.0" layoutY="165.0" onAction="#onRetirarFondos" prefHeight="26.0" prefWidth="120.0" text="Retirar fondos" />
+
+                <Label layoutX="30.0" layoutY="220.0" text="Historial de movimientos:">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Label>
+
+                <TableView fx:id="tableMovimientos" layoutX="30.0" layoutY="250.0" prefHeight="300.0" prefWidth="550.0">
+                    <columns>
+                        <TableColumn fx:id="colFecha" prefWidth="150.0" text="Fecha" />
+                        <TableColumn fx:id="colDescripcion" prefWidth="250.0" text="Descripción" />
+                        <TableColumn fx:id="colMonto" prefWidth="150.0" text="Monto" />
+                    </columns>
+                </TableView>
+
+            </children>
+        </AnchorPane>
+    </center>
+</BorderPane>

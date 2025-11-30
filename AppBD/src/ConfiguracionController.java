@@ -16,65 +16,46 @@ public class ConfiguracionController {
     private Button btnCambiarEmprendimiento;
 
     @FXML
+    private Button btnConfigSucursales;
+
+    @FXML
     private Button btnGestionPago;
 
     @FXML
     private Button btnVolverMenu;
 
     @FXML
-    private void initialize() {
-    }
-
-    @FXML
     private void onCambiarUsuario() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("config_usuario.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) btnCambiarUsuario.getScene().getWindow();
-            stage.setScene(new Scene(root, 800, 600));
-            stage.setTitle("Cambiar datos de usuario");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        cambiarEscena("configuracion_usuario.fxml", "Configuración de usuario", 800, 600);
     }
 
     @FXML
     private void onCambiarEmprendimiento() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("config_emprendimiento.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) btnCambiarEmprendimiento.getScene().getWindow();
-            stage.setScene(new Scene(root, 800, 600));
-            stage.setTitle("Cambiar datos de emprendimiento");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        cambiarEscena("configuracion_emprendimiento.fxml", "Configuración de emprendimientos", 800, 600);
+    }
+
+    @FXML
+    private void onConfigSucursales() {
+        cambiarEscena("configuracion_sucursales.fxml", "Configuración de sucursales", 800, 600);
     }
 
     @FXML
     private void onGestionPago() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("config_metodos_pago.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) btnGestionPago.getScene().getWindow();
-            stage.setScene(new Scene(root, 800, 600));
-            stage.setTitle("Gestionar métodos de pago");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        cambiarEscena("configuracion_metodos_pago.fxml", "Gestión de métodos de pago", 800, 600);
     }
 
     @FXML
     private void onVolverMenuUsuario() {
+        cambiarEscena("menu_usuario.fxml", "Menú usuario", 800, 600);
+    }
+
+    private void cambiarEscena(String fxml, String titulo, int w, int h) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("menu_usuario.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
             Parent root = loader.load();
-            Stage stage = (Stage) btnVolverMenu.getScene().getWindow();
-            stage.setScene(new Scene(root, 800, 600));
-            stage.setTitle("Menú de usuario - Sistema de Paquetería");
+            Stage stage = (Stage) btnCambiarUsuario.getScene().getWindow();
+            stage.setScene(new Scene(root, w, h));
+            stage.setTitle(titulo);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

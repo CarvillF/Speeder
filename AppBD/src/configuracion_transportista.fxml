@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ConfiguracionTransportistaController"
+            prefHeight="600.0" prefWidth="800.0">
+
+    <left>
+        <AnchorPane prefHeight="600.0" prefWidth="180.0"
+                    style="-fx-background-color: #263F73;"
+                    BorderPane.alignment="CENTER">
+            <children>
+                <Button fx:id="btnVolver"
+                        layoutX="20.0" layoutY="20.0"
+                        prefWidth="80.0" prefHeight="26.0"
+                        text="Volver"
+                        onAction="#onVolverMenuTransportista"
+                        style="-fx-background-color: transparent;
+                               -fx-text-fill: white;
+                               -fx-border-color: transparent;" />
+
+                <Label layoutX="30.0" layoutY="70.0"
+                       text="Configuración"
+                       textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Label>
+            </children>
+        </AnchorPane>
+    </left>
+
+    <center>
+        <AnchorPane prefHeight="600.0" prefWidth="620.0"
+                    BorderPane.alignment="CENTER">
+            <children>
+
+                <!-- Bloque de disponibilidad -->
+                <Label layoutX="30.0" layoutY="20.0"
+                       text="Estado del transportista">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Label>
+
+                <Label layoutX="30.0" layoutY="80.0"
+                       text="Disponibilidad:" />
+
+                <ChoiceBox fx:id="cbDisponibilidad"
+                           layoutX="150.0" layoutY="75.0"
+                           prefWidth="200.0" />
+
+                <Button fx:id="btnGuardarDisponibilidad"
+                        layoutX="30.0" layoutY="120.0"
+                        prefWidth="200.0" prefHeight="26.0"
+                        text="Guardar disponibilidad"
+                        onAction="#onGuardarDisponibilidad" />
+
+                <!-- Bloque de datos de licencia / zona -->
+                <Label layoutX="30.0" layoutY="180.0"
+                       text="Datos del transportista">
+                    <font>
+                        <Font name="System Bold" size="16.0" />
+                    </font>
+                </Label>
+
+                <Label layoutX="30.0" layoutY="220.0"
+                       text="Número de licencia:" />
+                <TextField fx:id="tfNumeroLicencia"
+                           layoutX="200.0" layoutY="215.0"
+                           prefWidth="250.0"
+                           promptText="Ej: 1234567890" />
+
+                <Label layoutX="30.0" layoutY="260.0"
+                       text="Tipo de licencia:" />
+                <TextField fx:id="tfTipoLicencia"
+                           layoutX="200.0" layoutY="255.0"
+                           prefWidth="250.0"
+                           promptText="Ej: Tipo C, Tipo E..." />
+
+                <Label layoutX="30.0" layoutY="300.0"
+                       text="Zona de cobertura:" />
+                <TextField fx:id="tfZonaCobertura"
+                           layoutX="200.0" layoutY="295.0"
+                           prefWidth="250.0"
+                           promptText="Ej: Quito, Quito-Cumbayá..." />
+
+                <Button fx:id="btnGuardarDatos"
+                        layoutX="30.0" layoutY="340.0"
+                        prefWidth="200.0" prefHeight="26.0"
+                        text="Guardar datos"
+                        onAction="#onGuardarDatos" />
+
+            </children>
+        </AnchorPane>
+    </center>
+</BorderPane>

@@ -1,12 +1,11 @@
 import clases.ProtocolActions;
 import clases.Request;
 import clases.Response;
-import clases.Shipment;
 import clases.SpeederClient;
+import clases.Vehicle;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import javafx.application.Platform;
-import javafx.beans.property.ReadOnlyDoubleWrapper;
 import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.fxml.FXML;
@@ -24,90 +23,77 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GestionEnviosController {
+public class VehiculosTransportistaController {
 
     @FXML
-    private TableView<Shipment> tableEnvios;
+    private TableView<Vehicle> tableVehiculos;
 
     @FXML
-    private TableColumn<Shipment, Number> colId;
+    private TableColumn<Vehicle, Number> colId;
 
     @FXML
-    private TableColumn<Shipment, String> colDestino;
+    private TableColumn<Vehicle, String> colModelo;
 
     @FXML
-    private TableColumn<Shipment, String> colEstado;
+    private TableColumn<Vehicle, String> colPlaca;
 
     @FXML
-    private TableColumn<Shipment, Number> colPrecio;
+    private TableColumn<Vehicle, String> colColor;
 
     @FXML
-    private TextField tfDestino;
+    private TextField tfModelo;
 
     @FXML
-    private TextField tfDescripcion;
+    private TextField tfColor;
 
     @FXML
-    private TextField tfPrecio;
+    private TextField tfPlaca;
 
     @FXML
     private void initialize() {
         if (colId != null) {
             colId.setCellValueFactory(c ->
-                    new ReadOnlyIntegerWrapper(c.getValue().getId()));
+                    new ReadOnlyIntegerWrapper(c.getValue().getIdVehiculo()));
         }
-        if (colDestino != null) {
-            colDestino.setCellValueFactory(c ->
-                    new ReadOnlyStringWrapper(c.getValue().getDestino()));
+        if (colModelo != null) {
+            colModelo.setCellValueFactory(c ->
+                    new ReadOnlyStringWrapper(c.getValue().getNombreModelo()));
         }
-        if (colEstado != null) {
-            colEstado.setCellValueFactory(c ->
-                    new ReadOnlyStringWrapper(c.getValue().getEstado()));
+        if (colPlaca != null) {
+            colPlaca.setCellValueFactory(c ->
+                    new ReadOnlyStringWrapper(c.getValue().getPlaca()));
         }
-        if (colPrecio != null) {
-            colPrecio.setCellValueFactory(c ->
-                    new ReadOnlyDoubleWrapper(c.getValue().getPrecioEstimado()));
+        if (colColor != null) {
+            colColor.setCellValueFactory(c ->
+                    new ReadOnlyStringWrapper(c.getValue().getColor()));
         }
-        cargarEnviosDesdeServidor();
+        cargarVehiculosDesdeServidor();
     }
 
     @FXML
-    private void onSolicitarEnvio() {
-        String destino = tfDestino.getText();
-        String descripcion = tfDescripcion.getText();
-        String precioStr = tfPrecio.getText();
+    private void onAgregarVehiculo() {
+        String modelo = tfModelo != null ? tfModelo.getText() : null;
+        String color = tfColor != null ? tfColor.getText() : null;
+        String placa = tfPlaca != null ? tfPlaca.getText() : null;
 
-        if (destino == null || destino.isBlank()
-                || descripcion == null || descripcion.isBlank()
-                || precioStr == null || precioStr.isBlank()) {
+        if (modelo == null || modelo.isBlank()
+                || color == null || color.isBlank()
+                || placa == null || placa.isBlank()) {
 
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Datos incompletos");
             alert.setHeaderText(null);
-            alert.setContentText("Complete destino, descripción y precio estimado.");
+            alert.setContentText("Complete modelo, color y placa.");
             alert.showAndWait();
             return;
         }
 
-        double precio;
-        try {
-            precio = Double.parseDouble(precioStr);
-        } catch (NumberFormatException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Precio inválido");
-            alert.setHeaderText(null);
-            alert.setContentText("Ingrese un valor numérico válido para el precio.");
-            alert.showAndWait();
-            return;
-        }
+        Vehicle nuevo = new Vehicle();
+        nuevo.setNombreModelo(modelo);
+        nuevo.setColor(color);
+        nuevo.setPlaca(placa);
 
-        Shipment nuevo = new Shipment();
-        nuevo.setDestino(destino);
-        nuevo.setDescripcion(descripcion);
-        nuevo.setPrecioEstimado(precio);
-        nuevo.setEstado("PENDIENTE");
-
-        Request request = new Request(ProtocolActions.CREATE_SHIPMENT, nuevo);
+        Request request = new Request(ProtocolActions.CREATE_VEHICLE, nuevo);
 
         new Thread(() -> {
             Response response = SpeederClient.getInstance().sendRequest(request);
@@ -115,22 +101,22 @@ public class GestionEnviosController {
                 Alert alert;
                 if (response != null && "SUCCESS".equalsIgnoreCase(response.getStatus())) {
                     alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Envío creado");
+                    alert.setTitle("Vehículo creado");
                     alert.setHeaderText(null);
                     alert.setContentText(response.getMessage() != null
                             ? response.getMessage()
-                            : "El envío fue creado correctamente.");
-                    tfDestino.clear();
-                    tfDescripcion.clear();
-                    tfPrecio.clear();
-                    cargarEnviosDesdeServidor();
+                            : "El vehículo fue creado correctamente.");
+                    tfModelo.clear();
+                    tfColor.clear();
+                    tfPlaca.clear();
+                    cargarVehiculosDesdeServidor();
                 } else {
                     alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error al crear envío");
+                    alert.setTitle("Error al crear vehículo");
                     alert.setHeaderText(null);
                     String msg = (response != null && response.getMessage() != null)
                             ? response.getMessage()
-                            : "No se pudo crear el envío.";
+                            : "No se pudo crear el vehículo.";
                     alert.setContentText(msg);
                 }
                 alert.showAndWait();
@@ -139,18 +125,18 @@ public class GestionEnviosController {
     }
 
     @FXML
-    private void onCancelarEnvio() {
-        Shipment seleccionado = tableEnvios.getSelectionModel().getSelectedItem();
+    private void onEliminarVehiculo() {
+        Vehicle seleccionado = tableVehiculos.getSelectionModel().getSelectedItem();
         if (seleccionado == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Selección requerida");
             alert.setHeaderText(null);
-            alert.setContentText("Seleccione un envío en la tabla para cancelarlo.");
+            alert.setContentText("Seleccione un vehículo en la tabla para eliminarlo.");
             alert.showAndWait();
             return;
         }
 
-        Request request = new Request(ProtocolActions.CANCEL_SHIPMENT, seleccionado.getId());
+        Request request = new Request(ProtocolActions.DELETE_VEHICLE, seleccionado.getIdVehiculo());
 
         new Thread(() -> {
             Response response = SpeederClient.getInstance().sendRequest(request);
@@ -158,19 +144,19 @@ public class GestionEnviosController {
                 Alert alert;
                 if (response != null && "SUCCESS".equalsIgnoreCase(response.getStatus())) {
                     alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Envío cancelado");
+                    alert.setTitle("Vehículo eliminado");
                     alert.setHeaderText(null);
                     alert.setContentText(response.getMessage() != null
                             ? response.getMessage()
-                            : "El envío fue cancelado.");
-                    cargarEnviosDesdeServidor();
+                            : "El vehículo fue eliminado.");
+                    cargarVehiculosDesdeServidor();
                 } else {
                     alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error al cancelar");
+                    alert.setTitle("Error al eliminar");
                     alert.setHeaderText(null);
                     String msg = (response != null && response.getMessage() != null)
                             ? response.getMessage()
-                            : "No se pudo cancelar el envío.";
+                            : "No se pudo eliminar el vehículo.";
                     alert.setContentText(msg);
                 }
                 alert.showAndWait();
@@ -179,26 +165,26 @@ public class GestionEnviosController {
     }
 
     @FXML
-    private void onVolverMenuUsuario() {
+    private void onVolverMenuTransportista() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("menu_usuario.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("menu_transportista.fxml"));
             Parent root = loader.load();
-            Stage stage = (Stage) tableEnvios.getScene().getWindow();
+            Stage stage = (Stage) tableVehiculos.getScene().getWindow();
             stage.setScene(new Scene(root, 800, 600));
-            stage.setTitle("Menú usuario");
+            stage.setTitle("Menú transportista");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error al volver");
             alert.setHeaderText(null);
-            alert.setContentText("No se pudo volver al menú de usuario.");
+            alert.setContentText("No se pudo volver al menú de transportista.");
             alert.showAndWait();
         }
     }
 
-    private void cargarEnviosDesdeServidor() {
-        Request request = new Request(ProtocolActions.GET_MY_SHIPMENTS, null);
+    private void cargarVehiculosDesdeServidor() {
+        Request request = new Request(ProtocolActions.GET_MY_VEHICLES, null);
 
         new Thread(() -> {
             Response response = SpeederClient.getInstance().sendRequest(request);
@@ -207,11 +193,11 @@ public class GestionEnviosController {
             }
             Gson gson = new Gson();
             String json = gson.toJson(response.getData());
-            Type listType = new TypeToken<ArrayList<Shipment>>() {}.getType();
-            List<Shipment> envios = gson.fromJson(json, listType);
+            Type listType = new TypeToken<ArrayList<Vehicle>>() {}.getType();
+            List<Vehicle> vehiculos = gson.fromJson(json, listType);
 
             Platform.runLater(() -> {
-                tableEnvios.getItems().setAll(envios);
+                tableVehiculos.getItems().setAll(vehiculos);
             });
         }).start();
     }

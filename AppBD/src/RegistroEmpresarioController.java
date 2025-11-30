@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import back.clases.Transportistas;
 import back.consultas.Buscar;
 
 public class RegistroEmpresarioController {
@@ -95,6 +96,7 @@ public class RegistroEmpresarioController {
                     if (response != null && "SUCCESS".equalsIgnoreCase(response.getStatus())) {
                         statusLabel.setText("Registro de transportista exitoso.");
                         statusLabel.setStyle("-fx-text-fill: green;");
+                        Transportistas transportista = new Transportistas(nombre, correo, pass, 0, null);
                     } else {
                         String msg = (response != null) ? response.getMessage() : "Error de conexión";
                         statusLabel.setText("Error: " + msg);

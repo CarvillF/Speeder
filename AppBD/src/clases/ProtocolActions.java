@@ -47,4 +47,6 @@ public class ProtocolActions {
 
     public static final String GET_DRIVER_FUNDS = "GET_DRIVER_FUNDS";
     public static final String WITHDRAW_DRIVER_FUNDS = "WITHDRAW_DRIVER_FUNDS";
+
+    public static final String UPDATE_TRANSPORTISTA = "UPDATE_TRANSPORTISTA";
 }

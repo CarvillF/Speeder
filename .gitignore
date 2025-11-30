@@ -1,13 +1,13 @@
 # IDEs
-.idea/
-.vscode/
+**/.idea/
+**/.vscode/
 *.iml
 
 # Java / Gradle / Maven builds
-out/
-target/
-build/
-.gradle/
+**/out/
+**/target/
+**/build/
+**/.gradle/
 *.class
 *.log
 

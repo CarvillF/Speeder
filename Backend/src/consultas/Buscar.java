@@ -14,7 +14,7 @@ public class Buscar {
     public static boolean login(String correo, String contrasena) {
         String sql = "select 1 from usuario where correo = ? and contrasena = ? limit 1";
 
-        try (var conn = DBConnection.connect();
+        try (var conn = DBConnection.connect(database.UserType.ADMINISTRADOR);
                 var stmt = conn.prepareStatement(sql)) {
 
             // buscamos correo
@@ -34,7 +34,7 @@ public class Buscar {
     public static boolean cedulaExiste(String cedula) {
         String sql = "select 1 from usuario where cedula = ?";
 
-        try (var conn = DBConnection.connect();
+        try (var conn = DBConnection.connect(database.UserType.ADMINISTRADOR);
                 var stmt = conn.prepareStatement(sql)) {
 
             // buscamos cedula
@@ -52,7 +52,7 @@ public class Buscar {
     public static boolean correoExiste(String correo) {
         String sql = "select 1 from usuario where correo = ?";
 
-        try (var conn = DBConnection.connect();
+        try (var conn = DBConnection.connect(database.UserType.ADMINISTRADOR);
                 var stmt = conn.prepareStatement(sql)) {
 
             // buscamos cedula

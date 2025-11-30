@@ -44,34 +44,4 @@ public class DBConnection {
             throw new SQLException("Failed to connect as " + userType, e);
         }
     }
-
-    /**
-     * Método de conexión por defecto para mantener compatibilidad con código
-     * existente.
-     * Usa el archivo config.properties por defecto.
-     * 
-     * @deprecated Usar connect(UserType) en su lugar para especificar el tipo de
-     *             usuario
-     * @return Conexión a la base de datos, o null si hay un error
-     * @throws SQLException si no se puede establecer la conexión
-     */
-    @Deprecated
-    public static Connection connect() throws SQLException {
-        try {
-            // Registrar el driver JDBC de MySQL
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            // Obtener credenciales desde DatabaseConfig (método deprecated)
-            String jdbcUrl = DatabaseConfig.getDbUrl();
-            String user = DatabaseConfig.getDbUsername();
-            String password = DatabaseConfig.getDbPassword();
-
-            // Abrir conexión
-            return DriverManager.getConnection(jdbcUrl, user, password);
-
-        } catch (SQLException | ClassNotFoundException e) {
-            System.err.println(e.getMessage());
-            return null;
-        }
-    }
 }

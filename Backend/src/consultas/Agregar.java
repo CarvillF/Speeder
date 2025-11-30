@@ -26,7 +26,7 @@ public class Agregar {
         ResultSet rs = null;
 
         try {
-            conn = DBConnection.connect();
+            conn = DBConnection.connect(database.UserType.ADMINISTRADOR);
 
             if (conn == null)
                 return;

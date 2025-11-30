@@ -1,4 +1,4 @@
-package back.clases;
+package clases;
 
 public class Cliente extends Usuario {
     // atributos

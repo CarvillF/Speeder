@@ -1,25 +1,26 @@
-package back.consultas;
+package consultas;
 
 import java.sql.SQLException;
 
-import back.DBConnection;
+import database.DBConnection;
 
 public class Buscar {
-    //metodos de busqueda modificados de ChatGPT
-    //PROMPT "Como creo una consulta en java de SQL para buscar un dato y que devuelva true si lo encuentra?"
+    // metodos de busqueda modificados de ChatGPT
+    // PROMPT "Como creo una consulta en java de SQL para buscar un dato y que
+    // devuelva true si lo encuentra?"
 
-    //METODOS LOGIN
-    //buscar si existe el correo y si coincide con su contrasena
-    public static boolean login(String correo, String contrasena){
+    // METODOS LOGIN
+    // buscar si existe el correo y si coincide con su contrasena
+    public static boolean login(String correo, String contrasena) {
         String sql = "select 1 from usuario where correo = ? and contrasena = ? limit 1";
 
-        try(var conn = DBConnection.connect();
-            var stmt = conn.prepareStatement(sql)){
+        try (var conn = DBConnection.connect();
+                var stmt = conn.prepareStatement(sql)) {
 
-            //buscamos correo
+            // buscamos correo
             stmt.setString(1, correo);
             stmt.setString(2, contrasena);
-            try (var rs = stmt.executeQuery()){
+            try (var rs = stmt.executeQuery()) {
                 return rs.next();
             }
 
@@ -28,17 +29,17 @@ public class Buscar {
         }
     }
 
-    //METODOS REGISTRO
-    //cedula existe
-    public static boolean cedulaExiste(String cedula){
+    // METODOS REGISTRO
+    // cedula existe
+    public static boolean cedulaExiste(String cedula) {
         String sql = "select 1 from usuario where cedula = ?";
 
-        try(var conn = DBConnection.connect();
-            var stmt = conn.prepareStatement(sql)){
+        try (var conn = DBConnection.connect();
+                var stmt = conn.prepareStatement(sql)) {
 
-            //buscamos cedula
+            // buscamos cedula
             stmt.setString(1, cedula);
-            try (var rs = stmt.executeQuery()){
+            try (var rs = stmt.executeQuery()) {
                 return rs.next();
             }
 
@@ -47,16 +48,16 @@ public class Buscar {
         }
     }
 
-    //correo existe
-    public static boolean correoExiste(String correo){
+    // correo existe
+    public static boolean correoExiste(String correo) {
         String sql = "select 1 from usuario where correo = ?";
 
-        try(var conn = DBConnection.connect();
-            var stmt = conn.prepareStatement(sql)){
+        try (var conn = DBConnection.connect();
+                var stmt = conn.prepareStatement(sql)) {
 
-            //buscamos cedula
+            // buscamos cedula
             stmt.setString(1, correo);
-            try (var rs = stmt.executeQuery()){
+            try (var rs = stmt.executeQuery()) {
                 return rs.next();
             }
 

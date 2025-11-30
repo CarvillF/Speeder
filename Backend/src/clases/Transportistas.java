@@ -1,9 +1,9 @@
-package back.clases;
+package clases;
 
 import java.util.ArrayList;
 
-public class Transportistas extends Usuario{
-    //atributos
+public class Transportistas extends Usuario {
+    // atributos
     private float comision;
     private ArrayList<Vehiculo> vehiculos;
 
@@ -13,28 +13,28 @@ public class Transportistas extends Usuario{
         this.vehiculos = vehiculos;
     }
 
-    //setters
-    public void setComision(float new_comision){
+    // setters
+    public void setComision(float new_comision) {
         this.comision = new_comision;
     }
 
-    //getters
-    public float getComision(){
+    // getters
+    public float getComision() {
         return comision;
     }
 
-    public ArrayList<Vehiculo> getVehiculos(){
+    public ArrayList<Vehiculo> getVehiculos() {
         return vehiculos;
     }
 
-    //funciones
-    public void eliminarVehiculo(int id_vehiculo){
-        if (!vehiculos.isEmpty()){
+    // funciones
+    public void eliminarVehiculo(int id_vehiculo) {
+        if (!vehiculos.isEmpty()) {
             vehiculos.remove(id_vehiculo);
         }
     }
 
-    public void agregarVehiculo(Vehiculo vehi){
+    public void agregarVehiculo(Vehiculo vehi) {
         vehiculos.add(vehi);
     }
 }

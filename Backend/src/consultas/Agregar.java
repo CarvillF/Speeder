@@ -1,14 +1,15 @@
-package back.consultas;
+package consultas;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import back.DBConnection;
+import database.DBConnection;
 
 public class Agregar {
-    //agregar un nuevo tipo de usuario
-    public static void agregarUsuario(String cedula, String nombre, String apellidos, String correo, String numero, int i){
+    // agregar un nuevo tipo de usuario
+    public static void agregarUsuario(String cedula, String nombre, String apellidos, String correo, String numero,
+            int i) {
         if (i == 1) {
             agregarTransportista(cedula, nombre, apellidos, correo, numero);
         } else if (i == 2) {
@@ -18,7 +19,8 @@ public class Agregar {
         }
     }
 
-    public static void agregarTransportista(String cedula, String nombre, String apellidos, String correo, String numero){
+    public static void agregarTransportista(String cedula, String nombre, String apellidos, String correo,
+            String numero) {
         Connection conn = null;
         PreparedStatement stmt = null, pstmtAssigStatement = null;
         ResultSet rs = null;
@@ -26,7 +28,8 @@ public class Agregar {
         try {
             conn = DBConnection.connect();
 
-            if (conn == null) return;
+            if (conn == null)
+                return;
             conn.setAutoCommit(false);
 
             stmt.setString(1, cedula);
@@ -40,11 +43,12 @@ public class Agregar {
             if (rowAffected == 1) {
                 rs = stmt.getGeneratedKeys();
                 int ID = (rs.next()) ? rs.getInt(1) : 0;
-                String sql = "insert into usuario(cedula, nombre, apellidos, correo, contrasena, numero, tDirecciones_id_direccion)" +
-                            " values (?, ?, ?, ?, ?, ?, ?)";
+                String sql = "insert into usuario(cedula, nombre, apellidos, correo, contrasena, numero, tDirecciones_id_direccion)"
+                        +
+                        " values (?, ?, ?, ?, ?, ?, ?)";
             }
         } catch (Exception e) {
-            
+
         }
     }
 }

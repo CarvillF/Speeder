@@ -28,4 +28,23 @@ public class ProtocolActions {
     public static final String GET_PAYMENT_METHODS = "GET_PAYMENT_METHODS";
     public static final String CREATE_PAYMENT_METHOD = "CREATE_PAYMENT_METHOD";
     public static final String DELETE_PAYMENT_METHOD = "DELETE_PAYMENT_METHOD";
+
+    public static final String GET_COMPANIES = "GET_COMPANIES";
+    public static final String CREATE_COMPANY = "CREATE_COMPANY";
+    public static final String UPDATE_COMPANY = "UPDATE_COMPANY";
+    public static final String DELETE_COMPANY = "DELETE_COMPANY";
+
+    public static final String GET_BRANCHES = "GET_BRANCHES";
+    public static final String CREATE_BRANCH = "CREATE_BRANCH";
+    public static final String UPDATE_BRANCH = "UPDATE_BRANCH";
+    public static final String DELETE_BRANCH = "DELETE_BRANCH";
+
+    public static final String REGISTER_ADMIN = "REGISTER_ADMIN";
+
+    public static final String GET_AVAILABLE_SHIPMENTS = "GET_AVAILABLE_SHIPMENTS";
+    public static final String ACCEPT_AVAILABLE_SHIPMENT = "ACCEPT_AVAILABLE_SHIPMENT";
+    public static final String HIDE_AVAILABLE_SHIPMENT = "HIDE_AVAILABLE_SHIPMENT";
+
+    public static final String GET_DRIVER_FUNDS = "GET_DRIVER_FUNDS";
+    public static final String WITHDRAW_DRIVER_FUNDS = "WITHDRAW_DRIVER_FUNDS";
 }

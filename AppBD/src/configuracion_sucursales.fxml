@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ConfiguracionSucursalesController"
+            prefHeight="600.0" prefWidth="800.0">
+
+    <top>
+        <AnchorPane prefHeight="70.0"
+                    style="-fx-background-color: #263F73;"
+                    BorderPane.alignment="CENTER">
+            <children>
+                <Button fx:id="btnVolver"
+                        layoutX="20.0" layoutY="20.0"
+                        text="Volver"
+                        textFill="WHITE"
+                        onAction="#onVolverConfiguracion"
+                        style="-fx-background-color: transparent;
+                               -fx-border-color: transparent;" />
+
+                <Label layoutX="260.0" layoutY="22.0"
+                       text="Configuración de sucursales"
+                       textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Label>
+            </children>
+        </AnchorPane>
+    </top>
+
+    <center>
+        <VBox spacing="16.0" alignment="TOP_CENTER"
+              prefWidth="780.0" BorderPane.alignment="CENTER">
+            <children>
+
+                <TableView fx:id="tableSucursales"
+                           prefHeight="360.0"
+                           prefWidth="760.0">
+                    <columns>
+                        <TableColumn fx:id="colDireccionId"
+                                     text="ID Dirección"
+                                     prefWidth="150.0" />
+                        <TableColumn fx:id="colRuc"
+                                     text="RUC Compañía"
+                                     prefWidth="250.0" />
+                        <TableColumn fx:id="colActiva"
+                                     text="Activa"
+                                     prefWidth="80.0" />
+                    </columns>
+                </TableView>
+
+                <GridPane hgap="10.0" vgap="8.0">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="RIGHT" prefWidth="120.0"/>
+                        <ColumnConstraints prefWidth="260.0"/>
+                        <ColumnConstraints halignment="RIGHT" prefWidth="120.0"/>
+                        <ColumnConstraints prefWidth="260.0"/>
+                    </columnConstraints>
+
+                    <rowConstraints>
+                        <RowConstraints prefHeight="30.0"/>
+                        <RowConstraints prefHeight="30.0"/>
+                    </rowConstraints>
+
+                    <children>
+                        <Label text="ID Dirección:"
+                               GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                        <TextField fx:id="tfDireccionId"
+                                   GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+                        <Label text="RUC compañía:"
+                               GridPane.rowIndex="0" GridPane.columnIndex="2" />
+                        <TextField fx:id="tfRuc"
+                                   GridPane.rowIndex="0" GridPane.columnIndex="3" />
+
+                        <Label text="Activa:"
+                               GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                        <CheckBox fx:id="chkActiva"
+                                  GridPane.rowIndex="1" GridPane.columnIndex="1" />
+                    </children>
+                </GridPane>
+
+                <HBox spacing="10.0" alignment="CENTER_RIGHT"
+                      prefWidth="760.0">
+                    <children>
+                        <Button fx:id="btnAgregarSucursal"
+                                text="Agregar sucursal"
+                                onAction="#onAgregarSucursal" />
+                        <Button fx:id="btnGuardarSucursal"
+                                text="Guardar cambios"
+                                onAction="#onGuardarSucursal" />
+                        <Button fx:id="btnEliminarSucursal"
+                                text="Eliminar sucursal"
+                                onAction="#onEliminarSucursal" />
+                    </children>
+                </HBox>
+
+            </children>
+        </VBox>
+    </center>
+</BorderPane>

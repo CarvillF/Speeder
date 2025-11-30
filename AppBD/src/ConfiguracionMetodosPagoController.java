@@ -5,6 +5,9 @@ import clases.Response;
 import clases.SpeederClient;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,7 +16,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -35,7 +41,18 @@ public class ConfiguracionMetodosPagoController {
     private TableColumn<PaymentMethod, String> colDatos;
 
     @FXML
+    private TableColumn<PaymentMethod, Boolean> colPredeterminado;
+
+    @FXML
     private TableColumn<PaymentMethod, String> colFecha;
+
+    @FXML
+    private TextField tfTipo;
+
+    @FXML
+    private TextField tfDatos;
+
+    private Timeline autoRefreshTimeline;
 
     @FXML
     private void initialize() {
@@ -51,22 +68,41 @@ public class ConfiguracionMetodosPagoController {
         if (colFecha != null) {
             colFecha.setCellValueFactory(c -> c.getValue().createdAtProperty());
         }
+        if (colPredeterminado != null) {
+            colPredeterminado.setCellValueFactory(c -> c.getValue().predeterminadoProperty());
+            colPredeterminado.setCellFactory(CheckBoxTableCell.forTableColumn(colPredeterminado));
+        }
+
         cargarMetodosDesdeServidor();
+        iniciarAutoRefresh();
     }
 
-    @FXML
-    private void onRefrescar() {
-        cargarMetodosDesdeServidor();
+    private void iniciarAutoRefresh() {
+        autoRefreshTimeline = new Timeline(
+                new KeyFrame(Duration.seconds(15), e -> cargarMetodosDesdeServidor())
+        );
+        autoRefreshTimeline.setCycleCount(Animation.INDEFINITE);
+        autoRefreshTimeline.play();
     }
 
     @FXML
     private void onAgregarMetodo() {
-        // Aquí solo dejas el esqueleto; el backend luego hará el INSERT de verdad.
-        // De momento mandamos un PaymentMethod con tipo/datos "dummy" o lo que tú quieras.
+        String tipo = tfTipo != null ? tfTipo.getText() : null;
+        String datos = tfDatos != null ? tfDatos.getText() : null;
+
+        if (tipo == null || tipo.isBlank() || datos == null || datos.isBlank()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Datos incompletos");
+            alert.setHeaderText(null);
+            alert.setContentText("Ingrese tipo y datos del método de pago.");
+            alert.showAndWait();
+            return;
+        }
 
         PaymentMethod nuevo = new PaymentMethod();
-        nuevo.setTipo("tarjeta");          // luego puedes leer esto de campos de texto si quieres
-        nuevo.setDatos("XXXX-XXXX-XXXX");  // solo para probar la consulta
+        nuevo.setTipo(tipo);
+        nuevo.setDatos(datos);
+        nuevo.setPredeterminado(false);
 
         Request request = new Request(ProtocolActions.CREATE_PAYMENT_METHOD, nuevo);
 
@@ -81,6 +117,8 @@ public class ConfiguracionMetodosPagoController {
                     alert.setContentText(response.getMessage() != null
                             ? response.getMessage()
                             : "El método de pago fue agregado.");
+                    if (tfTipo != null) tfTipo.clear();
+                    if (tfDatos != null) tfDatos.clear();
                     cargarMetodosDesdeServidor();
                 } else {
                     alert = new Alert(Alert.AlertType.ERROR);
@@ -168,9 +206,7 @@ public class ConfiguracionMetodosPagoController {
             Type listType = new TypeToken<ArrayList<PaymentMethod>>() {}.getType();
             List<PaymentMethod> metodos = gson.fromJson(json, listType);
 
-            Platform.runLater(() -> {
-                tableMetodosPago.getItems().setAll(metodos);
-            });
+            Platform.runLater(() -> tableMetodosPago.getItems().setAll(metodos));
         }).start();
     }
 }

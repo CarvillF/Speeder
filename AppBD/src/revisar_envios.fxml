@@ -74,14 +74,8 @@
                     </columns>
                 </TableView>
 
-                <Button fx:id="btnActualizar"
-                        layoutX="30.0" layoutY="490.0"
-                        prefWidth="150.0" prefHeight="28.0"
-                        text="Actualizar lista"
-                        onAction="#onActualizarLista" />
-
                 <Button fx:id="btnCancelarEnvio"
-                        layoutX="210.0" layoutY="490.0"
+                        layoutX="30.0" layoutY="490.0"
                         prefWidth="190.0" prefHeight="28.0"
                         text="Cancelar envío seleccionado"
                         onAction="#onCancelarEnvio" />

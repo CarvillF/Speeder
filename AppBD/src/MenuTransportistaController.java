@@ -3,7 +3,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -14,48 +13,56 @@ public class MenuTransportistaController {
     private Button btnEnviosAsignados;
 
     @FXML
+    private Button btnAceptarEnvios;
+
+    @FXML
     private Button btnMisVehiculos;
+
+    @FXML
+    private Button btnFondos;
+
+    @FXML
+    private Button btnConfig;
 
     @FXML
     private Button btnLogout;
 
     @FXML
-    private Label sectionTitleLabel;
-
-    @FXML
-    private Label sectionDescriptionLabel;
-
-    @FXML
-    private void initialize() {
-        if (sectionTitleLabel != null) {
-            sectionTitleLabel.setText("Menú transportista");
-        }
-        if (sectionDescriptionLabel != null) {
-            sectionDescriptionLabel.setText("Seleccione una opción de la barra izquierda para continuar.");
-        }
+    private void onEnviosAsignados() {
+        abrirVista("envios_transportista.fxml", "Envíos asignados");
     }
 
     @FXML
-    private void onEnviosAsignados() {
-        cambiarEscena("envios_transportista.fxml", "Envíos asignados", 800, 600);
+    private void onAceptarEnvios() {
+        abrirVista("aceptar_envios_transportista.fxml", "Aceptar nuevos envíos");
     }
 
     @FXML
     private void onMisVehiculos() {
-        cambiarEscena("vehiculos_transportista.fxml", "Mis vehículos", 800, 600);
+        abrirVista("vehiculos_transportista.fxml", "Mis vehículos");
+    }
+
+    @FXML
+    private void onFondos() {
+        abrirVista("fondos_transportista.fxml", "Fondos del transportista");
+    }
+
+    @FXML
+    private void onConfiguracion() {
+        abrirVista("configuracion_transportista.fxml", "Configuración transportista");
     }
 
     @FXML
     private void onLogout() {
-        cambiarEscena("login.fxml", "Sistema de Paquetería", 600, 400);
+        abrirVista("login.fxml", "Sistema de Paquetería");
     }
 
-    private void cambiarEscena(String fxml, String titulo, int width, int height) {
+    private void abrirVista(String fxml, String titulo) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
             Parent root = loader.load();
             Stage stage = (Stage) btnEnviosAsignados.getScene().getWindow();
-            stage.setScene(new Scene(root, width, height));
+            stage.setScene(new Scene(root, 800, 600));
             stage.setTitle(titulo);
             stage.show();
         } catch (IOException e) {

@@ -1,16 +1,19 @@
 package clases;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class PaymentMethod {
 
-    private IntegerProperty idMetodoPago = new SimpleIntegerProperty();
-    private StringProperty tipo = new SimpleStringProperty();
-    private StringProperty datos = new SimpleStringProperty();
-    private StringProperty createdAt = new SimpleStringProperty();
+    private final IntegerProperty idMetodoPago = new SimpleIntegerProperty();
+    private final StringProperty tipo = new SimpleStringProperty();
+    private final StringProperty datos = new SimpleStringProperty();
+    private final BooleanProperty predeterminado = new SimpleBooleanProperty();
+    private final StringProperty createdAt = new SimpleStringProperty();
 
     public PaymentMethod() {
     }
@@ -19,8 +22,8 @@ public class PaymentMethod {
         return idMetodoPago.get();
     }
 
-    public void setIdMetodoPago(int idMetodoPago) {
-        this.idMetodoPago.set(idMetodoPago);
+    public void setIdMetodoPago(int id) {
+        this.idMetodoPago.set(id);
     }
 
     public IntegerProperty idMetodoProperty() {
@@ -49,6 +52,18 @@ public class PaymentMethod {
 
     public StringProperty datosProperty() {
         return datos;
+    }
+
+    public boolean isPredeterminado() {
+        return predeterminado.get();
+    }
+
+    public void setPredeterminado(boolean pred) {
+        this.predeterminado.set(pred);
+    }
+
+    public BooleanProperty predeterminadoProperty() {
+        return predeterminado;
     }
 
     public String getCreatedAt() {

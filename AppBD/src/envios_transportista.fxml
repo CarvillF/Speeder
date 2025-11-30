@@ -1,61 +1,104 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="EnviosTransportistaController">
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="EnviosTransportistaController"
+            prefHeight="600.0" prefWidth="800.0">
 
     <left>
-        <AnchorPane prefHeight="600.0" prefWidth="260.0" style="-fx-background-color:#263F73;" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="600.0"
+                    prefWidth="180.0"
+                    style="-fx-background-color: #263F73;"
+                    BorderPane.alignment="CENTER">
             <children>
-                <Label layoutX="65.0" layoutY="103.0" text="Envíos asignados" textFill="WHITE">
+
+                <Button fx:id="btnVolverMenu"
+                        layoutX="20.0" layoutY="20.0"
+                        prefWidth="80.0" prefHeight="26.0"
+                        text="Volver"
+                        onAction="#onVolverMenuTransportista"
+                        style="-fx-background-color: transparent;
+                               -fx-text-fill: white;
+                               -fx-border-color: transparent;" />
+
+                <Label layoutX="30.0" layoutY="70.0"
+                       text="Envíos asignados"
+                       textFill="WHITE">
                     <font>
-                        <Font name="System Bold" size="18.0" />
+                        <Font name="System Bold" size="18.0"/>
                     </font>
                 </Label>
 
-                <Button fx:id="btnVolverMenu" layoutX="22.0" layoutY="20.0" onAction="#onVolverMenuTransportista" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: transparent;                                -fx-text-fill: white;                                -fx-border-color: transparent;" text="Volver" />
             </children>
         </AnchorPane>
     </left>
 
     <center>
-        <AnchorPane prefHeight="600.0" prefWidth="540.0" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="600.0" prefWidth="620.0" BorderPane.alignment="CENTER">
             <children>
-                <Label layoutX="30.0" layoutY="30.0" text="Envíos asignados">
+
+                <Label layoutX="30.0" layoutY="20.0"
+                       text="Envíos asignados al transportista">
                     <font>
-                        <Font name="System Bold" size="20.0" />
+                        <Font name="System Bold" size="18.0"/>
                     </font>
                 </Label>
 
-                <Label layoutX="30.0" layoutY="80.0" text="Filtrar por estado:" />
-                <ChoiceBox fx:id="cbFiltroEstado" layoutX="140.0" layoutY="76.0" prefWidth="180.0" />
+                <Label layoutX="30.0" layoutY="70.0" text="Estado:" />
+                <ChoiceBox fx:id="cbFiltroEstado"
+                           layoutX="90.0" layoutY="65.0"
+                           prefWidth="160.0" />
 
-                <Label layoutX="30.0" layoutY="120.0" text="Buscar:" />
-                <TextField fx:id="tfBuscar" layoutX="90.0" layoutY="116.0" prefWidth="350.0" promptText="Buscar por origen, destino, ID..." />
+                <Label layoutX="270.0" layoutY="70.0" text="Buscar:" />
+                <TextField fx:id="tfBuscar"
+                           layoutX="330.0" layoutY="65.0"
+                           prefWidth="200.0"
+                           promptText="Buscar por texto" />
 
-                <TableView fx:id="tableEnvios" layoutX="30.0" layoutY="160.0" prefHeight="320.0" prefWidth="500.0">
+                <Button fx:id="btnActualizar"
+                        layoutX="30.0" layoutY="105.0"
+                        prefWidth="120.0" prefHeight="26.0"
+                        text="Actualizar lista"
+                        onAction="#onActualizarLista" />
+
+                <TableView fx:id="tableEnvios"
+                           layoutX="30.0" layoutY="145.0"
+                           prefWidth="560.0" prefHeight="330.0">
                     <columns>
-                        <TableColumn fx:id="colIdEnvio" prefWidth="80.0" text="ID envío" />
-                        <TableColumn fx:id="colOrigen" prefWidth="120.0" text="Origen" />
-                        <TableColumn fx:id="colDestino" prefWidth="120.0" text="Destino" />
-                        <TableColumn fx:id="colEstado" prefWidth="90.0" text="Estado" />
-                        <TableColumn fx:id="colFechaInicio" prefWidth="90.0" text="Fecha inicio" />
+                        <TableColumn fx:id="colIdEnvio"
+                                     text="ID"
+                                     prefWidth="60.0" />
+                        <TableColumn fx:id="colOrigen"
+                                     text="Origen"
+                                     prefWidth="130.0" />
+                        <TableColumn fx:id="colDestino"
+                                     text="Destino"
+                                     prefWidth="130.0" />
+                        <TableColumn fx:id="colEstado"
+                                     text="Estado"
+                                     prefWidth="110.0" />
+                        <TableColumn fx:id="colFechaInicio"
+                                     text="Fecha inicio"
+                                     prefWidth="130.0" />
                     </columns>
                 </TableView>
 
-                <Button fx:id="btnActualizar" layoutX="30.0" layoutY="500.0" onAction="#onActualizarLista" prefHeight="28.0" prefWidth="140.0" text="Actualizar lista" />
+                <Button fx:id="btnMarcarRecogido"
+                        layoutX="30.0" layoutY="490.0"
+                        prefWidth="160.0" prefHeight="26.0"
+                        text="Marcar como recogido"
+                        onAction="#onMarcarRecogido" />
 
-                <Button fx:id="btnMarcarRecogido" layoutX="190.0" layoutY="500.0" onAction="#onMarcarRecogido" prefHeight="28.0" prefWidth="150.0" text="Marcar como recogido" />
+                <Button fx:id="btnMarcarEntregado"
+                        layoutX="210.0" layoutY="490.0"
+                        prefWidth="170.0" prefHeight="26.0"
+                        text="Marcar como entregado"
+                        onAction="#onMarcarEntregado" />
 
-                <Button fx:id="btnMarcarEntregado" layoutX="360.0" layoutY="500.0" onAction="#onMarcarEntregado" prefHeight="28.0" prefWidth="170.0" text="Marcar como entregado" />
             </children>
         </AnchorPane>
     </center>

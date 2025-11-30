@@ -60,7 +60,13 @@ public class EnviosTransportistaController {
     @FXML
     private void initialize() {
         if (cbFiltroEstado != null) {
-            cbFiltroEstado.getItems().addAll("Todos", "PENDIENTE", "EN CAMINO", "ENTREGADO", "CANCELADO");
+            cbFiltroEstado.getItems().addAll(
+                    "Todos",
+                    "PENDIENTE",
+                    "EN CAMINO",
+                    "ENTREGADO",
+                    "CANCELADO"
+            );
             cbFiltroEstado.setValue("Todos");
         }
     }
@@ -86,9 +92,13 @@ public class EnviosTransportistaController {
                 Alert alert;
                 if (response != null && "SUCCESS".equals(response.getStatus())) {
                     alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setHeaderText(null);
+                    alert.setTitle("Operación exitosa");
                     alert.setContentText(successMsg);
                 } else {
                     alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setHeaderText(null);
+                    alert.setTitle("Error");
                     String msg = errorPrefix;
                     if (response != null && response.getMessage() != null) {
                         msg += ": " + response.getMessage();
@@ -104,30 +114,46 @@ public class EnviosTransportistaController {
     private void onActualizarLista() {
         String estado = cbFiltroEstado != null ? cbFiltroEstado.getValue() : "Todos";
         String texto = tfBuscar != null ? tfBuscar.getText() : "";
+
         Map<String, String> payload = new HashMap<>();
         payload.put("estado", estado);
         payload.put("buscar", texto);
+
         Request request = new Request(ProtocolActions.GET_ASSIGNED_SHIPMENTS, payload);
-        sendRequestAsync(request, "Lista de envíos actualizada", "Error al obtener los envíos asignados");
+        sendRequestAsync(request,
+                "Lista de envíos actualizada.",
+                "Error al obtener los envíos asignados");
     }
 
     @FXML
     private void onMarcarRecogido() {
-        Object seleccionado = tableEnvios != null ? tableEnvios.getSelectionModel().getSelectedItem() : null;
+        Object seleccionado = tableEnvios != null
+                ? tableEnvios.getSelectionModel().getSelectedItem()
+                : null;
+
         Map<String, Object> payload = new HashMap<>();
         payload.put("envioSeleccionado", seleccionado);
         payload.put("nuevoEstado", "RECOGIDA");
+
         Request request = new Request(ProtocolActions.UPDATE_SHIPMENT_STATE, payload);
-        sendRequestAsync(request, "Envío marcado como recogido", "Error al actualizar estado");
+        sendRequestAsync(request,
+                "Envío marcado como recogido.",
+                "Error al actualizar estado del envío");
     }
 
     @FXML
     private void onMarcarEntregado() {
-        Object seleccionado = tableEnvios != null ? tableEnvios.getSelectionModel().getSelectedItem() : null;
+        Object seleccionado = tableEnvios != null
+                ? tableEnvios.getSelectionModel().getSelectedItem()
+                : null;
+
         Map<String, Object> payload = new HashMap<>();
         payload.put("envioSeleccionado", seleccionado);
         payload.put("nuevoEstado", "ENTREGADO");
+
         Request request = new Request(ProtocolActions.UPDATE_SHIPMENT_STATE, payload);
-        sendRequestAsync(request, "Envío marcado como entregado", "Error al actualizar estado");
+        sendRequestAsync(request,
+                "Envío marcado como entregado.",
+                "Error al actualizar estado del envío");
     }
 }

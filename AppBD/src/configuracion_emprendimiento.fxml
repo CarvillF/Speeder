@@ -1,85 +1,111 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/21"
+<BorderPane prefHeight="600.0" prefWidth="800.0"
+            xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="ConfiguracionEmprendimientoController"
-            prefHeight="600.0" prefWidth="800.0">
+            fx:controller="ConfiguracionEmprendimientoController">
 
-    <top>
-        <AnchorPane prefHeight="60.0" BorderPane.alignment="CENTER">
+    <left>
+        <AnchorPane prefHeight="600.0" prefWidth="180.0"
+                    style="-fx-background-color: #263F73;"
+                    BorderPane.alignment="CENTER">
             <children>
-                <Label layoutX="20.0" layoutY="18.0"
-                       text="Configuración de emprendimiento">
+                <Button fx:id="btnVolver"
+                        layoutX="20.0" layoutY="20.0"
+                        prefHeight="26.0" prefWidth="80.0"
+                        text="Volver"
+                        onAction="#onVolverConfiguracion"
+                        style="-fx-background-color: transparent;
+                               -fx-text-fill: white;
+                               -fx-border-color: transparent;" />
+
+                <Label layoutX="20.0" layoutY="70.0"
+                       text="Emprendimientos"
+                       textFill="WHITE">
                     <font>
-                        <Font name="System Bold" size="20.0"/>
+                        <Font name="System Bold" size="18.0" />
                     </font>
                 </Label>
             </children>
         </AnchorPane>
-    </top>
+    </left>
 
     <center>
-        <AnchorPane BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="600.0" prefWidth="540.0"
+                    BorderPane.alignment="CENTER">
             <children>
-                <GridPane layoutX="60.0" layoutY="60.0"
-                          hgap="10.0" vgap="12.0">
-                    <columnConstraints>
-                        <ColumnConstraints prefWidth="160.0"/>
-                        <ColumnConstraints prefWidth="260.0"/>
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints prefHeight="30.0"/>
-                        <RowConstraints prefHeight="30.0"/>
-                        <RowConstraints prefHeight="30.0"/>
-                        <RowConstraints prefHeight="80.0"/>
-                    </rowConstraints>
-                    <children>
-                        <Label text="RUC:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                        <TextField fx:id="txtRuc"
-                                   promptText="RUC del emprendimiento"
-                                   GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-                        <Label text="Nombre compañía:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                        <TextField fx:id="txtNombreCompania"
-                                   promptText="Nombre del emprendimiento"
-                                   GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                <Label layoutX="30.0" layoutY="20.0"
+                       text="Configuración de emprendimientos">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Label>
 
-                        <Label text="Tipo de compañía:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                        <TextField fx:id="txtTipoCompania"
-                                   promptText="Tipo (ej. logística, tienda, etc.)"
-                                   GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                <Label layoutX="30.0" layoutY="70.0" text="RUC:" />
+                <TextField fx:id="tfRuc"
+                           layoutX="130.0" layoutY="65.0"
+                           prefWidth="200.0" />
 
-                        <Label text="Descripción:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                        <TextArea fx:id="txtDescripcion"
-                                  promptText="Descripción del emprendimiento"
-                                  prefRowCount="3"
-                                  wrapText="true"
-                                  GridPane.rowIndex="3" GridPane.columnIndex="1"/>
-                    </children>
-                </GridPane>
+                <Label layoutX="30.0" layoutY="110.0" text="Nombre:" />
+                <TextField fx:id="tfNombre"
+                           layoutX="130.0" layoutY="105.0"
+                           prefWidth="320.0" />
 
-                <HBox layoutX="60.0" layoutY="330.0" spacing="15.0">
-                    <children>
-                        <Button fx:id="btnGuardar"
-                                text="Guardar cambios"
-                                onAction="#onGuardarCambiosEmprendimiento"
-                                prefWidth="150.0"/>
-                        <Button fx:id="btnVolver"
-                                text="Volver"
-                                onAction="#onVolverConfiguracion"
-                                prefWidth="120.0"/>
-                    </children>
-                </HBox>
+                <Label layoutX="30.0" layoutY="150.0" text="Tipo compañía:" />
+                <TextField fx:id="tfTipo"
+                           layoutX="130.0" layoutY="145.0"
+                           prefWidth="200.0"
+                           promptText="Privada / Pública / etc." />
+
+                <Label layoutX="30.0" layoutY="190.0" text="Descripción:" />
+                <TextField fx:id="tfDescripcion"
+                           layoutX="130.0" layoutY="185.0"
+                           prefWidth="320.0"
+                           promptText="Descripción breve" />
+
+                <Button fx:id="btnAgregar"
+                        layoutX="30.0" layoutY="230.0"
+                        prefWidth="150.0"
+                        text="Agregar emprendimiento"
+                        onAction="#onAgregarEmprendimiento" />
+
+                <Button fx:id="btnActualizar"
+                        layoutX="190.0" layoutY="230.0"
+                        prefWidth="150.0"
+                        text="Actualizar seleccionado"
+                        onAction="#onActualizarEmprendimiento" />
+
+                <Button fx:id="btnEliminar"
+                        layoutX="350.0" layoutY="230.0"
+                        prefWidth="150.0"
+                        text="Eliminar seleccionado"
+                        onAction="#onEliminarEmprendimiento" />
+
+                <TableView fx:id="tableEmprendimientos"
+                           layoutX="10.0" layoutY="280.0"
+                           prefHeight="300.0" prefWidth="600.0">
+                    <columns>
+                        <TableColumn fx:id="colRuc"
+                                     prefWidth="100.0"
+                                     text="RUC" />
+                        <TableColumn fx:id="colNombre"
+                                     prefWidth="180.0"
+                                     text="Nombre" />
+                        <TableColumn fx:id="colTipo"
+                                     prefWidth="120.0"
+                                     text="Tipo" />
+                        <TableColumn fx:id="colDescripcion"
+                                     prefWidth="200.0"
+                                     text="Descripción" />
+                    </columns>
+                </TableView>
+
             </children>
         </AnchorPane>
     </center>
-
-    <padding>
-        <Insets left="10.0" right="10.0" top="10.0" bottom="10.0"/>
-    </padding>
 </BorderPane>

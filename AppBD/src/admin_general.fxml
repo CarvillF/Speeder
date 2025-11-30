@@ -35,77 +35,83 @@
 
                 <TabPane fx:id="tabPaneEntidades" layoutX="10.0" layoutY="10.0" prefHeight="650.0" prefWidth="700.0">
 
+                    <!-- ===== TAB USUARIOS ===== -->
                     <Tab closable="false" text="Usuarios">
                         <AnchorPane>
+                            <children>
+                                <Label layoutX="20.0" layoutY="15.0" text="Filtrar por" />
+                                <ChoiceBox fx:id="cbFiltroUsuarios" layoutX="95.0" layoutY="11.0" prefWidth="200.0" />
 
-                            <Label layoutX="20.0" layoutY="15.0" text="Filtrar por" />
-                            <ChoiceBox fx:id="cbFiltroUsuarios" layoutX="95.0" layoutY="11.0" prefWidth="200.0" />
+                                <TextField fx:id="tfBuscarUsuarios" layoutX="20.0" layoutY="50.0" prefWidth="650.0" promptText="Buscar usuario..." />
 
-                            <TextField fx:id="tfBuscarUsuarios" layoutX="20.0" layoutY="50.0" prefWidth="650.0" promptText="Buscar usuario..." />
+                                <TableView fx:id="tableUsuarios" layoutX="20.0" layoutY="95.0" prefHeight="460.0" prefWidth="650.0">
+                                    <columns>
+                                        <TableColumn fx:id="colUsuarioCedula" text="Cédula" />
+                                        <TableColumn fx:id="colUsuarioNombre" text="Nombre" />
+                                        <TableColumn fx:id="colUsuarioApellidos" text="Apellidos" />
+                                        <TableColumn fx:id="colUsuarioCorreo" text="Correo" />
+                                        <TableColumn fx:id="colUsuarioNumero" text="Número" />
+                                        <TableColumn fx:id="colUsuarioCiudad" text="Ciudad" />
+                                    </columns>
+                                </TableView>
 
-                            <TableView fx:id="tableUsuarios" layoutX="20.0" layoutY="95.0" prefHeight="460.0" prefWidth="650.0">
-                                <columns>
-                                    <TableColumn fx:id="colUsuarioCedula" text="Cédula" />
-                                    <TableColumn fx:id="colUsuarioNombre" text="Nombre" />
-                                    <TableColumn fx:id="colUsuarioApellidos" text="Apellidos" />
-                                    <TableColumn fx:id="colUsuarioCorreo" text="Correo" />
-                                    <TableColumn fx:id="colUsuarioNumero" text="Número" />
-                                    <TableColumn fx:id="colUsuarioCiudad" text="Ciudad" />
-                                </columns>
-                            </TableView>
+                                <Button fx:id="btnCrearUsuario" layoutX="20.0" layoutY="575.0" onAction="#onCrearUsuario" prefWidth="140.0" text="Crear usuario" />
 
-                            <Button fx:id="btnCrearUsuario" layoutX="20.0" layoutY="575.0" onAction="#onCrearUsuario" prefWidth="140.0" text="Crear usuario" />
-
-                            <Button fx:id="btnEliminarUsuario" layoutX="180.0" layoutY="575.0" onAction="#onEliminarUsuario" prefWidth="140.0" text="Eliminar usuario" />
+                                <Button fx:id="btnEliminarUsuario" layoutX="180.0" layoutY="575.0" onAction="#onEliminarUsuario" prefWidth="140.0" text="Eliminar usuario" />
+                            </children>
                         </AnchorPane>
                     </Tab>
 
+                    <!-- ===== TAB TRANSPORTISTAS ===== -->
                     <Tab closable="false" text="Transpor.">
                         <AnchorPane>
+                            <children>
+                                <Label layoutX="20.0" layoutY="15.0" text="Filtrar por" />
+                                <ChoiceBox fx:id="cbFiltroTransportistas" layoutX="95.0" layoutY="11.0" prefWidth="200.0" />
 
-                            <Label layoutX="20.0" layoutY="15.0" text="Filtrar por" />
-                            <ChoiceBox fx:id="cbFiltroTransportistas" layoutX="95.0" layoutY="11.0" prefWidth="200.0" />
+                                <TextField fx:id="tfBuscarTransportistas" layoutX="20.0" layoutY="50.0" prefWidth="650.0" promptText="Buscar transportista..." />
 
-                            <TextField fx:id="tfBuscarTransportistas" layoutX="20.0" layoutY="50.0" prefWidth="650.0" promptText="Buscar transportista..." />
+                                <TableView fx:id="tableTransportistas" layoutX="20.0" layoutY="95.0" prefHeight="460.0" prefWidth="650.0">
+                                    <columns>
+                                        <TableColumn fx:id="colTransCedula" text="Cédula" />
+                                        <TableColumn fx:id="colTransNombre" text="Nombre" />
+                                        <TableColumn fx:id="colTransNumeroLicencia" text="N° licencia" />
+                                        <TableColumn fx:id="colTransTipoLicencia" text="Tipo licencia" />
+                                        <TableColumn fx:id="colTransZonaCobertura" text="Zona cobert." />
+                                        <TableColumn fx:id="colTransDisponibilidad" text="Disponibilidad" />
+                                    </columns>
+                                </TableView>
 
-                            <TableView fx:id="tableTransportistas" layoutX="20.0" layoutY="95.0" prefHeight="460.0" prefWidth="650.0">
-                                <columns>
-                                    <TableColumn fx:id="colTransCedula" text="Cédula" />
-                                    <TableColumn fx:id="colTransNombre" text="Nombre" />
-                                    <TableColumn fx:id="colTransNumeroLicencia" text="N° licencia" />
-                                    <TableColumn fx:id="colTransTipoLicencia" text="Tipo licencia" />
-                                    <TableColumn fx:id="colTransZonaCobertura" text="Zona cobert." />
-                                    <TableColumn fx:id="colTransDisponibilidad" text="Disponibilidad" />
-                                </columns>
-                            </TableView>
+                                <Button fx:id="btnCrearTransportista" layoutX="20.0" layoutY="575.0" onAction="#onCrearTransportista" prefWidth="160.0" text="Crear transportista" />
 
-                            <Button fx:id="btnCrearTransportista" layoutX="20.0" layoutY="575.0" onAction="#onCrearTransportista" prefWidth="160.0" text="Crear transportista" />
-
-                            <Button fx:id="btnEliminarTransportista" layoutX="200.0" layoutY="575.0" onAction="#onEliminarTransportista" prefWidth="160.0" text="Eliminar transportista" />
+                                <Button fx:id="btnEliminarTransportista" layoutX="200.0" layoutY="575.0" onAction="#onEliminarTransportista" prefWidth="160.0" text="Eliminar transportista" />
+                            </children>
                         </AnchorPane>
                     </Tab>
 
+                    <!-- ===== TAB ADMINS ===== -->
                     <Tab closable="false" text="Admin">
                         <AnchorPane>
+                            <children>
+                                <Label layoutX="20.0" layoutY="15.0" text="Filtrar por" />
+                                <ChoiceBox fx:id="cbFiltroAdmins" layoutX="95.0" layoutY="11.0" prefWidth="200.0" />
 
-                            <Label layoutX="20.0" layoutY="15.0" text="Filtrar por" />
-                            <ChoiceBox fx:id="cbFiltroAdmins" layoutX="95.0" layoutY="11.0" prefWidth="200.0" />
+                                <TextField fx:id="tfBuscarAdmins" layoutX="20.0" layoutY="50.0" prefWidth="650.0" promptText="Buscar administrador..." />
 
-                            <TextField fx:id="tfBuscarAdmins" layoutX="20.0" layoutY="50.0" prefWidth="650.0" promptText="Buscar empresario/admin..." />
+                                <TableView fx:id="tableAdmins" layoutX="20.0" layoutY="95.0" prefHeight="460.0" prefWidth="650.0">
+                                    <columns>
+                                        <TableColumn fx:id="colAdminCedula" text="Cédula" />
+                                        <TableColumn fx:id="colAdminNombre" text="Nombre" />
+                                        <TableColumn fx:id="colAdminApellidos" text="Apellidos" />
+                                        <TableColumn fx:id="colAdminCodigoEmpleado" prefWidth="113.0" text="Código empleado" />
+                                        <TableColumn fx:id="colAdminEstadoCuenta" prefWidth="105.0" text="Estado cuenta" />
+                                    </columns>
+                                </TableView>
 
-                            <TableView fx:id="tableAdmins" layoutX="20.0" layoutY="95.0" prefHeight="460.0" prefWidth="650.0">
-                                <columns>
-                                    <TableColumn fx:id="colAdminCedula" text="Cédula" />
-                                    <TableColumn fx:id="colAdminNombre" text="Nombre" />
-                                    <TableColumn fx:id="colAdminApellidos" prefWidth="137.0" text="Apellidos" />
-                                    <TableColumn fx:id="colAdminCargoEmpresa" prefWidth="124.0" text="Cargo empresa" />
-                                    <TableColumn fx:id="colAdminCorreoEmpresarial" prefWidth="172.0" text="Correo empresarial" />
-                                </columns>
-                            </TableView>
+                                <Button fx:id="btnCrearAdmin" layoutX="20.0" layoutY="575.0" onAction="#onCrearAdmin" prefWidth="140.0" text="Crear admin" />
 
-                            <Button fx:id="btnCrearAdmin" layoutX="20.0" layoutY="575.0" onAction="#onCrearAdmin" prefWidth="140.0" text="Crear admin" />
-
-                            <Button fx:id="btnEliminarAdmin" layoutX="180.0" layoutY="575.0" onAction="#onEliminarAdmin" prefWidth="140.0" text="Eliminar admin" />
+                                <Button fx:id="btnEliminarAdmin" layoutX="180.0" layoutY="575.0" onAction="#onEliminarAdmin" prefWidth="140.0" text="Eliminar admin" />
+                            </children>
                         </AnchorPane>
                     </Tab>
 
@@ -117,7 +123,6 @@
     <right>
         <AnchorPane prefWidth="300.0" style="-fx-background-color:#111111;">
             <children>
-
                 <Label layoutX="110.0" layoutY="20.0" text="Envíos" textFill="WHITE">
                     <font><Font name="System Bold" size="18.0" /></font>
                 </Label>

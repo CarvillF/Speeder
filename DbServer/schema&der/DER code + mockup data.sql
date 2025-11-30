@@ -138,6 +138,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`transportistas` (
   `numero_licencia` VARCHAR(45) NULL DEFAULT NULL,
   `tipo_licencia` VARCHAR(45) NULL DEFAULT NULL,
   `zona_cobertura` VARCHAR(45) NULL DEFAULT 'General',
+  `comision` DECIMAL(10,2) NULL DEFAULT 0.00,
   `disponibilidad` ENUM('Disponible', 'Ocupado', 'Fuera de servicio') NULL DEFAULT 'Disponible',
   PRIMARY KEY (`usuario_cedula`),
   CONSTRAINT `fk_transportistas_usuarios`

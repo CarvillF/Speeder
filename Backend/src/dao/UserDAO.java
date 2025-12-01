@@ -204,13 +204,13 @@ public class UserDAO {
             }
 
             // 2. Registrar en tabla transportistas
-            String sql = "INSERT INTO transportistas (usuario_cedula, numero_licencia, tipo_licencia, zona_cobertura, comision, disponibilidad) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO transportistas (usuario_cedula, numero_licencia, tipo_licencia, zona_cobertura, fondos, disponibilidad) VALUES (?, ?, ?, ?, ?, ?)";
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
                 stmt.setString(1, transportista.getCedula());
                 stmt.setString(2, transportista.getNumeroLicencia());
                 stmt.setString(3, transportista.getTipoLicencia());
                 stmt.setString(4, transportista.getZonaCobertura());
-                stmt.setFloat(5, transportista.getMonedero());
+                stmt.setFloat(5, transportista.getFondos());
                 stmt.setString(6, transportista.getDisponibilidad());
                 stmt.executeUpdate();
             }
@@ -259,11 +259,11 @@ public class UserDAO {
             }
 
             // 2. Registrar en tabla administradores
-            String sql = "INSERT INTO administradores (usuario_cedula, codigo_empleado, rol) VALUES (?, ?, ?)";
+            String sql = "INSERT INTO administradores (usuario_cedula, codigo_empleado, activo) VALUES (?, ?, ?)";
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
                 stmt.setString(1, admin.getCedula());
                 stmt.setString(2, admin.getCodigoEmpleado());
-                stmt.setString(3, admin.getRol());
+                stmt.setBoolean(3, admin.getActivo());
                 stmt.executeUpdate();
             }
 

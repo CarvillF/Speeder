@@ -57,7 +57,7 @@ public class TestPaso2 {
         // Register Admin
         Admin admin = new Admin(
                 "333" + suffix, "Ad" + suffix, "Min", "admin" + suffix + "@mail.com", "pass123", "0977777777", 0,
-                "EMP-001", "SuperAdmin");
+                "EMP-001", true);
         boolean adminSuccess = UserDAO.registerAdmin(admin);
         System.out.println("Register Admin: " + (adminSuccess ? "✓ Success" : "✗ Failed"));
         System.out.println();

@@ -7,26 +7,26 @@ public class Transportistas extends Usuario {
     private String numero_licencia;
     private String tipo_licencia;
     private String zona_cobertura;
-    private float monedero;
+    private float fondos;
     private String disponibilidad;
     private ArrayList<Vehiculo> vehiculos;
 
     public Transportistas(String cedula, String nombre, String apellidos, String correo, String contrasena,
             String numero_telefono, int id_direccion_principal,
-            String numero_licencia, String tipo_licencia, String zona_cobertura, float monedero, String disponibilidad,
+            String numero_licencia, String tipo_licencia, String zona_cobertura, float fondos, String disponibilidad,
             ArrayList<Vehiculo> vehiculos) {
         super(cedula, nombre, apellidos, correo, contrasena, numero_telefono, id_direccion_principal);
         this.numero_licencia = numero_licencia;
         this.tipo_licencia = tipo_licencia;
         this.zona_cobertura = zona_cobertura;
-        this.monedero = monedero;
+        this.fondos = fondos;
         this.disponibilidad = disponibilidad;
         this.vehiculos = vehiculos;
     }
 
     // setters
-    public void setMonedero(float new_monedero) {
-        this.monedero = new_monedero;
+    public void setFondos(float new_fondos) {
+        this.fondos = new_fondos;
     }
 
     public void setNumeroLicencia(String numero_licencia) {
@@ -46,8 +46,8 @@ public class Transportistas extends Usuario {
     }
 
     // getters
-    public float getMonedero() {
-        return monedero;
+    public float getFondos() {
+        return fondos;
     }
 
     public String getNumeroLicencia() {

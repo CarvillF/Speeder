@@ -3,14 +3,14 @@ package clases;
 public class Admin extends Usuario {
     // constructor
     public Admin(String cedula, String nombre, String apellidos, String correo, String contrasena,
-            String numero_telefono, int id_direccion_principal, String codigo_empleado, String rol) {
+            String numero_telefono, int id_direccion_principal, String codigo_empleado, boolean activo) {
         super(cedula, nombre, apellidos, correo, contrasena, numero_telefono, id_direccion_principal);
         this.codigo_empleado = codigo_empleado;
-        this.rol = rol;
+        this.activo = activo;
     }
 
     private String codigo_empleado;
-    private String rol;
+    private boolean activo;
 
     // getters and setters
     public String getCodigoEmpleado() {
@@ -21,12 +21,12 @@ public class Admin extends Usuario {
         this.codigo_empleado = codigo_empleado;
     }
 
-    public String getRol() {
-        return rol;
+    public boolean getActivo() {
+        return activo;
     }
 
-    public void setRol(String rol) {
-        this.rol = rol;
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 
     // funciones

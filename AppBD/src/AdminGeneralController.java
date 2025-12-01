@@ -19,7 +19,7 @@ public class AdminGeneralController {
     private Button btnInforme;
 
     @FXML
-    private Button btnLogoutAdmin; // 🔹 NUEVO
+    private Button btnLogoutAdmin;
 
     @FXML
     private ChoiceBox<String> cbFiltroUsuarios;
@@ -74,7 +74,17 @@ public class AdminGeneralController {
 
     @FXML
     private void onInformeClicked() {
-
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("admin_informes.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) btnInforme.getScene().getWindow();
+            stage.setScene(new Scene(root, 900, 600));
+            stage.setTitle("Informes");
+            stage.centerOnScreen();
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -84,7 +94,6 @@ public class AdminGeneralController {
 
     @FXML
     private void onEliminarUsuario() {
-       
     }
 
     @FXML
@@ -94,7 +103,6 @@ public class AdminGeneralController {
 
     @FXML
     private void onEliminarTransportista() {
-
     }
 
     @FXML
@@ -104,14 +112,11 @@ public class AdminGeneralController {
 
     @FXML
     private void onEliminarAdmin() {
-
     }
 
     @FXML
     private void onAnularEnvio() {
-
     }
-
 
     @FXML
     private void onLogoutAdmin() {
@@ -120,8 +125,6 @@ public class AdminGeneralController {
             Parent root = loader.load();
 
             Stage stage = (Stage) btnGeneral.getScene().getWindow();
-
-
             Scene scene = new Scene(root, 900, 500);
             stage.setScene(scene);
             stage.centerOnScreen();
@@ -129,7 +132,6 @@ public class AdminGeneralController {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            
         }
     }
 

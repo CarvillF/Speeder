@@ -1,33 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="600.0" prefWidth="800.0"
-            xmlns="http://javafx.com/javafx/21"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="ConfiguracionEmprendimientoController">
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ConfiguracionEmprendimientoController">
 
     <left>
-        <AnchorPane prefHeight="600.0" prefWidth="180.0"
-                    style="-fx-background-color: #263F73;"
-                    BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="600.0" prefWidth="220.0" style="-fx-background-color: linear-gradient(to bottom, #20273E, #263F73);" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="btnVolver"
-                        layoutX="20.0" layoutY="20.0"
-                        prefHeight="26.0" prefWidth="80.0"
-                        text="Volver"
-                        onAction="#onVolverConfiguracion"
-                        style="-fx-background-color: transparent;
-                               -fx-text-fill: white;
-                               -fx-border-color: transparent;" />
+                <Button fx:id="btnVolver" layoutX="20.0" layoutY="20.0" onAction="#onVolverConfiguracion" prefHeight="30.0" prefWidth="100.0" style="-fx-background-radius: 18;                                -fx-background-color: transparent;                                -fx-text-fill: #f9fafb;                                -fx-border-color: transparent;                                -fx-focus-color: transparent;                                -fx-faint-focus-color: transparent;" text="⮐  Volver" />
 
-                <Label layoutX="20.0" layoutY="70.0"
-                       text="Emprendimientos"
-                       textFill="WHITE">
+                <Label layoutX="16.0" layoutY="80.0" text="Emprendimientos" textFill="WHITE">
                     <font>
-                        <Font name="System Bold" size="18.0" />
+                        <Font name="Arial Black" size="20.0" />
+                    </font>
+                </Label>
+
+                <Label layoutX="32.0" layoutY="122.0" text="Configura tus compañías emisoras" textFill="#d0d8ff">
+                    <font>
+                        <Font size="12.0" />
                     </font>
                 </Label>
             </children>
@@ -35,76 +39,72 @@
     </left>
 
     <center>
-        <AnchorPane prefHeight="600.0" prefWidth="540.0"
-                    BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="600.0" prefWidth="540.0" style="-fx-background-color: linear-gradient(to bottom right, #020617, #0b1120);" BorderPane.alignment="CENTER">
             <children>
+                <VBox layoutX="30.0" layoutY="30.0" prefWidth="560.0" spacing="16.0" style="-fx-background-color: rgba(15,23,42,0.96);                              -fx-background-radius: 18;                              -fx-padding: 18;">
+                    <children>
+                        <Label text="Configuración de emprendimientos" textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Label>
 
-                <Label layoutX="30.0" layoutY="20.0"
-                       text="Configuración de emprendimientos">
-                    <font>
-                        <Font name="System Bold" size="18.0" />
-                    </font>
-                </Label>
+                        <Label text="Administra las compañías que utilizarás para enviar tus paquetes." textFill="#9ca3af">
+                            <font>
+                                <Font size="12.0" />
+                            </font>
+                        </Label>
 
-                <Label layoutX="30.0" layoutY="70.0" text="RUC:" />
-                <TextField fx:id="tfRuc"
-                           layoutX="130.0" layoutY="65.0"
-                           prefWidth="200.0" />
+                        <Separator />
 
-                <Label layoutX="30.0" layoutY="110.0" text="Nombre:" />
-                <TextField fx:id="tfNombre"
-                           layoutX="130.0" layoutY="105.0"
-                           prefWidth="320.0" />
+                        <GridPane hgap="12.0" vgap="10.0">
+                            <columnConstraints>
+                                <ColumnConstraints prefWidth="130.0" />
+                                <ColumnConstraints prefWidth="260.0" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints prefHeight="30.0" />
+                                <RowConstraints prefHeight="30.0" />
+                                <RowConstraints prefHeight="30.0" />
+                                <RowConstraints prefHeight="30.0" />
+                            </rowConstraints>
+                            <children>
+                                <Label text="RUC:" textFill="#e5e7eb" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                <TextField fx:id="tfRuc" promptText="RUC de la compañía" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-                <Label layoutX="30.0" layoutY="150.0" text="Tipo compañía:" />
-                <TextField fx:id="tfTipo"
-                           layoutX="130.0" layoutY="145.0"
-                           prefWidth="200.0"
-                           promptText="Privada / Pública / etc." />
+                                <Label text="Nombre:" textFill="#e5e7eb" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                <TextField fx:id="tfNombre" promptText="Nombre comercial" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-                <Label layoutX="30.0" layoutY="190.0" text="Descripción:" />
-                <TextField fx:id="tfDescripcion"
-                           layoutX="130.0" layoutY="185.0"
-                           prefWidth="320.0"
-                           promptText="Descripción breve" />
+                                <Label text="Tipo compañía:" textFill="#e5e7eb" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                <TextField fx:id="tfTipo" promptText="Privada / Pública / etc." GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-                <Button fx:id="btnAgregar"
-                        layoutX="30.0" layoutY="230.0"
-                        prefWidth="150.0"
-                        text="Agregar emprendimiento"
-                        onAction="#onAgregarEmprendimiento" />
+                                <Label text="Descripción:" textFill="#e5e7eb" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                                <TextField fx:id="tfDescripcion" promptText="Descripción breve" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                            </children>
+                        </GridPane>
 
-                <Button fx:id="btnActualizar"
-                        layoutX="190.0" layoutY="230.0"
-                        prefWidth="150.0"
-                        text="Actualizar seleccionado"
-                        onAction="#onActualizarEmprendimiento" />
+                        <HBox spacing="10.0">
+                            <children>
+                                <Button fx:id="btnAgregar" onAction="#onAgregarEmprendimiento" prefWidth="170.0" style="-fx-background-radius: 18;                                                -fx-background-color: #22c55e;                                                -fx-text-fill: white;                                                -fx-border-color: transparent;" text="Agregar emprendimiento" />
+                                <Button fx:id="btnActualizar" onAction="#onActualizarEmprendimiento" prefWidth="170.0" style="-fx-background-radius: 18;                                                -fx-background-color: #3b82f6;                                                -fx-text-fill: white;                                                -fx-border-color: transparent;" text="Actualizar seleccionado" />
+                                <Button fx:id="btnEliminar" onAction="#onEliminarEmprendimiento" prefWidth="170.0" style="-fx-background-radius: 18;                                                -fx-background-color: #ef4444;                                                -fx-text-fill: white;                                                -fx-border-color: transparent;" text="Eliminar seleccionado" />
+                            </children>
+                        </HBox>
 
-                <Button fx:id="btnEliminar"
-                        layoutX="350.0" layoutY="230.0"
-                        prefWidth="150.0"
-                        text="Eliminar seleccionado"
-                        onAction="#onEliminarEmprendimiento" />
-
-                <TableView fx:id="tableEmprendimientos"
-                           layoutX="10.0" layoutY="280.0"
-                           prefHeight="300.0" prefWidth="600.0">
-                    <columns>
-                        <TableColumn fx:id="colRuc"
-                                     prefWidth="100.0"
-                                     text="RUC" />
-                        <TableColumn fx:id="colNombre"
-                                     prefWidth="180.0"
-                                     text="Nombre" />
-                        <TableColumn fx:id="colTipo"
-                                     prefWidth="120.0"
-                                     text="Tipo" />
-                        <TableColumn fx:id="colDescripcion"
-                                     prefWidth="200.0"
-                                     text="Descripción" />
-                    </columns>
-                </TableView>
-
+                        <ScrollPane hbarPolicy="AS_NEEDED" pannable="true" prefHeight="260.0" prefWidth="560.0" style="-fx-background-color: transparent;" vbarPolicy="NEVER">
+                            <content>
+                                <TableView fx:id="tableEmprendimientos" prefHeight="240.0" prefWidth="900.0" style="-fx-background-color: transparent;                                                   -fx-control-inner-background: #020617;                                                   -fx-background-radius: 12;                                                   -fx-border-radius: 12;                                                   -fx-border-color: rgba(148,163,184,0.45);                                                   -fx-border-width: 1;">
+                                    <columns>
+                                        <TableColumn fx:id="colRuc" prefWidth="130.0" text="RUC" />
+                                        <TableColumn fx:id="colNombre" prefWidth="220.0" text="Nombre" />
+                                        <TableColumn fx:id="colTipo" prefWidth="150.0" text="Tipo" />
+                                        <TableColumn fx:id="colDescripcion" prefWidth="400.0" text="Descripción" />
+                                    </columns>
+                                </TableView>
+                            </content>
+                        </ScrollPane>
+                    </children>
+                </VBox>
             </children>
         </AnchorPane>
     </center>

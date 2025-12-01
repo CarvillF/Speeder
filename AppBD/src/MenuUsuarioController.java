@@ -23,7 +23,7 @@ public class MenuUsuarioController {
 
     @FXML
     private void initialize() {
-        // Ya no hacemos nada aquí porque no hay sectionTitleLabel ni sectionDescriptionLabel
+        
     }
 
     @FXML
@@ -33,11 +33,10 @@ public class MenuUsuarioController {
             Parent root = loader.load();
             Stage stage = (Stage) btnRevisarEnvios.getScene().getWindow();
             stage.setScene(new Scene(root, 800, 600));
-            stage.setTitle("Revisar envíos");
+            stage.setTitle("Envios");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            // Si quieres, aquí luego podemos poner un Alert en vez de usar un Label
         }
     }
 
@@ -62,7 +61,7 @@ public class MenuUsuarioController {
             Parent root = loader.load();
             Stage stage = (Stage) btnGestionEnvios.getScene().getWindow();
             stage.setScene(new Scene(root, 800, 600));
-            stage.setTitle("Gestión de envíos");
+            stage.setTitle("Crear nuevo envío");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -75,7 +74,7 @@ public class MenuUsuarioController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) btnLogout.getScene().getWindow();
-            // Tamaño del login según tu FXML (900 x 500)
+            // Tamaño del login según tu FXML
             stage.setScene(new Scene(root, 900, 500));
             stage.setTitle("Sistema de Paquetería");
             stage.show();

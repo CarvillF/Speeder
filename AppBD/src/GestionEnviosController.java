@@ -1,181 +1,116 @@
-import clases.ProtocolActions;
-import clases.Request;
-import clases.Response;
-import clases.Shipment;
-import clases.SpeederClient;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import javafx.application.Platform;
-import javafx.beans.property.ReadOnlyDoubleWrapper;
-import javafx.beans.property.ReadOnlyIntegerWrapper;
-import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GestionEnviosController {
 
-    @FXML
-    private TableView<Shipment> tableEnvios;
+    private static final boolean DEMO = true;
 
     @FXML
-    private TableColumn<Shipment, Number> colId;
+    private ComboBox<String> cbCompania;
 
     @FXML
-    private TableColumn<Shipment, String> colDestino;
+    private ComboBox<String> cbSucursal;
 
     @FXML
-    private TableColumn<Shipment, String> colEstado;
+    private ComboBox<String> cbCiudad;
 
     @FXML
-    private TableColumn<Shipment, Number> colPrecio;
+    private TextField tfCallePrincipal;
 
     @FXML
-    private TextField tfDestino;
+    private TextField tfCalleSecundaria;
 
     @FXML
-    private TextField tfDescripcion;
+    private TextField tfNumeroEdificacion;
 
     @FXML
-    private TextField tfPrecio;
+    private TextField tfDetalleDireccion;
+
+    @FXML
+    private TextField tfDescripcionPaquete;
+
+    @FXML
+    private TextField tfDimX;
+
+    @FXML
+    private TextField tfDimY;
+
+    @FXML
+    private TextField tfDimZ;
+
+    @FXML
+    private TextField tfPeso;
+
+    @FXML
+    private ComboBox<String> cbTipoPaquete;
+
+    @FXML
+    private TextArea taObservaciones;
+
+    @FXML
+    private ListView<TransportistaOpcion> listTransportistas;
+
+    @FXML
+    private Button btnOpcionesDisponibles;
+
+    @FXML
+    private Button btnConfirmarEnvio;
+
+    @FXML
+    private Button btnVolverMenu;
 
     @FXML
     private void initialize() {
-        if (colId != null) {
-            colId.setCellValueFactory(c ->
-                    new ReadOnlyIntegerWrapper(c.getValue().getId()));
+        inicializarCombosDemo();
+        if (btnConfirmarEnvio != null) {
+            btnConfirmarEnvio.setDisable(true);
         }
-        if (colDestino != null) {
-            colDestino.setCellValueFactory(c ->
-                    new ReadOnlyStringWrapper(c.getValue().getDestino()));
-        }
-        if (colEstado != null) {
-            colEstado.setCellValueFactory(c ->
-                    new ReadOnlyStringWrapper(c.getValue().getEstado()));
-        }
-        if (colPrecio != null) {
-            colPrecio.setCellValueFactory(c ->
-                    new ReadOnlyDoubleWrapper(c.getValue().getPrecioEstimado()));
-        }
-        cargarEnviosDesdeServidor();
     }
 
-    @FXML
-    private void onSolicitarEnvio() {
-        String destino = tfDestino.getText();
-        String descripcion = tfDescripcion.getText();
-        String precioStr = tfPrecio.getText();
-
-        if (destino == null || destino.isBlank()
-                || descripcion == null || descripcion.isBlank()
-                || precioStr == null || precioStr.isBlank()) {
-
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Datos incompletos");
-            alert.setHeaderText(null);
-            alert.setContentText("Complete destino, descripción y precio estimado.");
-            alert.showAndWait();
-            return;
+    private void inicializarCombosDemo() {
+        if (cbCompania != null) {
+            cbCompania.getItems().setAll(
+                    "Comercial Andina S.A.",
+                    "TechMarket Cía. Ltda.",
+                    "LogiStore Express"
+            );
         }
 
-        double precio;
-        try {
-            precio = Double.parseDouble(precioStr);
-        } catch (NumberFormatException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Precio inválido");
-            alert.setHeaderText(null);
-            alert.setContentText("Ingrese un valor numérico válido para el precio.");
-            alert.showAndWait();
-            return;
+        if (cbSucursal != null) {
+            cbSucursal.getItems().setAll(
+                    "Sucursal Quito - Av. Naciones Unidas",
+                    "Sucursal Cumbayá - Vía Interoceánica",
+                    "Sucursal Guayaquil - Cdla. Kennedy"
+            );
         }
 
-        Shipment nuevo = new Shipment();
-        nuevo.setDestino(destino);
-        nuevo.setDescripcion(descripcion);
-        nuevo.setPrecioEstimado(precio);
-        nuevo.setEstado("PENDIENTE");
-
-        Request request = new Request(ProtocolActions.CREATE_SHIPMENT, nuevo);
-
-        new Thread(() -> {
-            Response response = SpeederClient.getInstance().sendRequest(request);
-            Platform.runLater(() -> {
-                Alert alert;
-                if (response != null && "SUCCESS".equalsIgnoreCase(response.getStatus())) {
-                    alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Envío creado");
-                    alert.setHeaderText(null);
-                    alert.setContentText(response.getMessage() != null
-                            ? response.getMessage()
-                            : "El envío fue creado correctamente.");
-                    tfDestino.clear();
-                    tfDescripcion.clear();
-                    tfPrecio.clear();
-                    cargarEnviosDesdeServidor();
-                } else {
-                    alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error al crear envío");
-                    alert.setHeaderText(null);
-                    String msg = (response != null && response.getMessage() != null)
-                            ? response.getMessage()
-                            : "No se pudo crear el envío.";
-                    alert.setContentText(msg);
-                }
-                alert.showAndWait();
-            });
-        }).start();
-    }
-
-    @FXML
-    private void onCancelarEnvio() {
-        Shipment seleccionado = tableEnvios.getSelectionModel().getSelectedItem();
-        if (seleccionado == null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Selección requerida");
-            alert.setHeaderText(null);
-            alert.setContentText("Seleccione un envío en la tabla para cancelarlo.");
-            alert.showAndWait();
-            return;
+        if (cbCiudad != null) {
+            cbCiudad.getItems().setAll(
+                    "Quito",
+                    "Guayaquil",
+                    "Cuenca",
+                    "Ambato",
+                    "Manta"
+            );
         }
 
-        Request request = new Request(ProtocolActions.CANCEL_SHIPMENT, seleccionado.getId());
-
-        new Thread(() -> {
-            Response response = SpeederClient.getInstance().sendRequest(request);
-            Platform.runLater(() -> {
-                Alert alert;
-                if (response != null && "SUCCESS".equalsIgnoreCase(response.getStatus())) {
-                    alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Envío cancelado");
-                    alert.setHeaderText(null);
-                    alert.setContentText(response.getMessage() != null
-                            ? response.getMessage()
-                            : "El envío fue cancelado.");
-                    cargarEnviosDesdeServidor();
-                } else {
-                    alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error al cancelar");
-                    alert.setHeaderText(null);
-                    String msg = (response != null && response.getMessage() != null)
-                            ? response.getMessage()
-                            : "No se pudo cancelar el envío.";
-                    alert.setContentText(msg);
-                }
-                alert.showAndWait();
-            });
-        }).start();
+        if (cbTipoPaquete != null) {
+            cbTipoPaquete.getItems().setAll(
+                    "Estándar",
+                    "Frágil",
+                    "Perecible",
+                    "Documentos",
+                    "Electrónicos"
+            );
+        }
     }
 
     @FXML
@@ -183,36 +118,192 @@ public class GestionEnviosController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("menu_usuario.fxml"));
             Parent root = loader.load();
-            Stage stage = (Stage) tableEnvios.getScene().getWindow();
+            Stage stage = (Stage) btnVolverMenu.getScene().getWindow();
             stage.setScene(new Scene(root, 800, 600));
-            stage.setTitle("Menú usuario");
+            stage.setTitle("Menú de usuario");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error al volver");
-            alert.setHeaderText(null);
-            alert.setContentText("No se pudo volver al menú de usuario.");
-            alert.showAndWait();
+            mostrarAlerta(Alert.AlertType.ERROR, "Error al volver",
+                    "No se pudo volver al menú de usuario.");
         }
     }
 
-    private void cargarEnviosDesdeServidor() {
-        Request request = new Request(ProtocolActions.GET_MY_SHIPMENTS, null);
+    @FXML
+    private void onOpcionesDisponibles() {
+        if (!validarCamposObligatorios()) {
+            return;
+        }
 
-        new Thread(() -> {
-            Response response = SpeederClient.getInstance().sendRequest(request);
-            if (response == null || response.getData() == null) {
-                return;
+        if (DEMO) {
+            cargarTransportistasDemo();
+        } else {
+            // aquí irá la llamada real al backend
+        }
+    }
+
+    private boolean validarCamposObligatorios() {
+        List<String> errores = new ArrayList<>();
+
+        String compania = cbCompania.getSelectionModel().getSelectedItem();
+        String sucursal = cbSucursal.getSelectionModel().getSelectedItem();
+        String ciudad = cbCiudad.getSelectionModel().getSelectedItem();
+
+        String callePrin = tfCallePrincipal.getText();
+        String descripcion = tfDescripcionPaquete.getText();
+        String peso = tfPeso.getText();
+        String tipo = cbTipoPaquete.getSelectionModel().getSelectedItem();
+
+        if (compania == null || compania.isBlank()) {
+            errores.add("Seleccione la compañía que envía el paquete.");
+        }
+        if (sucursal == null || sucursal.isBlank()) {
+            errores.add("Seleccione la sucursal de la compañía.");
+        }
+        if (ciudad == null || ciudad.isBlank()) {
+            errores.add("Seleccione la ciudad de entrega.");
+        }
+        if (callePrin == null || callePrin.isBlank()) {
+            errores.add("Ingrese la calle principal de la dirección de entrega.");
+        }
+        if (descripcion == null || descripcion.isBlank()) {
+            errores.add("Ingrese la descripción del paquete.");
+        }
+        if (peso == null || peso.isBlank()) {
+            errores.add("Ingrese el peso del paquete.");
+        }
+        if (tipo == null || tipo.isBlank()) {
+            errores.add("Seleccione el tipo de paquete.");
+        }
+
+        if (peso != null && !peso.isBlank()) {
+            try {
+                Double.parseDouble(peso);
+            } catch (NumberFormatException e) {
+                errores.add("El peso debe ser un número válido (ej: 2.5).");
             }
-            Gson gson = new Gson();
-            String json = gson.toJson(response.getData());
-            Type listType = new TypeToken<ArrayList<Shipment>>() {}.getType();
-            List<Shipment> envios = gson.fromJson(json, listType);
+        }
 
-            Platform.runLater(() -> {
-                tableEnvios.getItems().setAll(envios);
-            });
-        }).start();
+        if (!errores.isEmpty()) {
+            StringBuilder sb = new StringBuilder();
+            for (String err : errores) {
+                sb.append("- ").append(err).append("\n");
+            }
+            mostrarAlerta(Alert.AlertType.WARNING, "Campos incompletos", sb.toString());
+            return false;
+        }
+
+        return true;
+    }
+
+    private void cargarTransportistasDemo() {
+        if (listTransportistas == null) return;
+
+        listTransportistas.getItems().clear();
+
+        TransportistaOpcion t1 = new TransportistaOpcion(
+                "T-001", "Juan Pérez", "Entrega estimada: 3 h", "Tarifa aprox: $4.50"
+        );
+        TransportistaOpcion t2 = new TransportistaOpcion(
+                "T-002", "María Gómez", "Entrega estimada: 1 día", "Tarifa aprox: $3.80"
+        );
+        TransportistaOpcion t3 = new TransportistaOpcion(
+                "T-003", "TransExpress S.A.", "Entrega estimada: mismo día", "Tarifa aprox: $5.20"
+        );
+
+        listTransportistas.getItems().addAll(t1, t2, t3);
+
+        if (btnConfirmarEnvio != null) {
+            btnConfirmarEnvio.setDisable(false);
+        }
+    }
+
+    @FXML
+    private void onConfirmarEnvio() {
+        TransportistaOpcion seleccionado = listTransportistas.getSelectionModel().getSelectedItem();
+        if (seleccionado == null) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Seleccione un transportista",
+                    "Debe escoger una opción de transportista antes de confirmar el envío.");
+            return;
+        }
+
+        if (DEMO) {
+            String resumen = String.format(
+                    "Envío creado en modo DEMO.\n\nTransportista: %s\nDetalle: %s\n\nMás adelante, este flujo enviará los datos al backend.",
+                    seleccionado.getNombre(), seleccionado.getDetallePrincipal()
+            );
+            mostrarAlerta(Alert.AlertType.INFORMATION, "Envío confirmado (DEMO)", resumen);
+            limpiarFormulario();
+        } else {
+            // aquí irá la confirmación real con backend
+        }
+    }
+
+    private void limpiarFormulario() {
+        if (cbCompania != null) cbCompania.getSelectionModel().clearSelection();
+        if (cbSucursal != null) cbSucursal.getSelectionModel().clearSelection();
+        if (cbCiudad != null) cbCiudad.getSelectionModel().clearSelection();
+
+        if (tfCallePrincipal != null) tfCallePrincipal.clear();
+        if (tfCalleSecundaria != null) tfCalleSecundaria.clear();
+        if (tfNumeroEdificacion != null) tfNumeroEdificacion.clear();
+        if (tfDetalleDireccion != null) tfDetalleDireccion.clear();
+
+        if (tfDescripcionPaquete != null) tfDescripcionPaquete.clear();
+        if (tfDimX != null) tfDimX.clear();
+        if (tfDimY != null) tfDimY.clear();
+        if (tfDimZ != null) tfDimZ.clear();
+        if (tfPeso != null) tfPeso.clear();
+        if (cbTipoPaquete != null) cbTipoPaquete.getSelectionModel().clearSelection();
+        if (taObservaciones != null) taObservaciones.clear();
+
+        if (listTransportistas != null) listTransportistas.getItems().clear();
+        if (btnConfirmarEnvio != null) btnConfirmarEnvio.setDisable(true);
+    }
+
+    private void mostrarAlerta(Alert.AlertType type, String title, String msg) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(msg);
+        alert.showAndWait();
+    }
+
+    public static class TransportistaOpcion {
+        private final String id;
+        private final String nombre;
+        private final String detallePrincipal;
+        private final String tarifaTexto;
+
+        public TransportistaOpcion(String id, String nombre,
+                                   String detallePrincipal, String tarifaTexto) {
+            this.id = id;
+            this.nombre = nombre;
+            this.detallePrincipal = detallePrincipal;
+            this.tarifaTexto = tarifaTexto;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public String getNombre() {
+            return nombre;
+        }
+
+        public String getDetallePrincipal() {
+            return detallePrincipal;
+        }
+
+        public String getTarifaTexto() {
+            return tarifaTexto;
+        }
+
+        @Override
+        public String toString() {
+            return nombre + " | " + detallePrincipal + " | " + tarifaTexto;
+        }
     }
 }
+
+

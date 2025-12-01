@@ -2,99 +2,91 @@ package clases;
 
 public class Paquete {
     // atributos
+    private int id_paquete;
     private String descripcion;
-    private float peso;
-    private float[] dimensiones = new float[3]; // alto[0] - largo[1] - profundidad[2]
-    private boolean fragilidad;
-    private int riesgo_salud;
-    private int inflamabilidad;
-    private int reactividad;
-    private String riesgo_especifico;
+    private double peso;
+    private String tipo;
+    private double dimension_x;
+    private double dimension_y;
+    private double dimension_z;
+    private String requisitos;
 
     // constructor
-    public Paquete(String descripcion, float peso, float[] dimensiones) {
+    public Paquete(int id_paquete, String descripcion, double peso, String tipo, double dimension_x, double dimension_y,
+            double dimension_z, String requisitos) {
+        this.id_paquete = id_paquete;
         this.descripcion = descripcion;
         this.peso = peso;
-        this.dimensiones = dimensiones;
+        this.tipo = tipo;
+        this.dimension_x = dimension_x;
+        this.dimension_y = dimension_y;
+        this.dimension_z = dimension_z;
+        this.requisitos = requisitos;
     }
 
-    // setter
-    public void setDescripcion(String new_descr) {
-        this.descripcion = new_descr;
+    // setters
+    public void setIdPaquete(int id_paquete) {
+        this.id_paquete = id_paquete;
     }
 
-    public void setPeso(float peso) {
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public void setPeso(double peso) {
         this.peso = peso;
     }
 
-    public void setDimensiones(float[] dimensiones) {
-        this.dimensiones = dimensiones;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
-    public void setFragilidad(boolean fragilidad) {
-        this.fragilidad = fragilidad;
+    public void setDimensionX(double dimension_x) {
+        this.dimension_x = dimension_x;
     }
 
-    public void setRiesgo_salud(int riesgo_salud) {
-        this.riesgo_salud = riesgo_salud;
+    public void setDimensionY(double dimension_y) {
+        this.dimension_y = dimension_y;
     }
 
-    public void setInflamabilidad(int inflamabilidad) {
-        this.inflamabilidad = inflamabilidad;
+    public void setDimensionZ(double dimension_z) {
+        this.dimension_z = dimension_z;
     }
 
-    public void setReactividad(int reactividad) {
-        this.reactividad = reactividad;
-    }
-
-    public void setRiesgo_especifico(String riesgo_especifico) {
-        this.riesgo_especifico = riesgo_especifico;
+    public void setRequisitos(String requisitos) {
+        this.requisitos = requisitos;
     }
 
     // getters
+    public int getIdPaquete() {
+        return id_paquete;
+    }
+
     public String getDescripcion() {
         return descripcion;
     }
 
-    public float getPeso() {
+    public double getPeso() {
         return peso;
     }
 
-    // -----Dimensiones-----
-    public float[] getDimensiones() {
-        return dimensiones;
+    public String getTipo() {
+        return tipo;
     }
 
-    public float getAlto() {
-        return dimensiones[0];
+    public double getDimensionX() {
+        return dimension_x;
     }
 
-    public float getAncho() {
-        return dimensiones[1];
+    public double getDimensionY() {
+        return dimension_y;
     }
 
-    public float getProfundidad() {
-        return dimensiones[2];
-    }
-    // ---------------------
-
-    public boolean getFragilidad() {
-        return fragilidad;
+    public double getDimensionZ() {
+        return dimension_z;
     }
 
-    public int getRiesgo_salud() {
-        return riesgo_salud;
-    }
-
-    public int getInflamabilidad() {
-        return inflamabilidad;
-    }
-
-    public int getReactividad() {
-        return reactividad;
-    }
-
-    public String getRiesgo_especifico() {
-        return riesgo_especifico;
+    public String getRequisitos() {
+        return requisitos;
     }
 }

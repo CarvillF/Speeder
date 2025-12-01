@@ -14,12 +14,13 @@ GRANT SELECT, INSERT, UPDATE ON mydb.companias TO 'emprendedor_user'@'localhost'
 GRANT SELECT, INSERT, UPDATE ON mydb.sucursales TO 'emprendedor_user'@'localhost';
 GRANT SELECT, INSERT, UPDATE ON mydb.envios TO 'emprendedor_user'@'localhost';
 GRANT SELECT, INSERT, UPDATE ON mydb.paquetes TO 'emprendedor_user'@'localhost';
-GRANT SELECT ON mydb.direcciones TO 'emprendedor_user'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON mydb.direcciones TO 'emprendedor_user'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE ON mydb.metodos_pago TO 'emprendedor_user'@'localhost';
 GRANT SELECT ON mydb.transportistas TO 'emprendedor_user'@'localhost';
 GRANT SELECT ON mydb.caracteristicas_paquete TO 'emprendedor_user'@'localhost';
 GRANT SELECT ON mydb.modificadores_entrega TO 'emprendedor_user'@'localhost';
 GRANT SELECT, INSERT ON mydb.modificadores_aplicados TO 'emprendedor_user'@'localhost';
-GRANT SELECT, INSERT, UPDATE, DELETE ON mydb.metodos_pago TO 'emprendedor_user'@'localhost';
+
 
 -- =====================================================
 -- USUARIO TRANSPORTISTA

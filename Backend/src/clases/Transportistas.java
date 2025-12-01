@@ -4,23 +4,23 @@ import java.util.ArrayList;
 
 public class Transportistas extends Usuario {
     // atributos
-    private float comision;
+    private float monedero;
     private ArrayList<Vehiculo> vehiculos;
 
-    public Transportistas(String nombre, String correo, String CI, float comision, ArrayList<Vehiculo> vehiculos) {
+    public Transportistas(String nombre, String correo, String CI, float monedero, ArrayList<Vehiculo> vehiculos) {
         super(nombre, correo, CI);
-        this.comision = comision;
+        this.monedero = monedero;
         this.vehiculos = vehiculos;
     }
 
     // setters
-    public void setComision(float new_comision) {
-        this.comision = new_comision;
+    public void setMonedero(float new_monedero) {
+        this.monedero = new_monedero;
     }
 
     // getters
-    public float getComision() {
-        return comision;
+    public float getMonedero() {
+        return monedero;
     }
 
     public ArrayList<Vehiculo> getVehiculos() {

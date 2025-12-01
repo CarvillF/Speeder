@@ -3,7 +3,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -23,19 +22,8 @@ public class MenuUsuarioController {
     private Button btnLogout;
 
     @FXML
-    private Label sectionTitleLabel;
-
-    @FXML
-    private Label sectionDescriptionLabel;
-
-    @FXML
     private void initialize() {
-        if (sectionTitleLabel != null) {
-            sectionTitleLabel.setText("Seleccione una opción del menú");
-        }
-        if (sectionDescriptionLabel != null) {
-            sectionDescriptionLabel.setText("Aquí se mostrará la información de la opción seleccionada.");
-        }
+        // Ya no hacemos nada aquí porque no hay sectionTitleLabel ni sectionDescriptionLabel
     }
 
     @FXML
@@ -49,7 +37,7 @@ public class MenuUsuarioController {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            sectionDescriptionLabel.setText("Error al abrir la vista de envíos.");
+            // Si quieres, aquí luego podemos poner un Alert en vez de usar un Label
         }
     }
 
@@ -64,7 +52,6 @@ public class MenuUsuarioController {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            sectionDescriptionLabel.setText("Error al abrir configuración.");
         }
     }
 
@@ -79,7 +66,6 @@ public class MenuUsuarioController {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            sectionDescriptionLabel.setText("Error al abrir gestión de envíos.");
         }
     }
 
@@ -89,12 +75,12 @@ public class MenuUsuarioController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) btnLogout.getScene().getWindow();
-            stage.setScene(new Scene(root, 600, 400));
+            // Tamaño del login según tu FXML (900 x 500)
+            stage.setScene(new Scene(root, 900, 500));
             stage.setTitle("Sistema de Paquetería");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            sectionDescriptionLabel.setText("Error al cerrar sesión.");
         }
     }
 }

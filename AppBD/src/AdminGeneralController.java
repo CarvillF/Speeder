@@ -19,6 +19,9 @@ public class AdminGeneralController {
     private Button btnInforme;
 
     @FXML
+    private Button btnLogoutAdmin; // 🔹 NUEVO
+
+    @FXML
     private ChoiceBox<String> cbFiltroUsuarios;
     @FXML
     private TextField tfBuscarUsuarios;
@@ -71,7 +74,7 @@ public class AdminGeneralController {
 
     @FXML
     private void onInformeClicked() {
-        // aquí más adelante cargas la vista de informes si quieren
+
     }
 
     @FXML
@@ -81,7 +84,7 @@ public class AdminGeneralController {
 
     @FXML
     private void onEliminarUsuario() {
-        // aquí luego haces el request para eliminar usuario seleccionado
+       
     }
 
     @FXML
@@ -91,7 +94,7 @@ public class AdminGeneralController {
 
     @FXML
     private void onEliminarTransportista() {
-        // request para eliminar transportista
+
     }
 
     @FXML
@@ -101,12 +104,33 @@ public class AdminGeneralController {
 
     @FXML
     private void onEliminarAdmin() {
-        // request para eliminar admin
+
     }
 
     @FXML
     private void onAnularEnvio() {
-        // request para anular envío seleccionado en listEnviosPendientes
+
+    }
+
+
+    @FXML
+    private void onLogoutAdmin() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = (Stage) btnGeneral.getScene().getWindow();
+
+
+            Scene scene = new Scene(root, 900, 500);
+            stage.setScene(scene);
+            stage.centerOnScreen();
+            stage.setTitle("Sistema de Paquetería - Login");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            
+        }
     }
 
     private void abrirVentana(String fxml, String titulo) {
@@ -116,6 +140,7 @@ public class AdminGeneralController {
             Stage stage = new Stage();
             stage.setTitle(titulo);
             stage.setScene(new Scene(root, 800, 600));
+            stage.centerOnScreen();
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

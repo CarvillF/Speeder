@@ -9,15 +9,28 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GestionEnviosController">
+<BorderPane prefHeight="600.0" prefWidth="800.0"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="GestionEnviosController">
 
-    <!-- LADO IZQUIERDO: MENÚ SIMPLE CON VOLVER -->
     <left>
-        <AnchorPane prefHeight="600.0" prefWidth="180.0" style="-fx-background-color: #263F73;" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="600.0" prefWidth="180.0"
+                    style="-fx-background-color: #263F73;"
+                    BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="btnVolverMenu" layoutX="20.0" layoutY="20.0" onAction="#onVolverMenuUsuario" prefHeight="26.0" prefWidth="80.0" style="-fx-background-color: transparent;                                -fx-text-fill: white;                                -fx-border-color: transparent;" text="Volver" />
+                <Button fx:id="btnVolverMenu"
+                        layoutX="20.0" layoutY="20.0"
+                        onAction="#onVolverMenuUsuario"
+                        prefHeight="26.0" prefWidth="80.0"
+                        style="-fx-background-color: transparent;
+                               -fx-text-fill: white;
+                               -fx-border-color: transparent;"
+                        text="Volver" />
 
-                <Label layoutX="23.0" layoutY="87.0" text="Gestión de envíos" textFill="WHITE">
+                <Label layoutX="23.0" layoutY="87.0"
+                       text="Gestión de envíos"
+                       textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="18.0" />
                     </font>
@@ -26,52 +39,62 @@
         </AnchorPane>
     </left>
 
-    <!-- CENTRO: CAMPOS PARA NUEVO ENVÍO + TABLA -->
     <center>
-        <AnchorPane prefHeight="600.0" prefWidth="540.0" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="600.0" prefWidth="540.0"
+                    BorderPane.alignment="CENTER">
             <children>
 
-                <Label layoutX="30.0" layoutY="20.0" text="Gestión de envíos del empresario">
+                <Label layoutX="30.0" layoutY="20.0"
+                       text="Gestión de envíos del empresario">
                     <font>
                         <Font name="System Bold" size="18.0" />
                     </font>
                 </Label>
 
-                <!-- CAMPOS PARA CREAR UN NUEVO ENVÍO / PAQUETE -->
 
                 <Label layoutX="30.0" layoutY="70.0" text="Destino:" />
-                <TextField fx:id="tfDestino" layoutX="140.0" layoutY="65.0" prefWidth="320.0" promptText="Ciudad / dirección destino" />
+                <TextField fx:id="tfDestino"
+                           layoutX="140.0" layoutY="65.0"
+                           prefWidth="320.0"
+                           promptText="Ciudad / dirección destino" />
 
                 <Label layoutX="30.0" layoutY="110.0" text="Descripción paquete:" />
-                <TextField fx:id="tfDescripcion" layoutX="140.0" layoutY="105.0" prefWidth="320.0" promptText="Contenido del paquete" />
+                <TextField fx:id="tfDescripcion"
+                           layoutX="140.0" layoutY="105.0"
+                           prefWidth="320.0"
+                           promptText="Contenido del paquete" />
 
-                <Label layoutX="30.0" layoutY="150.0" text="Peso (kg):" />
-                <TextField fx:id="tfPeso" layoutX="140.0" layoutY="145.0" prefWidth="120.0" promptText="Ej: 2.50" />
+                <Label layoutX="30.0" layoutY="150.0" text="Tarifa estimada:" />
+                <TextField fx:id="tfPrecio"
+                           layoutX="140.0" layoutY="145.0"
+                           prefWidth="120.0"
+                           promptText="Ej: 5.99" />
 
-                <Label layoutX="30.0" layoutY="190.0" text="Tipo:" />
-                <TextField fx:id="tfTipo" layoutX="140.0" layoutY="185.0" prefWidth="200.0" promptText="Ej: estándar, frágil..." />
+                <Button fx:id="btnAgregarEnvio"
+                        layoutX="30.0" layoutY="190.0"
+                        onAction="#onSolicitarEnvio"
+                        prefHeight="26.0" prefWidth="150.0"
+                        text="Agregar envío" />
 
-                <Label layoutX="30.0" layoutY="230.0" text="Dim X (cm):" />
-                <TextField fx:id="tfDimX" layoutX="140.0" layoutY="225.0" prefWidth="80.0" promptText="Largo" />
+                <Button fx:id="btnCancelarEnvio"
+                        layoutX="190.0" layoutY="190.0"
+                        onAction="#onCancelarEnvio"
+                        prefHeight="26.0" prefWidth="180.0"
+                        text="Cancelar seleccionado" />
 
-                <Label layoutX="230.0" layoutY="230.0" text="Dim Y (cm):" />
-                <TextField fx:id="tfDimY" layoutX="310.0" layoutY="225.0" prefWidth="80.0" promptText="Ancho" />
-
-                <Label layoutX="400.0" layoutY="230.0" text="Dim Z (cm):" />
-                <TextField fx:id="tfDimZ" layoutX="480.0" layoutY="225.0" prefWidth="80.0" promptText="Alto" />
-
-                <!-- BOTONES ACCIÓN -->
-                <Button fx:id="btnAgregarEnvio" layoutX="30.0" layoutY="270.0" onAction="#onAgregarEnvio" prefHeight="26.0" prefWidth="150.0" text="Agregar envío" />
-
-                <Button fx:id="btnCancelarEnvio" layoutX="190.0" layoutY="270.0" onAction="#onCancelarEnvio" prefHeight="26.0" prefWidth="180.0" text="Cancelar seleccionado" />
-
-                <!-- TABLA DE ENVÍOS -->
-                <TableView fx:id="tableEnvios" layoutX="30.0" layoutY="310.0" prefHeight="260.0" prefWidth="540.0">
+                <!-- Tabla de envíos -->
+                <TableView fx:id="tableEnvios"
+                           layoutX="30.0" layoutY="230.0"
+                           prefHeight="330.0" prefWidth="540.0">
                     <columns>
-                        <TableColumn fx:id="colId" prefWidth="60.0" text="ID" />
-                        <TableColumn fx:id="colDestino" prefWidth="160.0" text="Destino" />
-                        <TableColumn fx:id="colEstado" prefWidth="140.0" text="Estado" />
-                        <TableColumn fx:id="colPrecio" prefWidth="180.0" text="Tarifa estimada" />
+                        <TableColumn fx:id="colId"
+                                     prefWidth="60.0" text="ID" />
+                        <TableColumn fx:id="colDestino"
+                                     prefWidth="160.0" text="Destino" />
+                        <TableColumn fx:id="colEstado"
+                                     prefWidth="140.0" text="Estado" />
+                        <TableColumn fx:id="colPrecio"
+                                     prefWidth="180.0" text="Tarifa estimada" />
                     </columns>
                 </TableView>
 

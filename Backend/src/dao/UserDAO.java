@@ -132,4 +132,218 @@ public class UserDAO {
             return false;
         }
     }
+
+    /**
+     * Registra un nuevo empresario en la base de datos.
+     * 
+     * @param empresario Objeto Empresario con los datos a registrar
+     * @return true si el registro fue exitoso, false en caso contrario
+     */
+    public static boolean registerBusiness(clases.Empresario empresario) {
+        Connection conn = null;
+        try {
+            conn = DBConnection.connect(UserType.ADMINISTRADOR);
+            conn.setAutoCommit(false); // Iniciar transacción
+
+            // 1. Registrar en tabla usuarios
+            if (!registerUser(empresario, conn)) {
+                conn.rollback();
+                return false;
+            }
+
+            // 2. Registrar en tabla empresarios
+            String sql = "INSERT INTO empresarios (usuario_cedula, cargo_empresa, correo_empresarial) VALUES (?, ?, ?)";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1, empresario.getCedula());
+                stmt.setString(2, empresario.getCargoEmpresa());
+                stmt.setString(3, empresario.getCorreoEmpresarial());
+                stmt.executeUpdate();
+            }
+
+            conn.commit(); // Confirmar transacción
+            return true;
+
+        } catch (SQLException e) {
+            System.err.println("Error registering business user: " + e.getMessage());
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            return false;
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.setAutoCommit(true);
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    /**
+     * Registra un nuevo transportista en la base de datos.
+     * 
+     * @param transportista Objeto Transportistas con los datos a registrar
+     * @return true si el registro fue exitoso, false en caso contrario
+     */
+    public static boolean registerDriver(clases.Transportistas transportista) {
+        Connection conn = null;
+        try {
+            conn = DBConnection.connect(UserType.ADMINISTRADOR);
+            conn.setAutoCommit(false);
+
+            // 1. Registrar en tabla usuarios
+            if (!registerUser(transportista, conn)) {
+                conn.rollback();
+                return false;
+            }
+
+            // 2. Registrar en tabla transportistas
+            String sql = "INSERT INTO transportistas (usuario_cedula, numero_licencia, tipo_licencia, zona_cobertura, comision, disponibilidad) VALUES (?, ?, ?, ?, ?, ?)";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1, transportista.getCedula());
+                stmt.setString(2, transportista.getNumeroLicencia());
+                stmt.setString(3, transportista.getTipoLicencia());
+                stmt.setString(4, transportista.getZonaCobertura());
+                stmt.setFloat(5, transportista.getComision());
+                stmt.setString(6, transportista.getDisponibilidad());
+                stmt.executeUpdate();
+            }
+
+            conn.commit();
+            return true;
+
+        } catch (SQLException e) {
+            System.err.println("Error registering driver: " + e.getMessage());
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            return false;
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.setAutoCommit(true);
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    /**
+     * Registra un nuevo administrador en la base de datos.
+     * 
+     * @param admin Objeto Admin con los datos a registrar
+     * @return true si el registro fue exitoso, false en caso contrario
+     */
+    public static boolean registerAdmin(clases.Admin admin) {
+        Connection conn = null;
+        try {
+            conn = DBConnection.connect(UserType.ADMINISTRADOR);
+            conn.setAutoCommit(false);
+
+            // 1. Registrar en tabla usuarios
+            if (!registerUser(admin, conn)) {
+                conn.rollback();
+                return false;
+            }
+
+            // 2. Registrar en tabla administradores
+            String sql = "INSERT INTO administradores (usuario_cedula, codigo_empleado, rol) VALUES (?, ?, ?)";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1, admin.getCedula());
+                stmt.setString(2, admin.getCodigoEmpleado());
+                stmt.setString(3, admin.getRol());
+                stmt.executeUpdate();
+            }
+
+            conn.commit();
+            return true;
+
+        } catch (SQLException e) {
+            System.err.println("Error registering admin: " + e.getMessage());
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            return false;
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.setAutoCommit(true);
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    /**
+     * Método auxiliar para registrar en la tabla usuarios.
+     */
+    private static boolean registerUser(clases.Usuario user, Connection conn) throws SQLException {
+        String sql = "INSERT INTO usuarios (cedula, nombre, apellidos, correo, contrasena, numero_telefono, id_direccion_principal) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, user.getCedula());
+            stmt.setString(2, user.getNombre());
+            stmt.setString(3, user.getApellidos());
+            stmt.setString(4, user.getCorreo());
+            stmt.setString(5, user.getContrasena());
+            stmt.setString(6, user.getNumeroTelefono());
+            if (user.getIdDireccionPrincipal() > 0) {
+                stmt.setInt(7, user.getIdDireccionPrincipal());
+            } else {
+                stmt.setNull(7, java.sql.Types.INTEGER);
+            }
+
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+        }
+    }
+
+    /**
+     * Actualiza los datos del perfil de un usuario.
+     * 
+     * @param user Objeto Usuario con los datos actualizados
+     * @return true si la actualización fue exitosa, false en caso contrario
+     */
+    public static boolean updateProfile(clases.Usuario user) {
+        String sql = "UPDATE usuarios SET nombre = ?, apellidos = ?, correo = ?, numero_telefono = ?, id_direccion_principal = ? WHERE cedula = ?";
+
+        try (Connection conn = DBConnection.connect(UserType.ADMINISTRADOR);
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, user.getNombre());
+            stmt.setString(2, user.getApellidos());
+            stmt.setString(3, user.getCorreo());
+            stmt.setString(4, user.getNumeroTelefono());
+            if (user.getIdDireccionPrincipal() > 0) {
+                stmt.setInt(5, user.getIdDireccionPrincipal());
+            } else {
+                stmt.setNull(5, java.sql.Types.INTEGER);
+            }
+            stmt.setString(6, user.getCedula());
+
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            System.err.println("Error updating profile: " + e.getMessage());
+            return false;
+        }
+    }
 }

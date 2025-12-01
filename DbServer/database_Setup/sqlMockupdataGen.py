@@ -1,106 +1,144 @@
 import random
+from faker import Faker
 
-# Configuración
-NUM_USERS = 100
+fake = Faker('es_ES') # Datos en español
+
+# Configuración de cantidad de datos
+NUM_CIUDADES = 10
 NUM_DIRECCIONES = 200
-NUM_ENVIOS = 200  # Ajustar para llegar al total deseado
-FILE_NAME = "datos_prueba.sql"
+NUM_USUARIOS = 100
+NUM_EMPRESARIOS = 20
+NUM_TRANSPORTISTAS = 20
+NUM_COMPANIAS = 15
+NUM_SUCURSALES = 15
+NUM_PAQUETES = 150
+NUM_ENVIOS = 200 # Total aproximado de registros > 500
 
-cities = ["Quito", "Guayaquil", "Cuenca", "Ambato", "Manta", "Loja", "Machala", "Ibarra"]
-streets = ["Av. Amazonas", "Calle Larga", "Av. 9 de Octubre", "Av. Patria", "Calle 10 de Agosto", "Av. Shyris", "Calle Simon Bolivar"]
-names = ["Juan", "Maria", "Pedro", "Luis", "Ana", "Sofia", "Carlos", "Jose", "Fernanda", "Gabriela"]
-last_names = ["Perez", "Gomez", "Lopez", "Rodriguez", "Silva", "Martinez", "Sanchez", "Romero", "Vargas", "Mendoza"]
-paquete_types = ["Documentos", "Caja Pequena", "Caja Grande", "Electrodomestico"]
+file_path = 'populate_schema.sql'
 
-sql = []
-sql.append("SET FOREIGN_KEY_CHECKS=0;")
+def escape_sql(text):
+    if text is None: return "NULL"
+    return "'" + str(text).replace("'", "''") + "'"
 
-# 1. Ciudades
-sql.append("-- Ciudades")
-for city in cities:
-    x = random.uniform(-80, -78)
-    y = random.uniform(-4, 1)
-    sql.append(f"INSERT INTO ciudades (nombre_ciudad, coordenada_ciudad_x, coordenada_ciudad_y) VALUES ('{city}', {x:.8f}, {y:.8f});")
-
-# 2. Direcciones
-sql.append("-- Direcciones")
-direccion_ids = list(range(1, NUM_DIRECCIONES + 1))
-for i in direccion_ids:
-    city = random.choice(cities)
-    main = random.choice(streets)
-    sec = f"Calle {random.randint(1, 100)}"
-    num = f"N{random.randint(10, 99)}-{random.randint(100, 999)}"
-    sql.append(f"INSERT INTO direcciones (id_direccion, ciudades_nombre_ciudad, calle_principal, calle_secundaria, numero_edificacion, detalle) VALUES ({i}, '{city}', '{main}', '{sec}', '{num}', 'Detalle generico');")
-
-# 3. Usuarios
-sql.append("-- Usuarios")
-all_cedulas = []
-for i in range(NUM_USERS):
-    cedula = f"{random.randint(1000000000, 1999999999)}"
-    while cedula in all_cedulas: # Evitar duplicados
-        cedula = f"{random.randint(1000000000, 1999999999)}"
-    all_cedulas.append(cedula)
+with open(file_path, 'w', encoding='utf-8') as f:
+    f.write("USE `SchemaSpeeder`;\n\n")
     
-    fname = random.choice(names)
-    lname = random.choice(last_names)
-    email = f"{fname.lower()}.{lname.lower()}.{i}@test.com"
-    addr = random.choice(direccion_ids)
-    sql.append(f"INSERT INTO usuarios (cedula, nombre, apellidos, correo, contrasena, id_direccion_principal) VALUES ('{cedula}', '{fname}', '{lname}', '{email}', 'pass123', {addr});")
+    # 1. CIUDADES
+    ciudades = ['Quito', 'Guayaquil', 'Cuenca', 'Santo Domingo', 'Machala', 'Durán', 'Manta', 'Portoviejo', 'Loja', 'Ambato']
+    f.write("-- Ciudades\n")
+    for ciudad in ciudades:
+        lat = fake.latitude()
+        lon = fake.longitude()
+        f.write(f"INSERT IGNORE INTO ciudades VALUES ('{ciudad}', {lat}, {lon});\n")
+    f.write("\n")
 
-# Roles
-empresarios = all_cedulas[:10]
-transportistas = all_cedulas[10:30]
+    # 2. DIRECCIONES
+    f.write("-- Direcciones\n")
+    direccion_ids = []
+    for i in range(1, NUM_DIRECCIONES + 1):
+        ciudad = random.choice(ciudades)
+        calle1 = fake.street_name()
+        calle2 = fake.street_name()
+        num = fake.building_number()
+        detalle = fake.secondary_address()
+        f.write(f"INSERT INTO direcciones (ciudades_nombre_ciudad, calle_principal, calle_secundaria, numero_edificacion, detalle) VALUES ('{ciudad}', '{calle1}', '{calle2}', '{num}', '{detalle}');\n")
+        direccion_ids.append(i)
+    f.write("\n")
 
-# 4. Empresarios y Companias
-sql.append("-- Empresarios y Companias")
-sucursales_keys = [] # (id_direccion, RUC)
-companias_ruc = []
+    # 3. USUARIOS
+    f.write("-- Usuarios\n")
+    cedulas = []
+    for _ in range(NUM_USUARIOS):
+        cedula = str(fake.unique.random_number(digits=10, fix_len=True))
+        nombre = fake.first_name()
+        apellido = fake.last_name()
+        correo = fake.unique.email()
+        password = "password123" # En prod debe ser hash
+        telefono = fake.phone_number()[:15]
+        id_dir = random.choice(direccion_ids)
+        
+        f.write(f"INSERT INTO usuarios (cedula, nombre, apellidos, correo, contrasena, numero_telefono, id_direccion_principal) VALUES ('{cedula}', '{nombre}', '{apellido}', '{correo}', '{password}', '{telefono}', {id_dir});\n")
+        cedulas.append(cedula)
+    f.write("\n")
 
-for i, ced in enumerate(empresarios):
-    sql.append(f"INSERT INTO empresarios (usuario_cedula, cargo_empresa) VALUES ('{ced}', 'Gerente');")
-    ruc = f"{ced}001"
-    companias_ruc.append(ruc)
-    sql.append(f"INSERT INTO companias (RUC, empresario_cedula, nombre_compania) VALUES ('{ruc}', '{ced}', 'Empresa {i}');")
+    # 4. ROLES (Empresarios y Transportistas)
+    random.shuffle(cedulas)
+    cedulas_empresarios = cedulas[:NUM_EMPRESARIOS]
+    cedulas_transportistas = cedulas[NUM_EMPRESARIOS:NUM_EMPRESARIOS+NUM_TRANSPORTISTAS]
     
-    # Crear Sucursal
-    addr = random.choice(direccion_ids)
-    sql.append(f"INSERT INTO sucursales (id_direccion, compania_RUC) VALUES ({addr}, '{ruc}');")
-    sucursales_keys.append((addr, ruc))
+    f.write("-- Empresarios\n")
+    for ced in cedulas_empresarios:
+        f.write(f"INSERT INTO empresarios (usuario_cedula, cargo_empresa, correo_empresarial) VALUES ('{ced}', 'Gerente', '{fake.company_email()}');\n")
 
-# 5. Transportistas y Vehiculos
-sql.append("-- Transportistas, Modelos y Vehiculos")
-sql.append("INSERT INTO modelos (nombre_modelo, maximo_peso) VALUES ('Camion', 5000), ('Moto', 50);")
+    f.write("-- Transportistas\n")
+    for ced in cedulas_transportistas:
+        f.write(f"INSERT INTO transportistas (usuario_cedula, numero_licencia, tipo_licencia, zona_cobertura, disponibilidad) VALUES ('{ced}', '{fake.bothify(text='LIC-#####')}', 'Tipo E', 'General', 'Disponible');\n")
+    f.write("\n")
 
-for ced in transportistas:
-    sql.append(f"INSERT INTO transportistas (usuario_cedula, numero_licencia) VALUES ('{ced}', '{ced}-LIC');")
-    modelo = random.choice(['Camion', 'Moto'])
-    sql.append(f"INSERT INTO vehiculos (transportista_cedula, nombre_modelo, placa) VALUES ('{ced}', '{modelo}', 'ABC-{random.randint(100,999)}');")
-
-# 6. Paquetes
-sql.append("-- Caracteristicas y Paquetes")
-for pt in paquete_types:
-    sql.append(f"INSERT INTO caracteristicas_paquete (tipo_paquete) VALUES ('{pt}');")
-
-paquete_ids = []
-for i in range(1, NUM_ENVIOS + 1):
-    ptype = random.choice(paquete_types)
-    sql.append(f"INSERT INTO paquetes (id_paquete, descripcion, peso, tipo) VALUES ({i}, 'Paquete {i}', {random.uniform(1, 20):.2f}, '{ptype}');")
-    paquete_ids.append(i)
-
-# 7. Envios
-sql.append("-- Envios")
-for i in range(1, NUM_ENVIOS + 1):
-    suc = random.choice(sucursales_keys)
-    dest = random.choice(direccion_ids)
-    trans = random.choice(transportistas)
-    paq = paquete_ids[i-1]
+    # 5. COMPANIAS y SUCURSALES
+    f.write("-- Companias\n")
+    rucs = []
+    lista_rucs_sucursales = [] # Pares (RUC, id_direccion)
     
-    sql.append(f"INSERT INTO envios (sucursal_RUC, sucursal_id_direccion, id_direccion_entrega, transportista_cedula, id_paquete, tarifa, estado) VALUES ('{suc[1]}', {suc[0]}, {dest}, '{trans}', {paq}, {random.uniform(5, 50):.2f}, 'Entregado');")
+    for _ in range(NUM_COMPANIAS):
+        ruc = str(fake.unique.random_number(digits=13, fix_len=True))
+        emp_ced = random.choice(cedulas_empresarios)
+        nombre = fake.company()
+        desc = fake.catch_phrase()[:100]
+        f.write(f"INSERT INTO companias (RUC, empresario_cedula, nombre_compania, tipo_compania, descripcion) VALUES ('{ruc}', '{emp_ced}', '{escape_sql(nombre)[1:-1]}', 'Privada', '{escape_sql(desc)[1:-1]}');\n")
+        rucs.append(ruc)
 
-sql.append("SET FOREIGN_KEY_CHECKS=1;")
+    f.write("-- Sucursales\n")
+    # Aseguramos al menos una sucursal por compañia
+    used_dirs_sucursal = set()
+    for ruc in rucs:
+        id_dir = random.choice(direccion_ids)
+        if id_dir not in used_dirs_sucursal:
+            f.write(f"INSERT INTO sucursales (id_direccion, compania_RUC, activa) VALUES ({id_dir}, '{ruc}', 1);\n")
+            lista_rucs_sucursales.append((ruc, id_dir))
+            used_dirs_sucursal.add(id_dir)
+    f.write("\n")
 
-# Guardar archivo
-with open(FILE_NAME, "w", encoding="utf-8") as f:
-    f.write("\n".join(sql))
+    # 6. MODELOS y VEHICULOS
+    f.write("-- Modelos y Vehiculos\n")
+    modelos = ['Van Cargo', 'Camión 3T', 'Moto Delivery', 'Camioneta 4x4']
+    for mod in modelos:
+        f.write(f"INSERT IGNORE INTO modelos (nombre_modelo, maximo_peso) VALUES ('{mod}', {random.uniform(50, 5000)});\n")
+    
+    for ced in cedulas_transportistas:
+        mod = random.choice(modelos)
+        placa = fake.bothify(text='??-####').upper()
+        f.write(f"INSERT INTO vehiculos (transportista_cedula, nombre_modelo, color, placa) VALUES ('{ced}', '{mod}', '{fake.color_name()}', '{placa}');\n")
 
-print(f"Archivo {FILE_NAME} generado exitosamente con {len(sql)} sentencias.")
+    # 7. PAQUETES
+    f.write("-- Paquetes\n")
+    tipos_paquete = ['Caja Pequeña', 'Caja Grande', 'Sobre', 'Pallet']
+    for tp in tipos_paquete:
+        f.write(f"INSERT IGNORE INTO caracteristicas_paquete (tipo_paquete) VALUES ('{tp}');\n")
+    
+    paquete_ids = []
+    for i in range(1, NUM_PAQUETES + 1):
+        tipo = random.choice(tipos_paquete)
+        desc = fake.sentence()
+        peso = round(random.uniform(0.5, 50.0), 2)
+        f.write(f"INSERT INTO paquetes (descripcion, peso, tipo) VALUES ('{desc}', {peso}, '{tipo}');\n")
+        paquete_ids.append(i)
+    f.write("\n")
+
+    # 8. ENVIOS
+    f.write("-- Envios\n")
+    estados = ['En recogida', 'En camino', 'Entregado', 'Cancelado']
+    for _ in range(NUM_ENVIOS):
+        sucursal = random.choice(lista_rucs_sucursales) # Tupla (ruc, id_dir)
+        suc_ruc = sucursal[0]
+        suc_dir = sucursal[1]
+        
+        id_dest = random.choice(direccion_ids)
+        transportista = random.choice(cedulas_transportistas)
+        paquete = random.choice(paquete_ids)
+        tarifa = round(random.uniform(5.00, 100.00), 2)
+        estado = random.choice(estados)
+        
+        f.write(f"INSERT INTO envios (sucursal_RUC, sucursal_id_direccion, id_direccion_entrega, transportista_cedula, id_paquete, tarifa, estado) VALUES ('{suc_ruc}', {suc_dir}, {id_dest}, '{transportista}', {paquete}, {tarifa}, '{estado}');\n")
+
+print(f"Archivo '{file_path}' generado exitosamente con datos de prueba.")

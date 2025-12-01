@@ -27,12 +27,12 @@ public class User {
     }
 
     public User(String cedula,
-                String nombre,
-                String apellidos,
-                String correo,
-                String numero,
-                String ciudad,
-                String role) {
+            String nombre,
+            String apellidos,
+            String correo,
+            String numero,
+            String ciudad,
+            String role) {
         this.cedula = cedula;
         this.nombre = nombre;
         this.apellidos = apellidos;

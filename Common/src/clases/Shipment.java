@@ -22,13 +22,13 @@ public class Shipment {
     }
 
     public Shipment(int id,
-                    String origen,
-                    String destino,
-                    String descripcion,
-                    String tipoPaquete,
-                    double peso,
-                    String estado,
-                    double tarifa) {
+            String origen,
+            String destino,
+            String descripcion,
+            String tipoPaquete,
+            double peso,
+            String estado,
+            double tarifa) {
         this.id.set(id);
         this.origen.set(origen);
         this.destino.set(destino);

@@ -2,9 +2,9 @@ package clases;
 
 public class Response {
 
-    private String status;   // "SUCCESS", "ERROR"
-    private String message;  // Mensaje para la UI
-    private Object data;     // Datos (lista de envíos, usuario, etc.)
+    private String status; // "SUCCESS", "ERROR"
+    private String message; // Mensaje para la UI
+    private Object data; // Datos (lista de envíos, usuario, etc.)
 
     public Response(String status, String message, Object data) {
         this.status = status;

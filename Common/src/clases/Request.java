@@ -2,8 +2,8 @@ package clases;
 
 public class Request {
 
-    private String action;   // Ej: "LOGIN", "REGISTER_DRIVER", etc.
-    private Object payload;  // Lo que quieras enviar (Map, User, id, etc.)
+    private String action; // Ej: "LOGIN", "REGISTER_DRIVER", etc.
+    private Object payload; // Lo que quieras enviar (Map, User, id, etc.)
 
     public Request(String action, Object payload) {
         this.action = action;

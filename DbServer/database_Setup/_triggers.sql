@@ -1,7 +1,3 @@
--- -----------------------------------------------------
--- script de triggers para schemaspeeder
--- unificación de lógica de negocio y automatización
--- -----------------------------------------------------
 
 USE `SchemaSpeeder`;
 

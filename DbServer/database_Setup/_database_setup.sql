@@ -325,7 +325,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `SchemaSpeeder`.`administradores` (
   `usuario_cedula` VARCHAR(10) NOT NULL,
   `codigo_empleado` VARCHAR(20) NULL DEFAULT NULL,
-  `activo` TINYINT NULL DEFAULT 'Soporte',
+  `activo` TINYINT NULL DEFAULT 1,
   PRIMARY KEY (`usuario_cedula`),
   CONSTRAINT `fk_administradores_usuarios`
     FOREIGN KEY (`usuario_cedula`)

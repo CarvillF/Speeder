@@ -49,4 +49,10 @@ public class ProtocolActions {
     public static final String WITHDRAW_DRIVER_FUNDS = "WITHDRAW_DRIVER_FUNDS";
 
     public static final String UPDATE_TRANSPORTISTA = "UPDATE_TRANSPORTISTA";
+
+    public static final String REPORT_SHIPMENTS_MONTHLY   = "REPORT_SHIPMENTS_MONTHLY";
+    public static final String REPORT_COMPANIES_PLATFORM  = "REPORT_COMPANIES_PLATFORM";
+    public static final String REPORT_TRANSPORTERS        = "REPORT_TRANSPORTERS";
+    public static final String REPORT_COMPANY_FLOW        = "REPORT_COMPANY_FLOW";
+    public static final String REPORT_PACKAGES_HISTORY    = "REPORT_PACKAGES_HISTORY";
 }

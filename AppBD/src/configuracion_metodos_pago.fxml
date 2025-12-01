@@ -4,23 +4,35 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ConfiguracionMetodosPagoController">
 
     <left>
-        <AnchorPane prefHeight="600.0" prefWidth="180.0" style="-fx-background-color: #263F73;" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="600.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(to bottom, #20273E, #263F73);" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="btnVolver" layoutX="20.0" layoutY="20.0" onAction="#onVolverConfiguracion" prefHeight="26.0" prefWidth="80.0" style="-fx-background-color: transparent;                                -fx-text-fill: white;                                -fx-border-color: transparent;" text="Volver" />
+                <Button fx:id="btnVolver" layoutX="20.0" layoutY="20.0" onAction="#onVolverConfiguracion" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: transparent;                                -fx-text-fill: white;                                -fx-border-color: transparent;                                -fx-focus-color: transparent;                                -fx-faint-focus-color: transparent;" text="⮐  Volver" />
 
-                <Label layoutX="30.0" layoutY="70.0" text="Métodos de pago" textFill="WHITE">
+                <Label layoutX="9.0" layoutY="76.0" text="Métodos de pago" textFill="WHITE">
                     <font>
-                        <Font name="System Bold" size="18.0" />
+                        <Font name="Arial Black" size="20.0" />
+                    </font>
+                </Label>
+
+                <Label layoutX="18.0" layoutY="121.0" text="Administra tus opciones de pago" textFill="#d0d8ff">
+                    <font>
+                        <Font name="System" size="12.0" />
                     </font>
                 </Label>
             </children>
@@ -28,39 +40,75 @@
     </left>
 
     <center>
-        <AnchorPane prefHeight="600.0" prefWidth="540.0" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(to bottom right, #0f172a, #020617);" BorderPane.alignment="CENTER">
             <children>
+                <VBox layoutX="20.0" layoutY="20.0" prefWidth="560.0" spacing="14.0" style="-fx-background-color: rgba(15,23,42,0.95);                              -fx-background-radius: 18;                              -fx-padding: 18;">
+                    <children>
 
-                <Label layoutX="30.0" layoutY="20.0" text="Gestión de métodos de pago">
-                    <font>
-                        <Font name="System Bold" size="18.0" />
-                    </font>
-                </Label>
+                        <VBox spacing="4.0">
+                            <children>
+                                <Label text="Gestión de métodos de pago" textFill="WHITE">
+                                    <font>
+                                        <Font name="System Bold" size="18.0" />
+                                    </font>
+                                </Label>
+                                <Label text="Agrega, marca como predeterminados y elimina métodos de pago registrados." textFill="#9ca3af">
+                                    <font>
+                                        <Font name="System" size="12.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </VBox>
 
-                <Label layoutX="30.0" layoutY="70.0" text="Tipo:" />
-                <ChoiceBox fx:id="cbTipo" layoutX="120.0" layoutY="65.0" prefWidth="200.0" />
+                        <GridPane hgap="10.0" vgap="10.0">
+                            <columnConstraints>
+                                <ColumnConstraints prefWidth="110.0" />
+                                <ColumnConstraints prefWidth="260.0" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints prefHeight="30.0" />
+                                <RowConstraints prefHeight="30.0" />
+                                <RowConstraints prefHeight="30.0" />
+                            </rowConstraints>
+                            <children>
+                                <Label text="Tipo:" textFill="#e5e7eb" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                <ChoiceBox fx:id="cbTipo" prefWidth="220.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-                <Label layoutX="30.0" layoutY="110.0" text="Datos:" />
-                <TextField fx:id="tfDatos" layoutX="120.0" layoutY="105.0" prefWidth="320.0" promptText="Número de tarjeta o cuenta" />
+                                <Label text="Datos:" textFill="#e5e7eb" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                <TextField fx:id="tfDatos" prefWidth="280.0" promptText="Número de tarjeta o cuenta" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-                <CheckBox fx:id="chkPredeterminado" layoutX="120.0" layoutY="140.0" text="Marcar como predeterminado" />
+                                <CheckBox fx:id="chkPredeterminado" text="Marcar como predeterminado" textFill="#e5e7eb" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                            </children>
+                        </GridPane>
 
-                <Button fx:id="btnAgregarMetodo" layoutX="30.0" layoutY="180.0" onAction="#onAgregarMetodo" prefHeight="26.0" prefWidth="150.0" text="Agregar método" />
+                        <HBox alignment="CENTER_RIGHT" spacing="10.0">
+                            <children>
+                                <Button fx:id="btnAgregarMetodo" onAction="#onAgregarMetodo" prefHeight="28.0" prefWidth="150.0" style="-fx-background-radius: 18;                                                -fx-background-color: #22c55e;                                                -fx-text-fill: white;                                                -fx-font-weight: bold;" text="Agregar método" />
+                                <Button fx:id="btnEliminarMetodo" onAction="#onEliminarMetodo" prefHeight="28.0" prefWidth="170.0" style="-fx-background-radius: 18;                                                -fx-background-color: rgba(248,113,113,0.16);                                                -fx-text-fill: #fecaca;                                                -fx-font-weight: bold;" text="Eliminar seleccionado" />
+                            </children>
+                        </HBox>
 
-                <Button fx:id="btnEliminarMetodo" layoutX="190.0" layoutY="180.0" onAction="#onEliminarMetodo" prefHeight="26.0" prefWidth="170.0" text="Eliminar seleccionado" />
+                        <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="380.0" prefWidth="560.0">
+                            <content>
+                                <AnchorPane>
+                                    <children>
+                                        <TableView fx:id="tableMetodosPago" prefHeight="360.0" prefWidth="540.0" style="-fx-background-color: transparent;                                                           -fx-control-inner-background: #020617;                                                           -fx-background-radius: 12;                                                           -fx-border-radius: 12;                                                           -fx-border-color: rgba(148,163,184,0.45);                                                           -fx-border-width: 1;">
+                                            <columns>
+                                                <TableColumn fx:id="colTipo" prefWidth="100.0" text="Tipo" />
+                                                <TableColumn fx:id="colDatos" prefWidth="200.0" text="Datos" />
+                                                <TableColumn fx:id="colPredeterminado" prefWidth="110.0" text="Predeterminado" />
+                                                <TableColumn fx:id="colFecha" prefWidth="130.0" text="Fecha creación" />
+                                            </columns>
+                                        </TableView>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </ScrollPane>
 
-                <!-- Tabla de métodos de pago -->
-                <TableView fx:id="tableMetodosPago" layoutX="5.0" layoutY="230.0" prefHeight="320.0" prefWidth="604.0">
-                    <columns>
-                        <TableColumn fx:id="colId" prefWidth="60.0" text="ID" />
-                        <TableColumn fx:id="colTipo" prefWidth="60.0" text="Tipo" />
-                        <TableColumn fx:id="colDatos" prefWidth="213.0" text="Datos" />
-                        <TableColumn fx:id="colPredeterminado" prefWidth="104.0" text="Predeterminado" />
-                        <TableColumn fx:id="colFecha" prefWidth="213.0" text="Fecha creación" />
-                    </columns>
-                </TableView>
-
+                    </children>
+                </VBox>
             </children>
         </AnchorPane>
     </center>
+
 </BorderPane>

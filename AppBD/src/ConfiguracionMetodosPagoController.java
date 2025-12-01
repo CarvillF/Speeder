@@ -14,6 +14,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -32,9 +34,6 @@ public class ConfiguracionMetodosPagoController {
     private TableView<PaymentMethod> tableMetodosPago;
 
     @FXML
-    private TableColumn<PaymentMethod, Number> colId;
-
-    @FXML
     private TableColumn<PaymentMethod, String> colTipo;
 
     @FXML
@@ -47,18 +46,18 @@ public class ConfiguracionMetodosPagoController {
     private TableColumn<PaymentMethod, String> colFecha;
 
     @FXML
-    private TextField tfTipo;
+    private ChoiceBox<String> cbTipo;
 
     @FXML
     private TextField tfDatos;
+
+    @FXML
+    private CheckBox chkPredeterminado;
 
     private Timeline autoRefreshTimeline;
 
     @FXML
     private void initialize() {
-        if (colId != null) {
-            colId.setCellValueFactory(c -> c.getValue().idMetodoProperty());
-        }
         if (colTipo != null) {
             colTipo.setCellValueFactory(c -> c.getValue().tipoProperty());
         }
@@ -71,6 +70,11 @@ public class ConfiguracionMetodosPagoController {
         if (colPredeterminado != null) {
             colPredeterminado.setCellValueFactory(c -> c.getValue().predeterminadoProperty());
             colPredeterminado.setCellFactory(CheckBoxTableCell.forTableColumn(colPredeterminado));
+        }
+
+        if (cbTipo != null) {
+            cbTipo.getItems().setAll("Tarjeta", "Cuenta Bancaria");
+            cbTipo.getSelectionModel().selectFirst();
         }
 
         cargarMetodosDesdeServidor();
@@ -87,8 +91,9 @@ public class ConfiguracionMetodosPagoController {
 
     @FXML
     private void onAgregarMetodo() {
-        String tipo = tfTipo != null ? tfTipo.getText() : null;
+        String tipo = cbTipo != null ? cbTipo.getValue() : null;
         String datos = tfDatos != null ? tfDatos.getText() : null;
+        boolean predeterminado = chkPredeterminado != null && chkPredeterminado.isSelected();
 
         if (tipo == null || tipo.isBlank() || datos == null || datos.isBlank()) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -102,7 +107,7 @@ public class ConfiguracionMetodosPagoController {
         PaymentMethod nuevo = new PaymentMethod();
         nuevo.setTipo(tipo);
         nuevo.setDatos(datos);
-        nuevo.setPredeterminado(false);
+        nuevo.setPredeterminado(predeterminado);
 
         Request request = new Request(ProtocolActions.CREATE_PAYMENT_METHOD, nuevo);
 
@@ -117,8 +122,8 @@ public class ConfiguracionMetodosPagoController {
                     alert.setContentText(response.getMessage() != null
                             ? response.getMessage()
                             : "El método de pago fue agregado.");
-                    if (tfTipo != null) tfTipo.clear();
                     if (tfDatos != null) tfDatos.clear();
+                    if (chkPredeterminado != null) chkPredeterminado.setSelected(false);
                     cargarMetodosDesdeServidor();
                 } else {
                     alert = new Alert(Alert.AlertType.ERROR);

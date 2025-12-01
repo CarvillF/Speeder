@@ -13,12 +13,18 @@ public class Branch {
     private final StringProperty companiaRuc = new SimpleStringProperty();
     private final BooleanProperty activa = new SimpleBooleanProperty();
 
+    private final StringProperty ciudad = new SimpleStringProperty();
+    private final StringProperty callePrincipal = new SimpleStringProperty();
+    private final StringProperty calleSecundaria = new SimpleStringProperty();
+    private final StringProperty numeroEdificacion = new SimpleStringProperty();
+    private final StringProperty detalleDireccion = new SimpleStringProperty();
+
     public int getDireccionId() {
         return direccionId.get();
     }
 
-    public void setDireccionId(int value) {
-        direccionId.set(value);
+    public void setDireccionId(int id) {
+        this.direccionId.set(id);
     }
 
     public IntegerProperty direccionIdProperty() {
@@ -29,8 +35,8 @@ public class Branch {
         return companiaRuc.get();
     }
 
-    public void setCompaniaRuc(String value) {
-        companiaRuc.set(value);
+    public void setCompaniaRuc(String ruc) {
+        this.companiaRuc.set(ruc);
     }
 
     public StringProperty companiaRucProperty() {
@@ -41,11 +47,71 @@ public class Branch {
         return activa.get();
     }
 
-    public void setActiva(boolean value) {
-        activa.set(value);
+    public void setActiva(boolean activa) {
+        this.activa.set(activa);
     }
 
     public BooleanProperty activaProperty() {
         return activa;
+    }
+
+    public String getCiudad() {
+        return ciudad.get();
+    }
+
+    public void setCiudad(String ciudad) {
+        this.ciudad.set(ciudad);
+    }
+
+    public StringProperty ciudadProperty() {
+        return ciudad;
+    }
+
+    public String getCallePrincipal() {
+        return callePrincipal.get();
+    }
+
+    public void setCallePrincipal(String callePrincipal) {
+        this.callePrincipal.set(callePrincipal);
+    }
+
+    public StringProperty callePrincipalProperty() {
+        return callePrincipal;
+    }
+
+    public String getCalleSecundaria() {
+        return calleSecundaria.get();
+    }
+
+    public void setCalleSecundaria(String calleSecundaria) {
+        this.calleSecundaria.set(calleSecundaria);
+    }
+
+    public StringProperty calleSecundariaProperty() {
+        return calleSecundaria;
+    }
+
+    public String getNumeroEdificacion() {
+        return numeroEdificacion.get();
+    }
+
+    public void setNumeroEdificacion(String numeroEdificacion) {
+        this.numeroEdificacion.set(numeroEdificacion);
+    }
+
+    public StringProperty numeroEdificacionProperty() {
+        return numeroEdificacion;
+    }
+
+    public String getDetalleDireccion() {
+        return detalleDireccion.get();
+    }
+
+    public void setDetalleDireccion(String detalleDireccion) {
+        this.detalleDireccion.set(detalleDireccion);
+    }
+
+    public StringProperty detalleDireccionProperty() {
+        return detalleDireccion;
     }
 }

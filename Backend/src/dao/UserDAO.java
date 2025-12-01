@@ -210,7 +210,7 @@ public class UserDAO {
                 stmt.setString(2, transportista.getNumeroLicencia());
                 stmt.setString(3, transportista.getTipoLicencia());
                 stmt.setString(4, transportista.getZonaCobertura());
-                stmt.setFloat(5, transportista.getComision());
+                stmt.setFloat(5, transportista.getMonedero());
                 stmt.setString(6, transportista.getDisponibilidad());
                 stmt.executeUpdate();
             }

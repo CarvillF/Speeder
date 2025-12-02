@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import clases.Compania;
-import clases.Sucursal;
+import clases.Company;
+import clases.Branch;
 import database.DBConnection;
 import database.UserType;
 

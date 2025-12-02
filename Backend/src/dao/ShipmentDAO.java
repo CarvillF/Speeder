@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import clases.Envio;
+import clases.Shipment;
 import clases.Paquete;
 import database.DBConnection;
 import database.UserType;

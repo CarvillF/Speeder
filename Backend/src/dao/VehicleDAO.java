@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import clases.Vehiculo;
+import clases.Vehicle;
 import database.DBConnection;
 import database.UserType;
 

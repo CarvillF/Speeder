@@ -88,10 +88,8 @@ public class ConfiguracionEmprendimientoController {
 
         if (tableEmprendimientos != null) {
             tableEmprendimientos.getSelectionModel().selectedItemProperty().addListener(
-                    (obs, oldSel, newSel) -> mostrarDetalleEmprendimiento(newSel)
-            );
+                    (obs, oldSel, newSel) -> mostrarDetalleEmprendimiento(newSel));
         }
-
 
         if (colSucDireccionId != null) {
             colSucDireccionId.setCellValueFactory(c -> c.getValue().direccionIdProperty());
@@ -106,14 +104,12 @@ public class ConfiguracionEmprendimientoController {
 
         if (tableSucursales != null) {
             tableSucursales.getSelectionModel().selectedItemProperty().addListener(
-                    (obs, oldSel, newSel) -> mostrarDetalleSucursal(newSel)
-            );
+                    (obs, oldSel, newSel) -> mostrarDetalleSucursal(newSel));
         }
 
         cargarEmprendimientosDesdeServidor();
         cargarSucursalesDesdeServidor();
     }
-
 
     @FXML
     private void onAgregarEmprendimiento() {
@@ -227,7 +223,6 @@ public class ConfiguracionEmprendimientoController {
             });
         }).start();
     }
-
 
     @FXML
     private void onAgregarSucursal() {
@@ -381,7 +376,6 @@ public class ConfiguracionEmprendimientoController {
         }
     }
 
-
     private void cargarEmprendimientosDesdeServidor() {
         Request request = new Request(ProtocolActions.GET_COMPANIES, null);
 
@@ -392,7 +386,8 @@ public class ConfiguracionEmprendimientoController {
             }
             Gson gson = new Gson();
             String json = gson.toJson(response.getData());
-            Type listType = new TypeToken<ArrayList<Company>>() {}.getType();
+            Type listType = new TypeToken<ArrayList<Company>>() {
+            }.getType();
             List<Company> lista = gson.fromJson(json, listType);
 
             Platform.runLater(() -> {
@@ -413,7 +408,8 @@ public class ConfiguracionEmprendimientoController {
             }
             Gson gson = new Gson();
             String json = gson.toJson(response.getData());
-            Type listType = new TypeToken<ArrayList<Branch>>() {}.getType();
+            Type listType = new TypeToken<ArrayList<Branch>>() {
+            }.getType();
             List<Branch> lista = gson.fromJson(json, listType);
 
             Platform.runLater(() -> {
@@ -423,7 +419,6 @@ public class ConfiguracionEmprendimientoController {
             });
         }).start();
     }
-
 
     private void mostrarDetalleEmprendimiento(Company c) {
         if (c == null) {
@@ -447,16 +442,23 @@ public class ConfiguracionEmprendimientoController {
     }
 
     private void limpiarCamposEmprendimiento() {
-        if (tfRuc != null) tfRuc.clear();
-        if (tfNombre != null) tfNombre.clear();
-        if (tfTipo != null) tfTipo.clear();
-        if (tfDescripcion != null) tfDescripcion.clear();
+        if (tfRuc != null)
+            tfRuc.clear();
+        if (tfNombre != null)
+            tfNombre.clear();
+        if (tfTipo != null)
+            tfTipo.clear();
+        if (tfDescripcion != null)
+            tfDescripcion.clear();
     }
 
     private void limpiarCamposSucursal() {
-        if (tfSucDireccionId != null) tfSucDireccionId.clear();
-        if (tfSucRuc != null) tfSucRuc.clear();
-        if (chkSucActiva != null) chkSucActiva.setSelected(false);
+        if (tfSucDireccionId != null)
+            tfSucDireccionId.clear();
+        if (tfSucRuc != null)
+            tfSucRuc.clear();
+        if (chkSucActiva != null)
+            chkSucActiva.setSelected(false);
     }
 
     private void mostrarAlerta(Alert.AlertType type, String title, String msg) {

@@ -11,6 +11,7 @@ public class Vehicle {
     private final StringProperty placa = new SimpleStringProperty();
     private final StringProperty nombreModelo = new SimpleStringProperty();
     private final StringProperty color = new SimpleStringProperty();
+    private final StringProperty transportistaCedula = new SimpleStringProperty();
 
     public Vehicle() {
     }
@@ -68,6 +69,18 @@ public class Vehicle {
 
     public StringProperty colorProperty() {
         return color;
+    }
+
+    public String getTransportistaCedula() {
+        return transportistaCedula.get();
+    }
+
+    public void setTransportistaCedula(String transportistaCedula) {
+        this.transportistaCedula.set(transportistaCedula);
+    }
+
+    public StringProperty transportistaCedulaProperty() {
+        return transportistaCedula;
     }
 
     @Override

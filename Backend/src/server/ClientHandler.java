@@ -69,8 +69,6 @@ public class ClientHandler implements Runnable {
 
             // Seleccionar acción
             switch (request.getAction()) {
-                case "LOGIN":
-                    return handleLogin(request);
                 default:
                     return gson.toJson(new Response("ERROR", "Acción no reconocida: " + request.getAction()));
             }
@@ -83,40 +81,4 @@ public class ClientHandler implements Runnable {
         }
     }
 
-    /**
-     * Maneja la lógica de LOGIN.
-     */
-    private String handleLogin(Request request) {
-        Object payloadObj = request.getPayload();
-
-        if (!(payloadObj instanceof Map)) {
-            return gson.toJson(new Response("ERROR", "Payload de login inválido"));
-        }
-
-        @SuppressWarnings("unchecked")
-        Map<String, Object> payload = (Map<String, Object>) payloadObj;
-
-        String username = (String) payload.get("username");
-        String password = (String) payload.get("password");
-
-        if (username == null || password == null) {
-            return gson.toJson(new Response("ERROR", "Faltan credenciales (username, password)"));
-        }
-
-        try {
-            // Intentar login usando el DAO
-            UserType userType = UserDAO.loginAndGetUserType(username, password);
-
-            if (userType != null) {
-                // Login exitoso
-                return gson.toJson(new Response("SUCCESS", "Login correcto", userType.toString()));
-            } else {
-                // Credenciales incorrectas
-                return gson.toJson(new Response("ERROR", "Credenciales incorrectas"));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return gson.toJson(new Response("ERROR", "Error en base de datos al intentar login"));
-        }
-    }
 }

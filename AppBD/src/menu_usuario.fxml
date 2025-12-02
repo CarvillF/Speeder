@@ -27,8 +27,8 @@
                </font>
             </Label>
 
-            <!-- Botón Envíos actuales -->
-            <Button fx:id="btnRevisarEnvios" layoutX="25.0" layoutY="140.0" mnemonicParsing="false" onAction="#onRevisarEnvios" prefHeight="32.0" prefWidth="170.0" style="-fx-background-radius: 18;                            -fx-background-color: rgba(255,255,255,0.16);                            -fx-border-color: transparent;                            -fx-text-fill: white;                            -fx-focus-color: transparent;                            -fx-faint-focus-color: transparent;" text="📦  Envíos actuales" textFill="WHITE">
+            <!-- Botón Envios -->
+            <Button fx:id="btnRevisarEnvios" layoutX="25.0" layoutY="140.0" mnemonicParsing="false" onAction="#onRevisarEnvios" prefHeight="32.0" prefWidth="170.0" style="-fx-background-radius: 18;                            -fx-background-color: rgba(255,255,255,0.16);                            -fx-border-color: transparent;                            -fx-text-fill: white;                            -fx-focus-color: transparent;                            -fx-faint-focus-color: transparent;" text="📦  Envios" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
@@ -40,7 +40,7 @@
                </font>
             </Button>
 
-            <Button fx:id="btnGestionEnvios" layoutX="25.0" layoutY="240.0" mnemonicParsing="false" onAction="#onGestionEnvios" prefHeight="32.0" prefWidth="170.0" style="-fx-background-radius: 18;                            -fx-background-color: transparent;                            -fx-border-color: transparent;                            -fx-text-fill: #f2f4ff;                            -fx-focus-color: transparent;                            -fx-faint-focus-color: transparent;" text="🚚  Gestión de envíos" textFill="WHITE">
+            <Button fx:id="btnGestionEnvios" layoutX="25.0" layoutY="240.0" mnemonicParsing="false" onAction="#onGestionEnvios" prefHeight="32.0" prefWidth="170.0" style="-fx-background-radius: 18;                            -fx-background-color: transparent;                            -fx-border-color: transparent;                            -fx-text-fill: #f2f4ff;                            -fx-focus-color: transparent;                            -fx-faint-focus-color: transparent;" text="🚚  Crear nuevo envío" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>

@@ -10,75 +10,130 @@
             fx:controller="ConfiguracionUsuarioController"
             prefHeight="600.0" prefWidth="800.0">
 
-    <top>
-        <AnchorPane prefHeight="60.0" BorderPane.alignment="CENTER">
+    <left>
+        <AnchorPane prefHeight="600.0" prefWidth="220.0"
+                    style="-fx-background-color: linear-gradient(to bottom, #20273E, #263F73);"
+                    BorderPane.alignment="CENTER">
             <children>
-                <Label layoutX="20.0" layoutY="18.0"
-                       text="Configuración de usuario">
+                <Label layoutX="32.0" layoutY="70.0"
+                       text="Configuración"
+                       textFill="WHITE">
                     <font>
-                        <Font name="System Bold" size="20.0"/>
+                        <Font name="Arial Black" size="20.0"/>
                     </font>
                 </Label>
+
+                <Label layoutX="32.0" layoutY="105.0"
+                       text="Datos de usuario"
+                       textFill="#d0d8ff">
+                    <font>
+                        <Font size="13.0"/>
+                    </font>
+                </Label>
+
+                <Button fx:id="btnVolver"
+                        layoutX="20.0" layoutY="520.0"
+                        prefHeight="30.0" prefWidth="120.0"
+                        text="⮐  Volver"
+                        onAction="#onVolverConfiguracion"
+                        style="-fx-background-radius: 18;
+                               -fx-background-color: rgba(0,0,0,0.25);
+                               -fx-text-fill: #f9fafb;
+                               -fx-border-color: transparent;
+                               -fx-focus-color: transparent;
+                               -fx-faint-focus-color: transparent;"/>
             </children>
         </AnchorPane>
-    </top>
+    </left>
 
     <center>
-        <AnchorPane BorderPane.alignment="CENTER">
+        <AnchorPane BorderPane.alignment="CENTER"
+                    style="-fx-background-color: linear-gradient(to bottom right, #020617, #0b1120);">
             <children>
-                <GridPane layoutX="60.0" layoutY="60.0"
-                          hgap="10.0" vgap="12.0">
-                    <columnConstraints>
-                        <ColumnConstraints prefWidth="140.0"/>
-                        <ColumnConstraints prefWidth="260.0"/>
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints prefHeight="30.0"/>
-                        <RowConstraints prefHeight="30.0"/>
-                        <RowConstraints prefHeight="30.0"/>
-                        <RowConstraints prefHeight="30.0"/>
-                        <RowConstraints prefHeight="30.0"/>
-                    </rowConstraints>
+                <VBox spacing="18.0"
+                      layoutX="40.0" layoutY="40.0"
+                      prefWidth="520.0"
+                      style="-fx-background-color: rgba(15,23,42,0.96);
+                             -fx-background-radius: 18;
+                             -fx-padding: 20;">
                     <children>
-                        <Label text="Nombre:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                        <TextField fx:id="txtNombre"
-                                   promptText="Nombre"
-                                   GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                        <Label text="Configuración de usuario"
+                               textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="20.0"/>
+                            </font>
+                        </Label>
 
-                        <Label text="Apellidos:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                        <TextField fx:id="txtApellidos"
-                                   promptText="Apellidos"
-                                   GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                        <Label text="Actualiza tus datos personales y credenciales de acceso."
+                               textFill="#9ca3af">
+                            <font>
+                                <Font size="12.0"/>
+                            </font>
+                        </Label>
 
-                        <Label text="Correo:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                        <TextField fx:id="txtCorreo"
-                                   promptText="correo@ejemplo.com"
-                                   GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                        <Separator/>
 
-                        <Label text="Teléfono:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                        <TextField fx:id="txtTelefono"
-                                   promptText="Número de contacto"
-                                   GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                        <GridPane hgap="14.0" vgap="12.0">
+                            <columnConstraints>
+                                <ColumnConstraints prefWidth="140.0"/>
+                                <ColumnConstraints prefWidth="260.0"/>
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints prefHeight="30.0"/>
+                                <RowConstraints prefHeight="30.0"/>
+                                <RowConstraints prefHeight="30.0"/>
+                                <RowConstraints prefHeight="30.0"/>
+                                <RowConstraints prefHeight="30.0"/>
+                            </rowConstraints>
+                            <children>
+                                <Label text="Nombre:" GridPane.rowIndex="0" GridPane.columnIndex="0"
+                                       textFill="#e5e7eb"/>
+                                <TextField fx:id="txtNombre"
+                                           promptText="Nombre"
+                                           GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-                        <Label text="Contraseña:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-                        <PasswordField fx:id="txtContrasena"
-                                       promptText="Nueva contraseña"
-                                       GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                                <Label text="Apellidos:" GridPane.rowIndex="1" GridPane.columnIndex="0"
+                                       textFill="#e5e7eb"/>
+                                <TextField fx:id="txtApellidos"
+                                           promptText="Apellidos"
+                                           GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                                <Label text="Correo:" GridPane.rowIndex="2" GridPane.columnIndex="0"
+                                       textFill="#e5e7eb"/>
+                                <TextField fx:id="txtCorreo"
+                                           promptText="correo@ejemplo.com"
+                                           GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                                <Label text="Teléfono:" GridPane.rowIndex="3" GridPane.columnIndex="0"
+                                       textFill="#e5e7eb"/>
+                                <TextField fx:id="txtTelefono"
+                                           promptText="Número de contacto"
+                                           GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                                <Label text="Contraseña:" GridPane.rowIndex="4" GridPane.columnIndex="0"
+                                       textFill="#e5e7eb"/>
+                                <PasswordField fx:id="txtContrasena"
+                                               promptText="Nueva contraseña"
+                                               GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                            </children>
+                        </GridPane>
+
+                        <HBox spacing="14.0" alignment="CENTER_RIGHT">
+                            <children>
+                                <Button fx:id="btnGuardar"
+                                        text="Guardar cambios"
+                                        onAction="#onGuardarCambios"
+                                        prefWidth="160.0"
+                                        style="-fx-background-radius: 18;
+                                               -fx-background-color: #3b82f6;
+                                               -fx-text-fill: white;
+                                               -fx-border-color: transparent;
+                                               -fx-focus-color: transparent;
+                                               -fx-faint-focus-color: transparent;"/>
+                            </children>
+                        </HBox>
                     </children>
-                </GridPane>
-
-                <HBox layoutX="60.0" layoutY="330.0" spacing="15.0">
-                    <children>
-                        <Button fx:id="btnGuardar"
-                                text="Guardar cambios"
-                                onAction="#onGuardarCambios"
-                                prefWidth="150.0"/>
-                        <Button fx:id="btnVolver"
-                                text="Volver"
-                                onAction="#onVolverConfiguracion"
-                                prefWidth="120.0"/>
-                    </children>
-                </HBox>
+                </VBox>
             </children>
         </AnchorPane>
     </center>

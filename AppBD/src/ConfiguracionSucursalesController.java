@@ -6,11 +6,18 @@ import clases.SpeederClient;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import javafx.application.Platform;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.stage.Stage;
 
@@ -25,19 +32,31 @@ public class ConfiguracionSucursalesController {
     private TableView<Branch> tableSucursales;
 
     @FXML
-    private TableColumn<Branch, Number> colDireccionId;
+    private TableColumn<Branch, String> colRuc;
 
     @FXML
-    private TableColumn<Branch, String> colRuc;
+    private TableColumn<Branch, String> colDireccion;
 
     @FXML
     private TableColumn<Branch, Boolean> colActiva;
 
     @FXML
-    private TextField tfDireccionId;
+    private TextField tfRuc;
 
     @FXML
-    private TextField tfRuc;
+    private ChoiceBox<String> cbCiudad;
+
+    @FXML
+    private TextField tfCallePrincipal;
+
+    @FXML
+    private TextField tfCalleSecundaria;
+
+    @FXML
+    private TextField tfNumeroEdificacion;
+
+    @FXML
+    private TextField tfDetalleDireccion;
 
     @FXML
     private CheckBox chkActiva;
@@ -56,14 +75,41 @@ public class ConfiguracionSucursalesController {
 
     @FXML
     private void initialize() {
-        if (colDireccionId != null) {
-            colDireccionId.setCellValueFactory(c -> c.getValue().direccionIdProperty());
-        }
         if (colRuc != null) {
             colRuc.setCellValueFactory(c -> c.getValue().companiaRucProperty());
         }
+
+        if (colDireccion != null) {
+            colDireccion.setCellValueFactory(c -> {
+                Branch b = c.getValue();
+                String ciudad = b.getCiudad() != null ? b.getCiudad() : "";
+                String calleP = b.getCallePrincipal() != null ? b.getCallePrincipal() : "";
+                String calleS = b.getCalleSecundaria() != null ? b.getCalleSecundaria() : "";
+                String numero = b.getNumeroEdificacion() != null ? b.getNumeroEdificacion() : "";
+                String detalle = b.getDetalleDireccion() != null ? b.getDetalleDireccion() : "";
+
+                String texto = ciudad;
+                if (!calleP.isBlank() || !calleS.isBlank()) {
+                    if (!texto.isBlank()) texto += ", ";
+                    texto += calleP;
+                    if (!calleS.isBlank()) {
+                        texto += " y " + calleS;
+                    }
+                }
+                if (!numero.isBlank()) {
+                    if (!texto.isBlank()) texto += ", ";
+                    texto += "N° " + numero;
+                }
+                if (!detalle.isBlank()) {
+                    if (!texto.isBlank()) texto += " - ";
+                    texto += detalle;
+                }
+                return new ReadOnlyStringWrapper(texto);
+            });
+        }
+
         if (colActiva != null) {
-            colActiva.setCellValueFactory(c -> c.getValue().activaProperty());
+            colActiva.setCellValueFactory(c -> boleanPropertyFromBranch(c.getValue()));
             colActiva.setCellFactory(CheckBoxTableCell.forTableColumn(colActiva));
         }
 
@@ -71,33 +117,40 @@ public class ConfiguracionSucursalesController {
                 (obs, oldSel, newSel) -> mostrarDetalleSucursal(newSel)
         );
 
+        if (cbCiudad != null && cbCiudad.getItems().isEmpty()) {
+            cbCiudad.getItems().addAll("Quito", "Guayaquil", "Cuenca");
+        }
+
         cargarSucursalesDesdeServidor();
+    }
+
+    private javafx.beans.property.BooleanProperty boleanPropertyFromBranch(Branch branch) {
+        return branch.activaProperty();
     }
 
     @FXML
     private void onAgregarSucursal() {
-        String idTxt = tfDireccionId.getText().trim();
         String ruc = tfRuc.getText().trim();
+        String ciudad = cbCiudad.getValue() != null ? cbCiudad.getValue().trim() : "";
+        String callePrincipal = tfCallePrincipal.getText().trim();
+        String calleSecundaria = tfCalleSecundaria.getText().trim();
+        String numero = tfNumeroEdificacion.getText().trim();
+        String detalle = tfDetalleDireccion.getText().trim();
         boolean activa = chkActiva.isSelected();
 
-        if (idTxt.isEmpty() || ruc.isEmpty()) {
+        if (ruc.isEmpty() || ciudad.isEmpty() || callePrincipal.isEmpty()) {
             mostrarAlerta(Alert.AlertType.WARNING, "Datos incompletos",
-                    "ID Dirección y RUC son obligatorios.");
-            return;
-        }
-
-        int idDireccion;
-        try {
-            idDireccion = Integer.parseInt(idTxt);
-        } catch (NumberFormatException e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Formato inválido",
-                    "ID Dirección debe ser un número entero.");
+                    "RUC, ciudad y calle principal son obligatorios.");
             return;
         }
 
         Branch nueva = new Branch();
-        nueva.setDireccionId(idDireccion);
         nueva.setCompaniaRuc(ruc);
+        nueva.setCiudad(ciudad);
+        nueva.setCallePrincipal(callePrincipal);
+        nueva.setCalleSecundaria(calleSecundaria);
+        nueva.setNumeroEdificacion(numero);
+        nueva.setDetalleDireccion(detalle);
         nueva.setActiva(activa);
 
         Request request = new Request(ProtocolActions.CREATE_BRANCH, nueva);
@@ -130,21 +183,26 @@ public class ConfiguracionSucursalesController {
             return;
         }
 
-        String idTxt = tfDireccionId.getText().trim();
         String ruc = tfRuc.getText().trim();
+        String ciudad = cbCiudad.getValue() != null ? cbCiudad.getValue().trim() : "";
+        String callePrincipal = tfCallePrincipal.getText().trim();
+        String calleSecundaria = tfCalleSecundaria.getText().trim();
+        String numero = tfNumeroEdificacion.getText().trim();
+        String detalle = tfDetalleDireccion.getText().trim();
         boolean activa = chkActiva.isSelected();
 
-        int idDireccion;
-        try {
-            idDireccion = Integer.parseInt(idTxt);
-        } catch (NumberFormatException e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Formato inválido",
-                    "ID Dirección debe ser un número entero.");
+        if (ruc.isEmpty() || ciudad.isEmpty() || callePrincipal.isEmpty()) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Datos incompletos",
+                    "RUC, ciudad y calle principal son obligatorios.");
             return;
         }
 
-        seleccionada.setDireccionId(idDireccion);
         seleccionada.setCompaniaRuc(ruc);
+        seleccionada.setCiudad(ciudad);
+        seleccionada.setCallePrincipal(callePrincipal);
+        seleccionada.setCalleSecundaria(calleSecundaria);
+        seleccionada.setNumeroEdificacion(numero);
+        seleccionada.setDetalleDireccion(detalle);
         seleccionada.setActiva(activa);
 
         Request request = new Request(ProtocolActions.UPDATE_BRANCH, seleccionada);
@@ -237,14 +295,26 @@ public class ConfiguracionSucursalesController {
             limpiarCampos();
             return;
         }
-        tfDireccionId.setText(String.valueOf(b.getDireccionId()));
         tfRuc.setText(b.getCompaniaRuc());
+        if (b.getCiudad() != null) {
+            cbCiudad.setValue(b.getCiudad());
+        } else {
+            cbCiudad.setValue(null);
+        }
+        tfCallePrincipal.setText(b.getCallePrincipal());
+        tfCalleSecundaria.setText(b.getCalleSecundaria());
+        tfNumeroEdificacion.setText(b.getNumeroEdificacion());
+        tfDetalleDireccion.setText(b.getDetalleDireccion());
         chkActiva.setSelected(b.isActiva());
     }
 
     private void limpiarCampos() {
-        tfDireccionId.clear();
         tfRuc.clear();
+        cbCiudad.setValue(null);
+        tfCallePrincipal.clear();
+        tfCalleSecundaria.clear();
+        tfNumeroEdificacion.clear();
+        tfDetalleDireccion.clear();
         chkActiva.setSelected(false);
     }
 
@@ -256,4 +326,3 @@ public class ConfiguracionSucursalesController {
         alert.showAndWait();
     }
 }
-
